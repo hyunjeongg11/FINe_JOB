@@ -14,13 +14,7 @@ class DetailUser(models.Model):
         ("여성", "여성"),
     ]
 
-    GOAL_CHOICES = [
-        ("내 집 마련", "내 집 마련"),
-        ("내 차 마련", "내 차 마련"),
-        ("목돈 마련", "목돈 마련"),
-        ("여행 경비", "여행 경비"),
-    ]
-    BANK_CHOICES = (
+    JOB_CHOICES = (
         # ('모델에 설정할 값', '사람이 읽을수 있는 이름')
         ('우리은행','우리은행'),
         ('한국스탠다드차타드은행','한국스탠다드차타드은행'),
@@ -46,7 +40,7 @@ class DetailUser(models.Model):
     birthday = models.CharField(max_length=8, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True)
     address = models.CharField(max_length=255, null=True)
-    main_bank = models.CharField(max_length=12, choices=BANK_CHOICES, null=True)
+    profile_img = models.ImageField(null=True, blank=True)
     asset = models.IntegerField(null=True)
     salary = models.IntegerField(null=True)
-    goal = models.CharField(max_length=10, choices=GOAL_CHOICES, null=True)
+    interest_industry = models.CharField(max_length=20, choices=JOB_CHOICES, null=True)
