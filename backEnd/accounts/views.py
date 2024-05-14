@@ -1,87 +1,71 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserChangeForm, CustomUserCreationForm
+from django.contrib.auth import get_user_model
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+import json
+from django.http import JsonResponse 
+
+from .models import  DetailUser, User
+from .serializers import UserDetailSerializer, UserLikeListSerializer 
+
+# permission Decorators
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 
-# Create your views here.
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('articles:index')
+User = get_user_model()
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect('articles:index')
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def user_info(request):
+    if not DetailUser.objects.filter(user=request.user).exists():
+        DetailUser.objects.create(user=request.user)
+        userdetail = DetailUser.objects.get(user=request.user)
     else:
-        form = AuthenticationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/login.html', context)
-
-
-@login_required
-def logout(request):
-    auth_logout(request)
-    return redirect('articles:index')
-
-
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect('articles:index')
-
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('articles:index')
-    else:
-        form = CustomUserCreationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/signup.html', context)
-
-
-@login_required
-def delete(request):
-    # 삭제하고자하는 User를 조회 할 필요 없다.
-    request.user.delete()
-    return redirect('articles:index')
+        userdetail = DetailUser.objects.get(user=request.user)
+    if request.method == 'GET':
+        serializer = UserDetailSerializer(userdetail)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
+    elif request.method == "PUT":
+        serializer = UserDetailSerializer(userdetail, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
 
-@login_required
-def update(request):
-    if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('articles:index')
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def like_list(request):
+    serializer = UserLikeListSerializer(request.user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    user = request.user
+    detail = DetailUser.objects.get(user=user)
+    detail.delete()
+    user.delete()
+    return Response('{msg: delete complete}', status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_superuser(request):
+    data = {'is_superuser': request.user.is_superuser}
+    return JsonResponse(data, status=200)
+
+
+@api_view(['POST'])
+def check_userID(request):
+    username = request.data['username']
+    if User.objects.filter(username=username).exists():
+        isExist = True
     else:
-        form = CustomUserChangeForm(instance=request.user)
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/update.html', context)
+        isExist = False
 
-
-@login_required
-def change_password(request, user_pk):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            return redirect('articles:index')
-    else: 
-        # PasswordChangeForm은 첫번째 인자 user가 필수이다.
-        form = PasswordChangeForm(request.user)
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/change_password.html', context)
+    result = {'isExist': isExist}
+    return JsonResponse(result, status=status.HTTP_200_OK)
