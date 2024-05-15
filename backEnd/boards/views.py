@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import MMBoard, MMComment, LBoard, LComment
-from .serializers import MMBoardListSerializer, MMBoardSerializer, MMCommentSerializer, LBoardListSerializer, LBoardSerializer, LCommentSerializer
+from .models import Age_Board, Age_Comment, Free_Board, Free_Comment
+from .serializers import Age_BoardListSerializer, Age_BoardSerializer, Age_CommentSerializer, Free_BoardListSerializer, Free_BoardSerializer, Free_CommentSerializer
 
 # permission Decorators
 from rest_framework.decorators import permission_classes
@@ -20,14 +20,14 @@ User = get_user_model()
 # Create your views here.
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
-def moneyMGMT_list(request):
+def age_list(request):
     if request.method == 'GET':
-        boards = get_list_or_404(MMBoard)
-        serializer = MMBoardListSerializer(boards, many=True)
+        boards = get_list_or_404(Age_Board)
+        serializer = Age_BoardListSerializer(boards, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = MMBoardSerializer(data=request.data)
+        serializer = Age_BoardSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -35,11 +35,11 @@ def moneyMGMT_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def moneyMGMT_detail(request, moneyMGMT_pk):
-    board = get_object_or_404(MMBoard, pk=moneyMGMT_pk)
+def age_detail(request, age_pk):
+    board = get_object_or_404(Age_Board, pk=age_pk)
 
     if request.method == 'GET':
-        serializer = MMBoardSerializer(board)
+        serializer = Age_BoardSerializer(board)
         return Response(serializer.data)
     
     elif request.method == "DELETE":
@@ -47,7 +47,7 @@ def moneyMGMT_detail(request, moneyMGMT_pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == "PUT":
-        serializer = MMBoardSerializer(board, data=request.data)
+        serializer = Age_BoardSerializer(board, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -55,9 +55,9 @@ def moneyMGMT_detail(request, moneyMGMT_pk):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def moneyMGMT_comment_create(request, moneyMGMT_pk):
-    board = get_object_or_404(MMBoard, pk=moneyMGMT_pk)
-    serializer = MMCommentSerializer(data=request.data)
+def age_comment_create(request, age_pk):
+    board = get_object_or_404(Age_Board, pk=age_pk)
+    serializer = Age_CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(board=board, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -65,22 +65,22 @@ def moneyMGMT_comment_create(request, moneyMGMT_pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def moneyMGMT_comment_detail(request, comment_pk):
-    comment = MMComment.objects.get(pk=comment_pk)
+def age_comment_detail(request, comment_pk):
+    comment = Age_Comment.objects.get(pk=comment_pk)
     comment.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
-def local_list(request):
+def free_list(request):
     if request.method == 'GET':
-        boards = get_list_or_404(LBoard)
-        serializer = LBoardListSerializer(boards, many=True)
+        boards = get_list_or_404(Free_Board)
+        serializer = Free_BoardListSerializer(boards, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = LBoardSerializer(data=request.data)
+        serializer = Free_BoardSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -88,11 +88,11 @@ def local_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def local_detail(request, local_pk):
-    board = get_object_or_404(LBoard, pk=local_pk)
+def free_detail(request, free_pk):
+    board = get_object_or_404(Free_Board, pk=free_pk)
 
     if request.method == 'GET':
-        serializer = LBoardSerializer(board)
+        serializer = Free_BoardSerializer(board)
         return Response(serializer.data)
     
     elif request.method == "DELETE":
@@ -100,7 +100,7 @@ def local_detail(request, local_pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == "PUT":
-        serializer = LBoardSerializer(board, data=request.data)
+        serializer = Free_BoardSerializer(board, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -108,9 +108,9 @@ def local_detail(request, local_pk):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def local_comment_create(request, local_pk):
-    board = get_object_or_404(LBoard, pk=local_pk)
-    serializer = LCommentSerializer(data=request.data)
+def free_comment_create(request, free_pk):
+    board = get_object_or_404(Free_Board, pk=free_pk)
+    serializer = Free_CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(board=board, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -118,8 +118,8 @@ def local_comment_create(request, local_pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def local_comment_detail(request, comment_pk):
-    comment = LComment.objects.get(pk=comment_pk)
+def free_comment_detail(request, comment_pk):
+    comment = Free_Comment.objects.get(pk=comment_pk)
     comment.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -127,16 +127,16 @@ def local_comment_detail(request, comment_pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def show_logs(request):
-    mm_boards = MMBoard.objects.filter(user=request.user)
-    mm_comments = MMComment.objects.filter(user=request.user)
-    l_boards = LBoard.objects.filter(user=request.user)
-    l_comments = LComment.objects.filter(user=request.user)
+    age_boards = Age_Board.objects.filter(user=request.user)
+    age_comments = Age_Comment.objects.filter(user=request.user)
+    free_boards = Free_Board.objects.filter(user=request.user)
+    free_comments = Free_Comment.objects.filter(user=request.user)
 
     response_data = {
-        'mm_boards': MMBoardListSerializer(mm_boards, many=True).data,
-        'mm_comments': MMCommentSerializer(mm_comments, many=True).data,
-        'l_boards': LBoardListSerializer(l_boards, many=True).data,
-        'l_comments': LCommentSerializer(l_comments, many=True).data,
+        'age_boards': Age_BoardListSerializer(age_boards, many=True).data,
+        'age_comments': Age_CommentSerializer(age_comments, many=True).data,
+        'free_boards': Free_BoardListSerializer(free_boards, many=True).data,
+        'free_comments': Free_CommentSerializer(free_comments, many=True).data,
     }
 
     return JsonResponse(response_data, status=200)

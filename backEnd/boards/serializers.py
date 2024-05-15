@@ -30,8 +30,8 @@ class Age_CommentSerializer(serializers.ModelSerializer):
 
 
 class Age_BoardSerializer(serializers.ModelSerializer):
-    mm_comment = Age_CommentSerializer(many=True, read_only=True)
-    comment_count = serializers.IntegerField(source='mm_comment.count', read_only=True)
+    age_comment = Age_CommentSerializer(many=True, read_only=True)
+    comment_count = serializers.IntegerField(source='age_comment.count', read_only=True)
     nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
     user = UsernameSerializer(read_only=True)
     
@@ -65,8 +65,8 @@ class Free_CommentSerializer(serializers.ModelSerializer):
 
 
 class Free_BoardSerializer(serializers.ModelSerializer):
-    local_comment = Free_CommentSerializer(many=True, read_only=True)
-    comment_count = serializers.IntegerField(source='local_comment.count', read_only=True)
+    free_comment = Free_CommentSerializer(many=True, read_only=True)
+    comment_count = serializers.IntegerField(source='free_comment.count', read_only=True)
     address = serializers.CharField(source='user.detailuser.address', read_only=True)
     user = UsernameSerializer(read_only=True)
     
