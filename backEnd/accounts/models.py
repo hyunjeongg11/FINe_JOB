@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+def user_directory_path(instance, filename):
+    return f'profile_images/{instance.user.username}/{filename}'
+
 # Create your models here.
 class User(AbstractUser):
     pass
@@ -16,31 +19,36 @@ class DetailUser(models.Model):
 
     JOB_CHOICES = (
         # ('모델에 설정할 값', '사람이 읽을수 있는 이름')
-        ('우리은행','우리은행'),
-        ('한국스탠다드차타드은행','한국스탠다드차타드은행'),
-        ('대구은행','대구은행'),
-        ('부산은행','부산은행'),
-        ('광주은행','광주은행'),
-        ('제주은행','제주은행'),
-        ('전북은행','전북은행'),
-        ('경남은행','경남은행'),
-        ('중소기업은행','중소기업은행'),
-        ('한국산업은행','한국산업은행'),
-        ('국민은행','국민은행'),
-        ('신한은행','신한은행'),
-        ('농협은행','농협은행'),
-        ('KEB하나은행','KEB하나은행'),
-        ('수협은행','수협은행'),
-        ('주식회사 카카오뱅크','주식회사 카카오뱅크'),
-        ('주식회사 케이뱅크','주식회사 케이뱅크'),
-        ('토스뱅크 주식회사','토스뱅크 주식회사'),
-        ('기타','기타')
+        ('IT','IT'),
+        ('서비스','서비스'),
+        ('금융','금융'),
+        ('보험','보험'),
+        ('인사','인사'),
+        ('노무','노무'),
+        ('회계','회계'),
+        ('세무','세무'),
+        ('재무','재무'),
+        ('디자인','디자인'),
+        ('생산','생산'),
+        ('영업','영업'),
+        ('상품기획','상품기획'),
+        ('교육','교육'),
+        ('R&D','R&D'),
+        ('의료','의료'),
+        ('건축','건축'),
+        ('전기','전기'),
+        ('기계','기계'),
+        ('고객상담','고객상담'),
+        ('운송','운송')
+        ('미디어','미디어')
+        ('스포츠','스포츠')
+        ('복지','복지')
     )
     nickname = models.CharField(max_length=20, null=True)
     birthday = models.CharField(max_length=8, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True)
     address = models.CharField(max_length=255, null=True)
-    profile_img = models.ImageField(null=True, blank=True)
+    profile_img = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
     asset = models.IntegerField(null=True)
     salary = models.IntegerField(null=True)
     interest_industry = models.CharField(max_length=20, choices=JOB_CHOICES, null=True)
