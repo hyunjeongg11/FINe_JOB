@@ -15,6 +15,21 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# .env에서 API_KEY 가져오는 부분
+
+import os
+import environ
+
+env = environ.Env(DEBUG=(bool, True))
+
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
+EXCHANGE_API_KEY = env('EXCHANGE_API_KEY')
+KAKAOMAP_API_KEY = env('KAKAOMAP_API_KEY')
+NAVER_CLIENT_ID = env('NAVER_CLIENT_ID')
+NAVER_CLIENT_SECRET = env('NAVER_CLIENT_SECRET')
+FINLIFE_API_KEY = env('FINLIFE_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -22,23 +37,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-^evs+5^vug2)ekcxzw)a1r8%e2o24+8+seoq-8v*!vzgf^2m3!'
 
-# .env에서 API_KEY 가져오는 부분
-# from environ import Env
-
-# env = Env()
-# env_path = BASE_DIR / ".env"
-# if env_path.exists():
-#     with env_path.open("rt", encoding="utf8") as f:
-#         env.read_env(f, overwrite=True)
-
-# COMPARE_API_KEY = env.str("COMPARE_API_KEY")
-# EXCHANGE_API_KEY = env.str("EXCHANGE_API_KEY")
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -46,6 +48,8 @@ INSTALLED_APPS = [
     'accounts',
     'boards',
     'jobs',
+    'naver_news',
+    'exchange_rate',
     'financial_products',
     'rest_framework',
     'rest_framework.authtoken',
@@ -170,3 +174,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# REST-AUTH 회원가입 기본 Serailizer 재정의
+REST_AUTH = {
+ 'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+ACCOUNT_ADAPTER = 'accounts.models.CustomAccountAdapter'
