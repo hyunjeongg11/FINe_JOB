@@ -6,17 +6,16 @@ import os
 import sys
 import json
 import urllib.request
+from django.conf import settings
 
 # Create your views here.
 @api_view(['GET'])
 def news(request):
-    Naver_client_id = "TUU3FDvGA4TXxArye4M7"
-    Naver_client_secret = "DWm4cEU0iV"
     encText = urllib.parse.quote('금융')
     url = "https://openapi.naver.com/v1/search/blog?query=" + encText # JSON 결과
     request = urllib.request.Request(url)
-    request.add_header("X-Naver-Client-Id",Naver_client_id)
-    request.add_header("X-Naver-Client-Secret",Naver_client_secret)
+    request.add_header("X-Naver-Client-Id", settings.NAVER_CLIENT_ID)
+    request.add_header("X-Naver-Client-Secret", settings.NAVER_CLIENT_SECRET)
     response = urllib.request.urlopen(request)
     rescode = response.getcode()
     if(rescode==200):
