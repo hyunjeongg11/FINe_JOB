@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>djaslkds</h1>
+        <h1>근처 은행 찾기</h1>
         <kakaoMap />
     </div>
 </template>
