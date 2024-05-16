@@ -7,14 +7,14 @@ urlpatterns = [
     path('save_saving_products/', views.save_saving_products),
     
     # ------------ 예,적금 옵션이랑 합친 데이터 불러오기 ----------
-    # path('deposit_products/', views.deposit_products),
-    # path('saving_products/', views.saving_products),
-    # path('deposit_detail/<str:fin_prdt_cd>/', views.deposit_products_detail),
-    # path('saving_detail/<str:fin_prdt_cd>/', views.saving_product_detail),
+    path('deposit_products/', views.deposit_products),
+    path('saving_products/', views.saving_products),
+    path('deposit_product_detail/<str:fin_prdt_cd>/', views.deposit_product_detail),
+    path('saving_product_detail/<str:fin_prdt_cd>/', views.saving_product_detail),
     
     # # ------------- 예,적금 옵션 데이터만 불러오기 ---------------
-    # path('deposit_products-options/<str:fin_prdt_cd>/', views.deposit_products_options),
-    # path('saving_products-options/<str:fin_prdt_cd>/', views.saving_products_options),
+    path('deposit_product_options/<str:fin_prdt_cd>/', views.deposit_product_options),
+    path('saving_product_options/<str:fin_prdt_cd>/', views.saving_product_options),
     
     # # ------------ 예,적금 관심상품 ----------
     # path('<int:pk>/likes_deposit/', views.deposit_likes),
