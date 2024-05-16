@@ -11,12 +11,6 @@ from django.shortcuts import get_object_or_404
 
 from datetime import datetime, timedelta, date
 
-
-def change_date_format(input_date):
-    date_object = datetime.strptime(input_date, '%Y-%m-%d')
-    output_date = date_object.strftime('%Y-%m-%d')
-    return output_date
-
 # api 키로 환율정보 가져오기
 def get_exchange_rate_info(search_date):
     EXCHANGE_API_KEY = settings.EXCHANGE_API_KEY
@@ -57,8 +51,7 @@ def save_exchange_rate(response, search_date):
 def get_exchange_rate(request):
     EXCHANGE_API_KEY = settings.EXCHANGE_API_KEY
     today = date.today()
-    search_date = today.strftime('%Y%m%d')
-    
+    search_date = today.strftime('%Y-%m-%d')
     if not ExchangeRate.objects.filter(search_date=search_date):
         response = get_exchange_rate_info(search_date)
         if response:
@@ -66,9 +59,9 @@ def get_exchange_rate(request):
 
         else: # 비영업일이거나 영업 이전 시간이다
             while not response:
-                now = datetime.strptime(search_date, '%Y%m%d')
+                now = datetime.strptime(search_date, '%Y-%m-%d')
                 search_date = now - timedelta(days=1)
-                search_date = search_date.strftime('%Y%m%d')
+                search_date = search_date.strftime('%Y-%m-%d')
                 response = get_exchange_rate_info(search_date)
 
             if not ExchangeRate.objects.filter(search_date=search_date): # 환율 데이터가 DB에 없다면 저장
