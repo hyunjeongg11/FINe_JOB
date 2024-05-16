@@ -1,7 +1,6 @@
 from .models import Age_Board, Age_Comment, Free_Board, Free_Comment
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from accounts.models import DetailUser
 
 User = get_user_model()
 
