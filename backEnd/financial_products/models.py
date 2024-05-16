@@ -12,7 +12,7 @@ class Deposit_Products(models.Model):
     spcl_cnd = models.TextField() # 우대조건
     etc_note = models.TextField() # 금융상품설명
     join_deny = models.IntegerField() #  가입제한 (1: 제한X, 2:서민전용, 3: 일부제한)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, null= True, related_name= 'like_deposit') # 찜한 유저
+    # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, null= True, related_name= 'like_deposit') # 찜한 유저
     
 
 class Deposit_Options(models.Model):
@@ -34,7 +34,7 @@ class Saving_Products(models.Model):
     spcl_cnd = models.TextField() # 우대조건
     etc_note = models.TextField() # 금융상품설명
     join_deny = models.IntegerField() #  가입제한 (1: 제한X, 2:서민전용, 3: 일부제한)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, null= True, related_name= 'like_saving') # 찜한 유저
+    # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, null= True, related_name= 'like_saving') # 찜한 유저
 
 
 class Saving_Options(models.Model):
