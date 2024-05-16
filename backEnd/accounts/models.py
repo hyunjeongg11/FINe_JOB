@@ -39,10 +39,10 @@ class DetailUser(models.Model):
         ('전기','전기'),
         ('기계','기계'),
         ('고객상담','고객상담'),
-        ('운송','운송')
-        ('미디어','미디어')
-        ('스포츠','스포츠')
-        ('복지','복지')
+        ('운송','운송'),
+        ('미디어','미디어'),
+        ('스포츠','스포츠'),
+        ('복지','복지'),
     )
     nickname = models.CharField(max_length=20, null=True)
     birthday = models.CharField(max_length=8, null=True, blank=True)

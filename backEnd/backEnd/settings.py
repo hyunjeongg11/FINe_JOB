@@ -23,13 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^evs+5^vug2)ekcxzw)a1r8%e2o24+8+seoq-8v*!vzgf^2m3!'
 
 # .env에서 API_KEY 가져오는 부분
-from environ import Env
+# from environ import Env
 
-env = Env()
-env_path = BASE_DIR / ".env"
-if env_path.exists():
-    with env_path.open("rt", encoding="utf8") as f:
-        env.read_env(f, overwrite=True)
+# env = Env()
+# env_path = BASE_DIR / ".env"
+# if env_path.exists():
+#     with env_path.open("rt", encoding="utf8") as f:
+#         env.read_env(f, overwrite=True)
 
 # COMPARE_API_KEY = env.str("COMPARE_API_KEY")
 # EXCHANGE_API_KEY = env.str("EXCHANGE_API_KEY")
