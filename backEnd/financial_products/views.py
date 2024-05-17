@@ -22,6 +22,7 @@ User = get_user_model()
 
 # 예금 데이터
 # 예금 상품 목록 및 옵션 DB 저장
+# @permission_classes([IsAdminUser])
 @api_view(['GET'])
 def save_deposit_products(request):
     URL = BASE_URL + 'depositProductsSearch.json'
@@ -113,6 +114,7 @@ def like_deposit_check(request, product_pk):
 #------------------------------------------------------------#
 # 적금 데이터
 # 적금 상품 목록 및 옵션 DB 저장
+# @permission_classes([IsAdminUser])
 @api_view(['GET'])
 def save_saving_products(request):
     URL = BASE_URL + 'savingProductsSearch.json'
@@ -295,95 +297,3 @@ def recommend_saving_products(request):
     if data:
         return Response({'message': 'okay', 'data': data})
     return Response({'message': 'no data'})
-
-
-# 상품 추천
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def recommend_products(request):
-#     user = request.user
-#     detailInfo = DetailUser.objects.get(user=user)
-#     # 임의의 유저 선택
-#     # detailInfo = DetailUser.objects.get(pk=1)
-#     birthday = detailInfo.birthday
-#     year = birthday[0:4]
-#     year_range = [str(tmp) for tmp in range(int(year) - 3, int(year) + 3)]
-#     salary = detailInfo.salary
-#     asset = detailInfo.asset
-#     main_bank = detailInfo.main_bank
-#     goal = detailInfo.goal
-#     gender = detailInfo.gender
-
-#     # 자산과 연봉 범위에 따라 filter 범위 다르게 주기
-#     salary_range = [[0, 20000000], [30000000, 40000000], [40000000, 60000000], [60000000, 100000000], [100000000, 150000000]]
-#     salary_gap = [5000000, 2000000, 5000000, 10000000, 30000000]
-#     asset_range = [[0, 20000000], [30000000, 60000000], [60000000, 150000000], [150000000, 500000000], [500000000, 1500000000]]
-#     asset_gap = [5000000, 10000000, 20000000, 30000000, 50000000]
-    
-#     for si in range(len(salary_range)):
-#         if salary_range[si][0] <= salary < salary_range[si][1]:
-#             break
-    
-#     for ai in range(len(asset_range)):
-#         if asset_range[si][0] <= asset < asset_range[si][1]:
-#             break
-
-#     # 비슷한 유저 찾기
-#     # 해당 유저들이 가입한 상품 리스트 추출(user.like_deposits_set, user.like_savings_set 사용)
-#     age_filtered_users = DetailUser.objects.filter(
-#         (Q(birthday__icontains=year_range[0]) |
-#         Q(birthday__icontains=year_range[1]) |
-#         Q(birthday__icontains=year_range[2]) |
-#         Q(birthday__icontains=year_range[3]) |
-#         Q(birthday__icontains=year_range[4]) |
-#         Q(birthday__icontains=year_range[5])) & 
-#         Q(main_bank=main_bank, goal=goal))
-        
-#     all_filtered_users = age_filtered_users.filter(Q(salary__lte=salary + salary_gap[si], salary__gte=salary - salary_gap[si],
-#                                                     asset__lte=asset + asset_gap[si], asset__gte=asset - asset_gap[ai]))
-
-
-#     # print(all_filtered_users)
-#     deposit_products = []
-#     saving_products = []
-#     average_salary = all_filtered_users.aggregate(avg_salary=Avg('salary'))['avg_salary']
-#     average_asset = all_filtered_users.aggregate(avg_asset=Avg('asset'))['avg_asset']
-#     for info in all_filtered_users:
-#         filter = 'all'
-#         if info.user.like_deposit.all().exists():
-#             for item in info.user.like_deposit.all():
-#                 deposit_products.append(item)
-#         if info.user.like_saving.all().exists():
-#             for item in info.user.like_saving.all():
-#                 saving_products.append(item)
-
-#     if (len(set(deposit_products)) < 5) or (len(set(saving_products)) < 5):
-#         filter = 'age_only'
-#         deposit_products = []
-#         saving_products = []
-#         average_salary = age_filtered_users.aggregate(avg_salary=Avg('salary'))['avg_salary']
-#         average_asset = age_filtered_users.aggregate(avg_asset=Avg('asset'))['avg_asset']
-
-#         for info in age_filtered_users:
-#             if info.user.like_deposit.all().exists():
-#                 for item in info.user.like_deposit.all():
-#                     deposit_products.append(item)
-#             if info.user.like_saving.all().exists():
-#                 for item in info.user.like_saving.all():
-#                     saving_products.append(item)
-
-
-#     selected_deposit = random.sample(set(deposit_products), min(len(deposit_products), 5))
-#     selected_saving = random.sample(set(saving_products), min(len(saving_products), 5))
-    
-#     serializer1 = DepositProductsSerializer(selected_deposit, many=True)
-#     serializer2 = SavingProductsSerializer(selected_saving, many=True)
-
-#     response_data = {
-#         'deposit_products': serializer1.data,
-#         'saving_products': serializer2.data,
-#         'filter': filter,
-#         'average_salary': average_salary,
-#         'average_asset': average_asset
-#     }
-#     return JsonResponse(response_data, status=200)
