@@ -62,8 +62,8 @@ def save_job_info(request): # 사람인 크롤링
 @api_view(['GET'])
 def get_job_info(request):
     # job_info = get_list_or_404(JobInfo, keyword=request.GET['keyword'])
-    job_info = get_list_or_404(JobInfo, keyword='복지')
-    serializer = JobInfoSerializer(job_info, many=True)
+    job_infos = get_list_or_404(JobInfo, keyword='복지')
+    serializer = JobInfoSerializer(job_infos, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -71,11 +71,11 @@ def get_job_info(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def like_job_info(request, job_info_pk):
-    saving_product = get_object_or_404(JobInfo, pk=job_info_pk)
-    if request.user in saving_product.like_users.all():
-        saving_product.like_users.remove(request.user)
+    job_info = get_object_or_404(JobInfo, pk=job_info_pk)
+    if request.user in job_info.like_users.all():
+        job_info.like_users.remove(request.user)
         liked = False
     else:
-        saving_product.like_users.add(request.user)
+        job_info.like_users.add(request.user)
         liked = True
     return Response({'liked': liked})
