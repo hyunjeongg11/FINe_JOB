@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPageView from '@/views/MainPageView.vue'
 import SearchBankView from '@/views/SearchBankView.vue'
-import BoardView from '@/views/Board/BoardView.vue'
 import FreeBoardView from '@/views/Board/FreeBoardView.vue'
 import FreeBoardCreateView from '@/views/Board/FreeBoardCreateView.vue'
 import FreeBoardDetailView from '@/views/Board/FreeBoardDetailView.vue'
@@ -32,11 +31,6 @@ const router = createRouter({
       path: '/searchbank', 
       name: 'searchbank', 
       component: SearchBankView
-    },
-    {
-      path: '/board',
-      name: 'board',
-      component: BoardView
     },
     {
       path: '/freeboard',
