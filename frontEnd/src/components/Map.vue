@@ -67,34 +67,56 @@ export default {
   },
   created() {},
   mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.loadMap();
-    } else {
-      this.loadScript();
-    }
+    this.loadScript();
   },
   methods: {
     loadScript() {
       const script = document.createElement("script");
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?appkey=fb46c88703e2ee3761ca6cee1048de3c&libraries=services&autoload=false";
-      script.onload = () => window.kakao.maps.load(() => this.loadMap());
+      script.onload = () => window.kakao.maps.load(() => this.getCurrentLocation());
       document.head.appendChild(script);
     },
-    loadMap() {
+    getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const locPosition = new window.kakao.maps.LatLng(lat, lon);
+            this.loadMap(locPosition);
+          },
+          (error) => {
+            // 기본 위치 설정 (예: 서울 시청)
+            const defaultPosition = new window.kakao.maps.LatLng(37.5665, 126.9780);
+            this.loadMap(defaultPosition);
+          }
+        );
+      } else {
+        // 기본 위치 설정 (예: 서울 시청)
+        const defaultPosition = new window.kakao.maps.LatLng(37.5665, 126.9780);
+        this.loadMap(defaultPosition);
+      }
+    },
+    loadMap(position) {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        center: position,
         level: 3,
       };
       this.map = new window.kakao.maps.Map(container, options);
+
+      // 지도 이동 이벤트 등록
+      window.kakao.maps.event.addListener(this.map, 'dragend', this.searchNearbyBanks);
+      window.kakao.maps.event.addListener(this.map, 'zoom_changed', this.searchNearbyBanks);
+
+      this.searchNearbyBanks();
     },
     searchPlaces() {
-      let keyword = this.keyword.trim();
-      keyword += ' 은행';
+      const keyword = this.keyword.trim() + ' 은행';
       if (!keyword) {
         alert("키워드를 입력해주세요!");
-        return false;
+        return;
       }
       const ps = new window.kakao.maps.services.Places();
       ps.keywordSearch(keyword, this.placesSearchCB);
@@ -138,30 +160,30 @@ export default {
 
         bounds.extend(placePosition);
 
-        (function (marker, title) {
-          window.kakao.maps.event.addListener(marker, "mouseover", function () {
+        // 마커와 리스트 아이템에 이벤트 추가
+        ((marker, title) => {
+          window.kakao.maps.event.addListener(marker, "mouseover", () => {
             infowindow.setContent('<div style="padding:5px;font-size:12px;">' + title + '</div>');
             infowindow.open(this.map, marker);
           });
 
-          window.kakao.maps.event.addListener(marker, "mouseout", function () {
+          window.kakao.maps.event.addListener(marker, "mouseout", () => {
             infowindow.close();
           });
 
-          itemEl.onmouseover = function () {
+          itemEl.onmouseover = () => {
             infowindow.setContent('<div style="padding:5px;font-size:12px;">' + title + '</div>');
             infowindow.open(this.map, marker);
           };
 
-          itemEl.onmouseout = function () {
+          itemEl.onmouseout = () => {
             infowindow.close();
           };
 
-          itemEl.addEventListener("click", function () {
+          itemEl.addEventListener("click", () => {
             this.map.setCenter(placePosition);
-            this.map.setLevel(3);
-          }.bind(this));
-        }).call(this, marker, place.place_name);
+          });
+        })(marker, place.place_name);
 
         fragment.appendChild(itemEl);
       }
@@ -179,7 +201,8 @@ export default {
         '"></span>' +
         '<div class="info">' +
         "   <h5>" +
-        (index + 1) + ". " +
+        (index + 1) +
+        ". " +
         place.place_name +
         "</h5>";
 
@@ -203,14 +226,19 @@ export default {
       return el;
     },
     addMarker(position, idx, title) {
-      const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
+      const imageSrc =
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
       const imageSize = new window.kakao.maps.Size(36, 37);
       const imgOptions = {
         spriteSize: new window.kakao.maps.Size(36, 691),
         spriteOrigin: new window.kakao.maps.Point(0, idx * 46 + 10),
         offset: new window.kakao.maps.Point(13, 37),
       };
-      const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
+      const markerImage = new window.kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imgOptions
+      );
       const marker = new window.kakao.maps.Marker({
         position: position,
         image: markerImage,
@@ -219,9 +247,8 @@ export default {
       marker.setMap(this.map);
       this.markers.push(marker);
 
-      window.kakao.maps.event.addListener(marker, 'click', () => {
+      window.kakao.maps.event.addListener(marker, "click", () => {
         this.map.setCenter(position);
-        this.map.setLevel(3);
       });
 
       return marker;
@@ -233,36 +260,35 @@ export default {
       this.markers = [];
     },
     displayPagination(pagination) {
-      if (this.listEl && this.listEl.hasChildNodes()) {
-        const paginationEl = document.getElementById("pagination");
-        const fragment = document.createDocumentFragment();
+      const paginationEl = document.getElementById("pagination");
+      const fragment = document.createDocumentFragment();
 
-        while (paginationEl.hasChildNodes()) {
-          paginationEl.removeChild(paginationEl.lastChild);
-        }
-
-        for (let i = 1; i <= pagination.last; i++) {
-          const el = document.createElement("a");
-          el.href = "#";
-          el.innerHTML = i;
-
-          if (i === pagination.current) {
-            el.className = "on";
-          } else {
-            el.onclick = (function (i) {
-              return function () {
-                pagination.gotoPage(i);
-              };
-            })(i);
-          }
-
-          fragment.appendChild(el);
-        }
-        paginationEl.appendChild(fragment);
+      while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild(paginationEl.lastChild);
       }
+
+      for (let i = 1; i <= pagination.last; i++) {
+        const el = document.createElement("a");
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i === pagination.current) {
+          el.className = "on";
+        } else {
+          el.onclick = ((i) => {
+            return () => {
+              pagination.gotoPage(i);
+            };
+          })(i);
+        }
+
+        fragment.appendChild(el);
+      }
+      paginationEl.appendChild(fragment);
     },
     displayInfowindow(marker, title) {
-      const content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
+      const content =
+        '<div style="padding:5px;z-index:1;">' + title + "</div>";
 
       infowindow.setContent(content);
       infowindow.open(this.map, marker);
@@ -280,15 +306,25 @@ export default {
             const lon = position.coords.longitude;
             const locPosition = new window.kakao.maps.LatLng(lat, lon);
             this.map.setCenter(locPosition);
-            this.map.setLevel(3);
+            this.map.setLevel(3); // 여기서만 확대 레벨을 설정
+            this.searchNearbyBanks(); // 현재 위치 근처 은행 검색
           },
           (error) => {
-            alert('현재 위치를 찾을 수 없습니다.');
+            alert("현재 위치를 찾을 수 없습니다.");
           }
         );
       } else {
-        alert('현재 위치를 찾을 수 없습니다.');
+        alert("현재 위치를 찾을 수 없습니다.");
       }
+    },
+    searchNearbyBanks() {
+      const center = this.map.getCenter();
+      const ps = new window.kakao.maps.services.Places();
+      ps.keywordSearch("은행", this.placesSearchCB, {
+        location: center,
+        radius: 5000, // 반경 5km 내에서 검색
+        size: 15, // 결과 수 (기본값은 15, 최대값은 45)
+      });
     },
   },
 };
