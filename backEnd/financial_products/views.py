@@ -51,8 +51,8 @@ def save_deposit_products(request):
 def deposit_products(request):
     if request.method == "GET":
         # deposit_product = Deposit_Products.objects.all()
-        deposit_product = get_list_or_404(Deposit_Products)
-        serializer = DepositProductsSerializer(deposit_product, many=True)
+        deposit_products = get_list_or_404(Deposit_Products)
+        serializer = DepositProductsSerializer(deposit_products, many=True)
         return Response(serializer.data)
     else:
         serializer = DepositProductsSerializer(data=request.data)
@@ -143,8 +143,8 @@ def save_saving_products(request):
 def saving_products(request):
     if request.method == "GET":
         # saving_product = Saving_Products.objects.all()
-        saving_product = get_list_or_404(Saving_Products)
-        serializer = SavingProductsSerializer(saving_product, many= True)
+        saving_products = get_list_or_404(Saving_Products)
+        serializer = SavingProductsSerializer(saving_products, many= True)
         return Response(serializer.data)
     else:
         serializer = SavingProductsSerializer(data=request.data)
@@ -201,7 +201,103 @@ def like_saving_check(request, product_pk):
         return Response({'user': False})
 
 
-# # 상품 추천
+# 예금 단리 복리 계산기
+def deposit_calculate_interest(deposit_amount, target_amount, interest_type, intr_rate, intr_rate2, save_trm):
+    if interest_type == '단리':
+        result = {}
+        simple_interest = round(deposit_amount * (1 + (intr_rate / 100) * (save_trm / 12)))
+        simple_interest2 = round(deposit_amount * (1 + (intr_rate2 / 100) * (save_trm / 12)))
+        if simple_interest >= target_amount:
+            result['amount'] = simple_interest
+        if simple_interest2 >= target_amount:
+            result['amount2'] = simple_interest2
+        return result
+    elif interest_type == '복리':
+        result = {}
+        compound_interest = round(deposit_amount * (1 + (intr_rate / 100))**(save_trm / 12))
+        compound_interest2 = round(deposit_amount * (1 + (intr_rate2 / 100))**(save_trm / 12))
+        if compound_interest >= target_amount:
+            result['amount'] = compound_interest
+        if compound_interest2 >= target_amount:
+            result['amount2'] = compound_interest2
+        return result
+    return {}
+
+
+# 예금 상품 추천
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_deposit_products(request):
+    # deposit_amount = request.GET['depositAmount']
+    # target_amount = request.GET['targetAmount']
+    deposit_products = get_list_or_404(Deposit_Products)
+    data = {}
+    for deposit_product in deposit_products:
+        options = Deposit_Options.objects.filter(deposit_product=deposit_product)
+        for option in options:
+            intr_rate_type_nm = option.intr_rate_type_nm
+            intr_rate = option.intr_rate
+            intr_rate2 = option.intr_rate2
+            save_trm = option.save_trm
+            result = deposit_calculate_interest(1000, 1050, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            # result = calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            if result:
+                data[deposit_product.fin_prdt_cd] = (result, save_trm)
+                break
+    if data:
+        return Response({'message': 'okay', 'data': data})
+    return Response({'message': 'no data'})
+
+
+# 적금 단리 복리 계산기
+def saving_calculate_interest(monthly_amount, target_amount, interest_type, intr_rate, intr_rate2, save_trm):
+    if interest_type == '단리':
+        result = {}
+        simple_interest = round(monthly_amount * (save_trm * (save_trm + 1) / 2 * (intr_rate / 100) / 12) + monthly_amount * save_trm)
+        simple_interest2 = round(monthly_amount * (save_trm * (save_trm + 1) / 2 * (intr_rate2 / 100) / 12) + monthly_amount * save_trm)
+        if simple_interest >= target_amount:
+            result['amount'] = simple_interest
+        if simple_interest2 >= target_amount:
+            result['amount2'] = simple_interest2
+        return result
+    elif interest_type == '복리':
+        result = {}
+        compound_interest = round(monthly_amount * ((1 + (intr_rate / 100))**((save_trm + 1) / 12) - (1 + intr_rate / 100)**(1 / 12)) / ((1 + intr_rate / 100)**(1 / 12) - 1))
+        compound_interest2 = round(monthly_amount * ((1 + (intr_rate2 / 100))**((save_trm + 1) / 12) - (1 + intr_rate2 / 100)**(1 / 12)) / ((1 + intr_rate2 / 100)**(1 / 12) - 1))
+        if compound_interest >= target_amount:
+            result['amount'] = compound_interest
+        if compound_interest2 >= target_amount:
+            result['amount2'] = compound_interest2
+        return result
+    return {}
+
+
+# 적금 상품 추천
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_saving_products(request):
+    # monthly_amount = request.GET['monthlyAmount']
+    # target_amount = request.GET['targetAmount']
+    saving_products = get_list_or_404(Saving_Products)
+    data = {}
+    for saving_product in saving_products:
+        options = Saving_Options.objects.filter(saving_product=saving_product)
+        for option in options:
+            intr_rate_type_nm = option.intr_rate_type_nm
+            intr_rate = option.intr_rate
+            intr_rate2 = option.intr_rate2
+            save_trm = option.save_trm
+            result = saving_calculate_interest(1000000, 24000000, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            # result = calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            if result:
+                data[saving_product.fin_prdt_cd] = (result, save_trm)
+                break
+    if data:
+        return Response({'message': 'okay', 'data': data})
+    return Response({'message': 'no data'})
+
+
+# 상품 추천
 # @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 # def recommend_products(request):
