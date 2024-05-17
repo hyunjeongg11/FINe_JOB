@@ -5,16 +5,19 @@ from rest_framework.decorators import api_view
 from bs4 import BeautifulSoup
 from rest_framework import status
 from django.conf import settings
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from rest_framework.response import Response 
+from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import JobInfoSerializer
+from .models import JobInfo
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 allPage = 3
 keywords = ['IT', '서비스', '금융', '보험', '인사', '노무', '회계', '세무', '재무', '디자인', '생산', '영업', '상품기획', '교육', 'R&D', '의료', '건축', '전기', '기계', '고객상담', '운송', '미디어', '스포츠', '복지']
 
 # @permission_classes([IsAdminUser])
 @api_view(['GET'])
-def get_job_info(request): # 사람인 크롤링
+def save_job_info(request): # 사람인 크롤링
     # https://www.saramin.co.kr/zf_user/search?searchType=auto&searchword=%ED%8C%8C%EC%9D%B4%EC%8D%AC&company_cd=0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C9%2C10&keydownAccess=&panel_type=&search_optional_item=y&search_done=y&panel_count=y&preview=y&recruitPage=1&recruitSort=accuracy&recruitPageCount=50&inner_com_type=&show_applied=&quick_apply=&except_read=&ai_head_hunting=&mainSearch=y
 
     for keyword in keywords:
@@ -53,4 +56,26 @@ def get_job_info(request): # 사람인 크롤링
 
                 except Exception:
                     pass
-    return Response({'msg': 'load complete'}, status=status.HTTP_200_OK)
+    return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_job_info(request):
+    # job_info = get_list_or_404(JobInfo, keyword=request.GET['keyword'])
+    job_info = get_list_or_404(JobInfo, keyword='복지')
+    serializer = JobInfoSerializer(job_info, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# 관심 채용공고 등록
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_job_info(request, job_info_pk):
+    saving_product = get_object_or_404(JobInfo, pk=job_info_pk)
+    if request.user in saving_product.like_users.all():
+        saving_product.like_users.remove(request.user)
+        liked = False
+    else:
+        saving_product.like_users.add(request.user)
+        liked = True
+    return Response({'liked': liked})
