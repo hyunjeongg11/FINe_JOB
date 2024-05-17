@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>자유 게시글 생성 페이지</h1>
+        <h3>적금 상품 각각</h3>
     </div>
 </template>
 

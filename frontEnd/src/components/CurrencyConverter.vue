@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>자유 게시글 생성 페이지</h1>
+        <h2>환율 계산기</h2>
     </div>
 </template>
 
