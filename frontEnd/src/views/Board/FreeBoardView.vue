@@ -14,15 +14,15 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-// import FreeBoardList from '@/components/FreeBoardList.vue'
+import FreeBoardList from '@/components/FreeBoardList.vue'
 import { onMounted } from 'vue'
-// import { useCounterStore } from 'vue'
+import { useCounterStore } from '@/stores/counter'
 
-// const store = useCounterStore()
+const store = useCounterStore()
 
-// onMounted(() => {
-//     store.getFreeBoards()
-// })
+onMounted(() => {
+    store.getFreeBoards()
+})
 </script>
 
 <style scoped>

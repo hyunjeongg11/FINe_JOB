@@ -15,6 +15,14 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import AgeBoardList from '@/components/AgeBoardList.vue'
+import { onMounted } from 'vue'
+import { useCounterStore } from '@/stores/counter'
+
+const store = useCounterStore()
+
+onMounted(() => {
+    store.getAgeBoards()
+})
 </script>
 
 <style scoped>
