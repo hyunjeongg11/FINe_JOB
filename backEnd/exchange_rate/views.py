@@ -49,7 +49,6 @@ def save_exchange_rate(response, search_date):
 
 @api_view(['GET'])
 def get_exchange_rate(request):
-    EXCHANGE_API_KEY = settings.EXCHANGE_API_KEY
     today = date.today()
     search_date = today.strftime('%Y-%m-%d')
     if not ExchangeRate.objects.filter(search_date=search_date):
