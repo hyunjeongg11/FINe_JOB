@@ -67,3 +67,12 @@ def get_exchange_rate(request):
                 save_exchange_rate(response, search_date)
 
     return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def calculate(request):
+    searchDate = request.GET.get('searchDate')
+    fromValue = request.GET.get('fromValue')
+    toValue = request.GET.get('toValue')
+
+    return Response({'msg': 'success', 'searchDate': searchDate, 'fromValue': fromValue, 'toValue': toValue, 'result': 0}, status=status.HTTP_200_OK)

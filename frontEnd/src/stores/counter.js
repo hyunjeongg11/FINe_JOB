@@ -14,7 +14,6 @@ export const useCounterStore = defineStore('counter', () => {
       url: `${API_URL}/api/v1/boards/free/`,
     })
       .then(res => {
-        console.log(res.data)
         freeBoards.value = res.data
       })
       .catch(err => console.log(err))
@@ -26,7 +25,6 @@ export const useCounterStore = defineStore('counter', () => {
       url: `${API_URL}/api/v1/boards/age/`,
     })
       .then(res => {
-        console.log(res)
         ageBoards.value = res.data
       })
       .catch(err => console.log(err))
