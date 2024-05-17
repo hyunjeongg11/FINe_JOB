@@ -11,7 +11,7 @@
       <nav class="main-nav">
         <RouterLink :to="{ name: 'main' }">메인페이지</RouterLink> |
         <RouterLink :to="{ name: 'searchbank' }">근처 은행 찾기</RouterLink> |
-        <RouterLink :to="{ name: 'board' }">게시판</RouterLink> |
+        <RouterLink :to="{ name: 'freeboard' }">게시판</RouterLink> |
         <RouterLink :to="{ name: 'deposit' }">예금 상품</RouterLink> |
         <RouterLink :to="{ name: 'saving' }">적금 상품</RouterLink> |
         <RouterLink :to="{ name: 'job' }">일자리</RouterLink> |
