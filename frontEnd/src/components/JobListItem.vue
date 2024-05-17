@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>자유 게시글 생성 페이지</h1>
+        <h3>일자리 item</h3>
     </div>
 </template>
 

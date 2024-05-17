@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>자유 게시글 생성 페이지</h1>
+        <h2>오늘의 운세</h2>
     </div>
 </template>
 
