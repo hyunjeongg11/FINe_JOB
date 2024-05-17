@@ -1,0 +1,26 @@
+<template>
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 FINe JOB. All rights reserved.</p>
+      </div>
+    </footer>
+  </template>
+  
+  <script setup>
+  </script>
+  
+  <style scoped>
+  .footer {
+    background-color: white;
+    color: #333;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  </style>
+  

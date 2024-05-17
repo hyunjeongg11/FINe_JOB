@@ -30,6 +30,7 @@ KAKAOMAP_API_KEY = env('KAKAOMAP_API_KEY')
 NAVER_CLIENT_ID = env('NAVER_CLIENT_ID')
 NAVER_CLIENT_SECRET = env('NAVER_CLIENT_SECRET')
 FINLIFE_API_KEY = env('FINLIFE_API_KEY')
+FAQ_API_KEY = env('FAQ_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'naver_news',
     'exchange_rate',
     'financial_products',
+    'side_events',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
