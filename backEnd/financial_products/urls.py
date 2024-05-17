@@ -21,6 +21,8 @@ urlpatterns = [
     path('like_deposit_check/<int:product_pk>/', views.like_deposit_check),
     path('like_saving/<int:product_pk>/', views.like_saving),
     path('like_saving_check/<int:product_pk>/', views.like_saving_check),
+    
     # -------------- 상품 추천 -----------------
-    # path('recommend/', views.recommend_products)
+    path('recommend_deposit_products/', views.recommend_deposit_products),
+    path('recommend_saving_products/', views.recommend_saving_products),
 ]

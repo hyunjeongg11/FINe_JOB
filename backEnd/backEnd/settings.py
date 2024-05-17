@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'naver_news',
     'exchange_rate',
     'financial_products',
+    'side_events',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
