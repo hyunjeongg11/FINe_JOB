@@ -6,7 +6,7 @@ from django.http import JsonResponse
 import requests
 import random
 from django.db.models import Q, Avg
- 
+from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Deposit_Products, Saving_Products, Deposit_Options, Saving_Options
 from .serializers import DepositOptionsSerializer, DepositProductsSerializer, SavingProductsSerializer, SavingOptionsSerializer,DepositProductDetailSerializer, SavingProductDetailSerializer
 
@@ -50,7 +50,8 @@ def save_deposit_products(request):
 @permission_classes([IsAuthenticated])
 def deposit_products(request):
     if request.method == "GET":
-        deposit_product = Deposit_Products.objects.all()
+        # deposit_product = Deposit_Products.objects.all()
+        deposit_product = get_list_or_404(Deposit_Products)
         serializer = DepositProductsSerializer(deposit_product, many=True)
         return Response(serializer.data)
     else:
@@ -59,49 +60,58 @@ def deposit_products(request):
             serializer.save()
             return Response(serializer.data, status=201)
 
+
 # 특정 예금 상품 불러오기
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def deposit_product_detail(request, fin_prdt_cd):    
-    deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+def deposit_product_detail(request, fin_prdt_cd):
+    # deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    deposit_product = get_object_or_404(Deposit_Products, fin_prdt_cd=fin_prdt_cd)
     serializer = DepositProductDetailSerializer(deposit_product)
     return Response(serializer.data)
+
 
 # 예금 옵션 불러오기
 # @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def deposit_product_options(request, fin_prdt_cd):    
-    deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    # deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    deposit_product = get_object_or_404(Deposit_Products, fin_prdt_cd=fin_prdt_cd)
     deposit_options = Deposit_Options.objects.filter(deposit_product=deposit_product)
     serializer = DepositOptionsSerializer(deposit_options, many=True)
     return Response(serializer.data)
 
-# # 예금 관심상품 등록
-# @permission_classes([IsAuthenticated])
-# @api_view(['POST'])
-# def deposit_likes(request, pk):
-#     deposit = Deposit_Products.objects.get(pk= pk)
-#     if request.user in deposit.like_users.all():
-#         deposit.like_users.remove(request.user)
-#         liked = False
-#     else:
-#         deposit.like_users.add(request.user)
-#         liked = True
-#     return Response({'liked': liked})
 
-# # 관심상품 등록한 유저인지 확인
-# @permission_classes([IsAuthenticated])
-# @api_view(['GET'])
-# def check_likes_user(request, pk):
-#     deposit = Deposit_Products.objects.get(pk= pk)
-#     if request.user in deposit.like_users.all():
-#         return Response({'user' : True})
-#     else:
-#         return Response({'user': False})
+# 예금 관심상품 등록
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_deposit(request, product_pk):
+    # deposit = Deposit_Products.objects.get(pk=pk)
+    deposit_product = get_object_or_404(Deposit_Products, pk=product_pk)
+
+    if request.user in deposit_product.like_users.all():
+        deposit_product.like_users.remove(request.user)
+        liked = False
+    else:
+        deposit_product.like_users.add(request.user)
+        liked = True
+    return Response({'liked': liked})
 
 
+# 관심상품 등록한 유저인지 확인
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def like_deposit_check(request, product_pk):
+    # deposit = Deposit_Products.objects.get(pk=pk)
+    deposit_product = get_object_or_404(Deposit_Products, pk=product_pk)
+
+    if request.user in deposit_product.like_users.all():
+        return Response({'user' : True})
+    else:
+        return Response({'user': False})
+
+#------------------------------------------------------------#
 # 적금 데이터
-
 # 적금 상품 목록 및 옵션 DB 저장
 @api_view(['GET'])
 def save_saving_products(request):
@@ -128,11 +138,12 @@ def save_saving_products(request):
 
                 
 # 전체 적금 데이터 불러오기, 추가하기
-@permission_classes([IsAuthenticated])
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def saving_products(request):
     if request.method == "GET":
-        saving_product = Saving_Products.objects.all()
+        # saving_product = Saving_Products.objects.all()
+        saving_product = get_list_or_404(Saving_Products)
         serializer = SavingProductsSerializer(saving_product, many= True)
         return Response(serializer.data)
     else:
@@ -141,11 +152,13 @@ def saving_products(request):
             serializer.save()
             return Response(serializer.data, status=201)
 
+
 # 특정 적금 상품 불러오기
-@permission_classes([IsAuthenticated])
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def saving_product_detail(request, fin_prdt_cd):    
-    saving_product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    # saving_product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    saving_product = get_object_or_404(Saving_Products, fin_prdt_cd=fin_prdt_cd)
     serializer = SavingProductDetailSerializer(saving_product)
     return Response(serializer.data)
 
@@ -154,35 +167,38 @@ def saving_product_detail(request, fin_prdt_cd):
 # @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def saving_product_options(request, fin_prdt_cd):
-    print(fin_prdt_cd)    
-    product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
-    options = Saving_Options.objects.filter(saving_product=product)
+    # saving_product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    saving_product = get_object_or_404(Saving_Products, fin_prdt_cd=fin_prdt_cd)
+    options = Saving_Options.objects.filter(saving_product=saving_product)
     serializer = DepositOptionsSerializer(options, many=True)
     return Response(serializer.data)
 
 
-# # 적금 관심 상품 등록
-# @permission_classes([IsAuthenticated])
-# @api_view(['POST'])
-# def saving_likes(request, pk):
-#     saving = Saving_Products.objects.get(pk= pk)
-#     if request.user in saving.like_users.all():
-#         saving.like_users.remove(request.user)
-#         liked = False
-#     else:
-#         saving.like_users.add(request.user)
-#         liked = True
-#     return Response({'liked': liked})
+# 적금 관심 상품 등록
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_saving(request, product_pk):
+    # saving_product = Saving_Products.objects.get(pk=pk)
+    saving_product = get_object_or_404(Saving_Products, pk=product_pk)
+    if request.user in saving_product.like_users.all():
+        saving_product.like_users.remove(request.user)
+        liked = False
+    else:
+        saving_product.like_users.add(request.user)
+        liked = True
+    return Response({'liked': liked})
 
-# # 적금 관심상품 등록유저 확인
-# @permission_classes([IsAuthenticated])
-# @api_view(['GET'])
-# def check_likes_user_saving(request, pk):
-#     saving = Saving_Products.objects.get(pk= pk)
-#     if request.user in saving.like_users.all():
-#         return Response({'user' : True})
-#     else:
-#         return Response({'user': False})
+
+# 적금 관심상품 등록유저 확인
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def like_saving_check(request, product_pk):
+    # saving_product = Saving_Products.objects.get(pk=pk)
+    saving_product = get_object_or_404(Saving_Products, pk=product_pk)
+    if request.user in saving_product.like_users.all():
+        return Response({'user' : True})
+    else:
+        return Response({'user': False})
 
 
 # # 상품 추천
