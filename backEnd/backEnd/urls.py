@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/', include('dj_rest_auth.urls')),
     path('accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('api/v1/financial_products/', include('financial_products.urls')),
+    path('api/v1/side_events/', include('side_events.urls')),
     # path('api/v1/mainpage/', mpviews.mainpage_info),
     # path('api/v1/mainpage/kospi/', mpviews.kospi_info),
 ]
