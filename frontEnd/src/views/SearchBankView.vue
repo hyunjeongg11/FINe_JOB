@@ -1,12 +1,12 @@
 <template>
     <div>
         <h1>근처 은행 찾기</h1>
-        <kakaoMap />
+        <Map />
     </div>
 </template>
 
 <script setup>
-import kakaoMap from '@/components/kakaoMap.vue';
+import Map from '@/components/Map.vue';
 </script>
 
 <style  scoped>
