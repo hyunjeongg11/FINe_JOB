@@ -1,11 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck.js'
 
 export const useCounterStore = defineStore('counter', () => {
   const freeBoards = ref([])
   const ageBoards = ref([])
-
+  const store = userCheckStore()
+  
   const API_URL = 'http://127.0.0.1:8000'
   
   const getFreeBoards = function() {
