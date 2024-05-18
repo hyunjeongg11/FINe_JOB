@@ -38,16 +38,34 @@ export const userCheckStore = defineStore('usercheck', () => {
       method: 'post',
       url: `${API_URL}/accounts/logout/`
     })
-      .then((res) => {
+      .then(res => {
         console.log('로그아웃 완료')
         token.value = null
         userId.value = null
-        router.push({ name: 'home'})
+        router.push({ name: 'main'})
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
       })
   }
-  
-  return { API_URL, token, userId, router, isSuperUser, logIn, logOut }
+
+  const signUp = function (payload) {
+    const { username, password1, password2, email, nickname, birthday, gender, address, asset, salary, interest_industry } = payload
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/signup/`,
+      data: {
+        username, password1, password2, email, nickname, birthday, gender, address, asset, salary, interest_industry
+      }
+    })
+      .then(res => {
+        console.log('회원가입 완료')
+        router.push({ name: 'main'})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  return { API_URL, token, userId, router, isSuperUser, logIn, logOut, signUp }
 }, {persist: true})
