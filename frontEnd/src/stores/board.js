@@ -3,10 +3,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { userCheckStore } from '@/stores/usercheck.js'
 
-export const useCounterStore = defineStore('counter', () => {
+export const useBoardStore = defineStore('board', () => {
   const freeBoards = ref([])
   const ageBoards = ref([])
   const store = userCheckStore()
+  const token = ref('f9ed05e26bf2a18c2c8a3793ad057fc9e5027499')
+  // const token = store.token
   
   const API_URL = 'http://127.0.0.1:8000'
   
@@ -31,5 +33,5 @@ export const useCounterStore = defineStore('counter', () => {
       })
       .catch(err => console.log(err))
   }
-  return { freeBoards, ageBoards, API_URL, getFreeBoards, getAgeBoards }
+  return { freeBoards, ageBoards, API_URL, token, getFreeBoards, getAgeBoards }
 }, {persist: true})

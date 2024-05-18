@@ -84,9 +84,9 @@
 
 <script setup>
   import { ref, onMounted, watch } from 'vue'
-  import { useCounterStore } from '@/stores/counter'
+  import { useBoardStore } from '@/stores/board'
   import axios from 'axios'
-  const store = useCounterStore()
+  const store = useBoardStore()
   const currentDate = new Date()
   const searchDate = ref(currentDate.toISOString().slice(0,10))
   const from = ref('')

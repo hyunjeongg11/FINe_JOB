@@ -4,9 +4,11 @@ import SearchBankView from '@/views/SearchBankView.vue'
 import FreeBoardView from '@/views/Board/FreeBoardView.vue'
 import FreeBoardCreateView from '@/views/Board/FreeBoardCreateView.vue'
 import FreeBoardDetailView from '@/views/Board/FreeBoardDetailView.vue'
+import FreeEditBoardView from '@/views/Board/FreeEditBoardView.vue'
 import AgeBoardView from '@/views/Board/AgeBoardView.vue'
 import AgeBoardCreateView from '@/views/Board/AgeBoardCreateView.vue'
 import AgeBoardDetailView from '@/views/Board/AgeBoardDetailView.vue'
+import AgeEditBoardView from '@/views/Board/AgeEditBoardView.vue'
 import FAQView from '@/views/Board/FAQView.vue'
 import DepositView from '@/views/DepositView.vue'
 import DepositDetailView from '@/views/DepositDetailView.vue'
@@ -43,9 +45,14 @@ const router = createRouter({
       component: FreeBoardCreateView
     },
     {
-      path: '/freeboarddetail',
+      path: '/freeboarddetail/:id',
       name: 'freeboarddetail',
       component: FreeBoardDetailView
+    },
+    {
+      path: '/freeboarddetail/:id/update',
+      name: 'freeditboard',
+      component: FreeEditBoardView
     },
     {
       path: '/ageboard',
@@ -58,9 +65,14 @@ const router = createRouter({
       component: AgeBoardCreateView
     },
     {
-      path: '/ageboarddetail',
+      path: '/ageboarddetail/:id',
       name: 'ageboarddetail',
       component: AgeBoardDetailView
+    },
+    {
+      path: '/ageboarddetail/:id/update',
+      name: 'ageeditboard',
+      component: AgeEditBoardView
     },
     {
       path: '/faq',
@@ -122,3 +134,4 @@ const router = createRouter({
 })
 
 export default router
+
