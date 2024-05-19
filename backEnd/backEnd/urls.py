@@ -28,6 +28,6 @@ urlpatterns = [
     path('accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('api/v1/financial_products/', include('financial_products.urls')),
     path('api/v1/side_events/', include('side_events.urls')),
-    path('api/v1/mainpage/', nnviews.news),
+    path('api/v1/naver_news/', include('naver_news.urls')),
     # path('api/v1/mainpage/kospi/', mpviews.kospi_info),
 ]
