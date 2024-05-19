@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <h5>{{ freeBoard.id }}</h5>
-        <p>{{ freeBoard.title }}</p>
-        <p>{{ freeBoard.content }}</p>
-        <hr>
-    </div>
+	<div>
+		<h5>{{ freeBoard.id }}</h5>
+		<p>{{ freeBoard.title }}</p>
+		<p>{{ freeBoard.content }}</p>
+		<hr>
+	</div>
 </template>
 
 <script setup>
 defineProps({
-    freeBoard: Object
+	freeBoard: Object
 })
 </script>
 

@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from naver_news import views as nnviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,6 @@ urlpatterns = [
     path('accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('api/v1/financial_products/', include('financial_products.urls')),
     path('api/v1/side_events/', include('side_events.urls')),
-    # path('api/v1/mainpage/', mpviews.mainpage_info),
+    path('api/v1/mainpage/', nnviews.news),
     # path('api/v1/mainpage/kospi/', mpviews.kospi_info),
 ]

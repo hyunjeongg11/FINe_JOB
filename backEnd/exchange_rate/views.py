@@ -47,10 +47,36 @@ def save_exchange_rate(response, search_date):
             print(serializer.errors)
 
 
+# @api_view(['GET'])
+# def get_exchange_rate(request):
+#     today = date.today()
+#     search_date = today.strftime('%Y-%m-%d')
+#     if not ExchangeRate.objects.filter(search_date=search_date):
+#         response = get_exchange_rate_info(search_date)
+#         if response:
+#             save_exchange_rate(response, search_date)
+
+#         else: # 비영업일이거나 영업 이전 시간이다
+#             while not response:
+#                 now = datetime.strptime(search_date, '%Y-%m-%d')
+#                 search_date = now - timedelta(days=1)
+#                 search_date = search_date.strftime('%Y-%m-%d')
+#                 response = get_exchange_rate_info(search_date)
+
+#             if not ExchangeRate.objects.filter(search_date=search_date): # 환율 데이터가 DB에 없다면 저장
+#                 save_exchange_rate(response, search_date)
+
+#     return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
-def get_exchange_rate(request):
-    today = date.today()
-    search_date = today.strftime('%Y-%m-%d')
+def calculate(request):
+    search_date = request.GET.get('searchDate')
+    country_from = request.GET.get('from')
+    country_to = request.GET.get('to')
+
+    # DB에 해당 날짜의 환율 정보가 없다면 API로 가져와서 저장
+    # 비영업일이거나 영업 이전 시간이라면 -> 가장 최근 영업일 데이터를 가져와서 저장
     if not ExchangeRate.objects.filter(search_date=search_date):
         response = get_exchange_rate_info(search_date)
         if response:
@@ -66,4 +92,7 @@ def get_exchange_rate(request):
             if not ExchangeRate.objects.filter(search_date=search_date): # 환율 데이터가 DB에 없다면 저장
                 save_exchange_rate(response, search_date)
 
-    return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
+    exchange_rates = ExchangeRate.objects.filter(search_date=search_date, cur_unit__in=[country_from, country_to])
+
+    serializer = ExchangeRateSerializer(exchange_rates, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
