@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPageView from '@/views/MainPageView.vue'
 import SearchBankView from '@/views/SearchBankView.vue'
-import FreeBoardView from '@/views/Board/FreeBoardView.vue'
-import FreeBoardCreateView from '@/views/Board/FreeBoardCreateView.vue'
-import FreeBoardDetailView from '@/views/Board/FreeBoardDetailView.vue'
-import FreeEditBoardView from '@/views/Board/FreeEditBoardView.vue'
-import AgeBoardView from '@/views/Board/AgeBoardView.vue'
-import AgeBoardCreateView from '@/views/Board/AgeBoardCreateView.vue'
-import AgeBoardDetailView from '@/views/Board/AgeBoardDetailView.vue'
-import AgeEditBoardView from '@/views/Board/AgeEditBoardView.vue'
-import FAQView from '@/views/Board/FAQView.vue'
-import DepositView from '@/views/DepositView.vue'
-import DepositDetailView from '@/views/DepositDetailView.vue'
-import SavingView from '@/views/SavingView.vue'
-import SavingDetailView from '@/views/SavingDetailView.vue'
+import FreeBoardView from '@/views/boards/FreeBoardView.vue'
+import FreeBoardCreateView from '@/views/boards/FreeBoardCreateView.vue'
+import FreeBoardDetailView from '@/views/boards/FreeBoardDetailView.vue'
+import FreeEditBoardView from '@/views/boards/FreeEditBoardView.vue'
+import AgeBoardView from '@/views/boards/AgeBoardView.vue'
+import AgeBoardCreateView from '@/views/boards/AgeBoardCreateView.vue'
+import AgeBoardDetailView from '@/views/boards/AgeBoardDetailView.vue'
+import AgeEditBoardView from '@/views/boards/AgeEditBoardView.vue'
+import FAQView from '@/views/boards/FAQView.vue'
+import DepositView from '@/views/finances/DepositView.vue'
+import DepositDetailView from '@/views/finances/DepositDetailView.vue'
+import SavingView from '@/views/finances/SavingView.vue'
+import SavingDetailView from '@/views/finances/SavingDetailView.vue'
 import JobView from '@/views/JobView.vue'
 import JobDetailView from '@/views/JobDetailView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
@@ -85,7 +85,7 @@ const router = createRouter({
       component: DepositView
     },
     {
-      path: '/depositdetail', 
+      path: '/deposit/:fin_prdt_cd/:id/', 
       name: 'depositdetail', 
       component: DepositDetailView
     },
@@ -95,7 +95,7 @@ const router = createRouter({
       component: SavingView
     },
     {
-      path: '/savingdetail', 
+      path: '/saving/:fin_prdt_cd/:id/', 
       name:'savingdetail', 
       component: SavingDetailView
     },
