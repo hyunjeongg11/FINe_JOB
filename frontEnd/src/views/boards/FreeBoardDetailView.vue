@@ -10,9 +10,9 @@
       <div class="post-header">
         <h1>{{ freeBoard.title }}</h1>
         <div class="post-meta">
-          <p>작성자: {{ freeBoard.author }}</p>
-          <p>작성시간: {{ formattedCreatedAt }}</p>
-          <p>수정시간: {{ formattedUpdatedAt }}</p>
+          <p>작성자 : {{ freeBoard.user.username }}</p>
+          <p>작성시간 : {{ formattedCreatedAt }}</p>
+          <p>수정시간 : {{ formattedUpdatedAt }}</p>
         </div>
       </div>
       <div class="post-content">
@@ -29,14 +29,12 @@
       </div>
     </div>
     <Comment />
-    <CreateComment />
   </div>
 </template>
 
 <script setup>
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import CreateComment from '@/components/CreateComment.vue'
-import Comment from '@/components/Comment.vue'
+import Comment from '@/components/FreeBoardComment.vue'
 import axios from 'axios'
 import { onMounted, ref, computed } from 'vue'
 import { useBoardStore } from '@/stores/board'

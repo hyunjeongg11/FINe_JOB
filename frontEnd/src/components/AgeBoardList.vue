@@ -16,7 +16,7 @@
                 {{ ageBoard.title }}
               </RouterLink>
             </td>
-            <td>{{ ageBoard.author }}</td>
+            <td>{{ ageBoard.user }}</td>
             <td>{{ formatDateTime(ageBoard.created_at) }}</td>
           </tr>
         </tbody>

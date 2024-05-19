@@ -10,9 +10,9 @@
       <div class="post-header">
         <h1>{{ ageBoard.title }}</h1>
         <div class="post-meta">
-          <p>작성자: {{ ageBoard.author }}</p>
-          <p>작성시간: {{ formattedCreatedAt }}</p>
-          <p>수정시간: {{ formattedUpdatedAt }}</p>
+          <p>작성자 : {{ ageBoard.user.username }}</p>
+          <p>작성시간 : {{ formattedCreatedAt }}</p>
+          <p>수정시간 : {{ formattedUpdatedAt }}</p>
         </div>
       </div>
       <div class="post-content">
@@ -28,15 +28,14 @@
         <button @click="deleteBoard">삭제</button>
       </div>
     </div>
-    <Comment />
-    <CreateComment />
+    <AgeBoardComment />
   </div>
 </template>
 
 <script setup>
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import CreateComment from '@/components/CreateComment.vue'
-import Comment from '@/components/Comment.vue'
+import AgeBoardCreateComment from '@/components/AgeBoardCreateComment.vue'
+import AgeBoardComment from '@/components/AgeBoardComment.vue'
 import axios from 'axios'
 import { onMounted, ref, computed } from 'vue'
 import { useBoardStore } from '@/stores/board'
@@ -55,7 +54,7 @@ onMounted(() => {
     }
   })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       ageBoard.value = res.data
     })
     .catch((err) => {
