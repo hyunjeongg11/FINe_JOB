@@ -43,7 +43,6 @@ export const useBoardStore = defineStore('board', () => {
       }
     })
       .then(res => {
-        console.log(res.data)
         todayLuck.value = res.data
       })
       .catch(err => {
