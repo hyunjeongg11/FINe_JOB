@@ -59,6 +59,10 @@ header {
   margin-bottom: 1rem;
 }
 
+.logo {
+  height: 40px;
+}
+
 .main-nav {
   background: #e9ecef;
   padding: 1rem;
