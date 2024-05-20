@@ -1,6 +1,6 @@
 from django.urls import path
-from ..naverNews import views
+from . import views
 
 urlpatterns = [
-    path('news/', views.news, name='news'),
+    path('', views.news, name='news'),
 ]

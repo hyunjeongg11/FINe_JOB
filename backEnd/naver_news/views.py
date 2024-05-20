@@ -12,7 +12,7 @@ from django.conf import settings
 @api_view(['GET'])
 def news(request):
     encText = urllib.parse.quote('금융')
-    url = "https://openapi.naver.com/v1/search/blog?query=" + encText # JSON 결과
+    url = "https://openapi.naver.com/v1/search/news.json?query=" + encText # JSON 결과
     request = urllib.request.Request(url)
     request.add_header("X-Naver-Client-Id", settings.NAVER_CLIENT_ID)
     request.add_header("X-Naver-Client-Secret", settings.NAVER_CLIENT_SECRET)
