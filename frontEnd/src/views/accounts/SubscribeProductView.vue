@@ -11,7 +11,7 @@
         <ul class="list-group mb-5">
           <li v-for="(deposit, index) in products.deposit_list" :key="deposit.id" class="list-group-item"> 
             <span> {{ index + 1 }}. {{ deposit.kor_co_nm }} - {{ deposit.fin_prdt_nm }}</span>
-            <button @click="goDetailDeposit(deposit.fin_prdt_cd, deposit.id)" class="btn btn-link p-0 ms-2">상세정보</button>
+            <button @click="goDetailDeposit(deposit.fin_prdt_cd, deposit.id)" class="btn btn-link p-0 ms-3">상세정보</button>
           </li>
         </ul>
 
@@ -19,7 +19,7 @@
         <ul class="list-group mb-5">
           <li v-for="(saving, index) in products.saving_list" :key="saving.id" class="list-group-item">
             <span>{{ index + 1 }}. {{ saving.kor_co_nm }} - {{ saving.fin_prdt_nm }}</span>
-            <button @click="goDetailSaving(saving.fin_prdt_cd, saving.id)" class="btn btn-link p-0 ms-2">상세정보</button>
+            <button @click="goDetailSaving(saving.fin_prdt_cd, saving.id)" class="btn btn-link p-0 ms-3">상세정보</button>
           </li>
         </ul>
 
@@ -183,6 +183,11 @@ onMounted(() => {
 .detail-view {
   flex: 1;
 }
+
+.btn-link {
+  color: black;
+}
+
 
 #interest-chart {
   margin-bottom: 50px;

@@ -1,6 +1,6 @@
 <template>
- <div>
-    <!-- <h1 class="mb-4">예금 상품</h1> -->
+ <div class="container">
+    <h1 class="mb-4">예금 상품</h1>
     <h2 class="mb-3">검색하기</h2>
     <h4 class="mb-3">검색 조건을 입력하세요</h4>
     <hr>
@@ -24,13 +24,13 @@
           </select>
         </div>
         <div class="col-md-2 mt-4 d-flex justify-content-center">
-          <input type="submit" value="검색" class="btn btn-primary">
+          <input type="submit" value="검색" class="btn button_blue">
         </div>
       </div>
     </form>
   </div>
   <div class="container">
-    <button @click="toggleCalculator" class="btn btn-primary my-2">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
+    <button @click="toggleCalculator" class="btn button_blue my-2">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
     <div v-if="isOpen">
       <h4>간편 예적금 계산기</h4>
       <div>저축 방식 :
@@ -70,7 +70,7 @@
       </div>
       <div>
         <p><strong>세후 수령액 :</strong>{{ mymoney.toLocaleString('ko-KR') }}(원)</p>
-        <button @click.prevent="calculator()" class="btn btn-primary">계산</button>
+        <button @click.prevent="calculator()" class="btn button_blue">계산</button>
       </div>
     </div>
     <div>
@@ -222,5 +222,9 @@ const toggleCalculator = function () {
 .sort {
   display: grid;
   place-items: center;
+}
+.button_blue {
+  background-color: rgb(59 130 153);
+  color: white;
 }
 </style>

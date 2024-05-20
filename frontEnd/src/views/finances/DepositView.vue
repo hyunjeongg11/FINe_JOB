@@ -1,7 +1,7 @@
 <template>
 	<div>
     <button @click="goBack" class="back-button">뒤로 가기</button>
-		<h1>예금 상품</h1>
+		<!-- <h1>예금 상품</h1> -->
 		<!-- <RouterLink :to="{name: 'depositdetail'}">예금 상품 상세 페이지</RouterLink> -->
 		<DepositList />
 	</div>
