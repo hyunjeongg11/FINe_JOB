@@ -1,3 +1,5 @@
+import hashlib
+from datetime import datetime
 import requests, random
 from rest_framework.response import Response 
 from rest_framework.decorators import api_view
@@ -18,14 +20,28 @@ def save_today_luck(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+def generate_hash(birthday, today):
+    # 생일과 오늘 날짜를 문자열로 결합
+    input_str = f"{birthday}-{today}"
+    # SHA-256 해시 생성
+    hash_object = hashlib.sha256(input_str.encode())
+    # 해시 값을 16진수 문자열로 변환 후, 정수로 변환
+    hash_value = int(hash_object.hexdigest(), 16)
+    return hash_value
+
+def hash(request, lenOfTodayLucks):
+    birthday = datetime.strptime(request.user.birthday, '%Y-%m-%d').strftime('%Y-%m-%d')
+    today = datetime.now().strftime('%Y-%m-%d')
+    hash = generate_hash(birthday, today)
+    # lenOfTodayLucks로 나눈 나머지 반환
+    return hash % lenOfTodayLucks + 1
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_today_luck(request):
     if not TodayLuck.objects.exists():
         call_command('loaddata', 'today_luck/today_luck.json')
-    todayLucks = get_list_or_404(TodayLuck)
-    random_luck = random.choice(todayLucks)
-    serializer = TodayLuckSerializer(random_luck)
+    serializer = TodayLuckSerializer(get_object_or_404(TodayLuck, id=hash(request, TodayLuck.objects.count())))
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
