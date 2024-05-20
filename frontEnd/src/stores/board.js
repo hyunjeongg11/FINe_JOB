@@ -6,6 +6,7 @@ import { userCheckStore } from '@/stores/usercheck.js'
 export const useBoardStore = defineStore('board', () => {
   const freeBoards = ref([])
   const ageBoards = ref([])
+  const jobBoards = ref([])
   const store = userCheckStore()
   const todayLuck = ref('')
   // const token = ref('f9ed05e26bf2a18c2c8a3793ad057fc9e5027499')
@@ -50,5 +51,16 @@ export const useBoardStore = defineStore('board', () => {
       })
   } 
 
-  return { freeBoards, ageBoards, API_URL, token, todayLuck, getFreeBoards, getAgeBoards, getTodayLuck }
+  const getJobBoards = function(keyword) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/jobs/get_job_info/?keyword=${keyword}`,
+    })
+      .then(res => {
+        jobBoards.value = res.data
+      })
+      .catch(err => console.log(err))
+  }
+
+  return { freeBoards, ageBoards, API_URL, token, todayLuck, jobBoards, getFreeBoards, getAgeBoards, getTodayLuck, getJobBoards }
 }, {persist: true})

@@ -15,7 +15,6 @@ import DepositDetailView from '@/views/DepositDetailView.vue'
 import SavingView from '@/views/SavingView.vue'
 import SavingDetailView from '@/views/SavingDetailView.vue'
 import JobView from '@/views/JobView.vue'
-import JobDetailView from '@/views/JobDetailView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import SignUpView from '@/views/accounts/SignUpView.vue'
 import UserProfileView from '@/views/accounts/UserProfileView.vue'
@@ -103,11 +102,6 @@ const router = createRouter({
       path: '/job', 
       name: 'job', 
       component: JobView
-    },
-    {
-      path: '/jobdetail', 
-      name: 'jobdetail', 
-      component: JobDetailView
     },
     {
       path: '/login',
