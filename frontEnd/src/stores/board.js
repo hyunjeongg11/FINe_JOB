@@ -19,6 +19,7 @@ export const useBoardStore = defineStore('board', () => {
     })
       .then(res => {
         freeBoards.value = res.data
+        console.log(res.data)
       })
       .catch(err => console.log(err))
   }

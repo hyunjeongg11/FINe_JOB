@@ -16,7 +16,7 @@
               {{ freeBoard.title }}
             </RouterLink>
           </td>
-          <td>{{ freeBoard.author }}</td>
+          <td>{{ freeBoard.user.username}}</td>
           <td>{{ formatDateTime(freeBoard.created_at) }}</td>
         </tr>
       </tbody>
@@ -40,12 +40,14 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useBoardStore } from '@/stores/board'
+import { userCheckStore } from '@/stores/usercheck'
 import { useRouter, RouterLink } from 'vue-router'
 
 const store = useBoardStore()
 const router = useRouter()
 const currentPage = ref(1)
 const itemsPerPage = 10
+
 
 const filteredBoards = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
