@@ -1,6 +1,6 @@
 <template>
   <div class="outer-box">
-    <h4 class="calculator">환율 계산기</h4>
+    <h4 class="calculator-title">환율 계산기</h4>
     <p class="calculator-info">※ 매매기준으로 계산됩니다.</p>
     <div class="container">
       <div class="row">
@@ -175,16 +175,19 @@ const changeFromTo = () => {
 
 <style scoped>
 .outer-box {
-    padding: 10px;
-    background-color: rgb(180, 212, 255);
-    border-radius: 10px;
-    /* border: solid 3px #00B992 ; */
+  padding: 10px;
+  background-color: rgb(238, 245, 255);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.calculator {
+.calculator-title {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
+  background-color: rgb(224, 224, 224);
+  border-radius: 10px;
+  padding: 15px 0;
 }
 
 .calculator-info {
@@ -226,5 +229,13 @@ const changeFromTo = () => {
 
 #source-output-value {
   font-size: 1.5rem;
+}
+
+.btn-exchange:hover {
+  background-color: rgb(104, 142, 206);
+}
+
+.btn-calc:hover {
+  background-color: rgb(104, 142, 206);
 }
 </style>
