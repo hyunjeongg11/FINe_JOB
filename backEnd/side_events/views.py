@@ -8,6 +8,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import TodayLuckSerializer, FAQSerializer
 from .models import TodayLuck, FAQ
+from django.core.management import call_command
 
 # @permission_classes([IsAdminUser])
 @api_view(['POST'])
@@ -20,6 +21,8 @@ def save_today_luck(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_today_luck(request):
+    if not TodayLuck.objects.exists():
+        call_command('loaddata', 'today_luck/today_luck.json')
     todayLucks = get_list_or_404(TodayLuck)
     random_luck = random.choice(todayLucks)
     serializer = TodayLuckSerializer(random_luck)

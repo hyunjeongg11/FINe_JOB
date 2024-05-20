@@ -47,28 +47,6 @@ def save_exchange_rate(response, search_date):
             print(serializer.errors)
 
 
-# @api_view(['GET'])
-# def get_exchange_rate(request):
-#     today = date.today()
-#     search_date = today.strftime('%Y-%m-%d')
-#     if not ExchangeRate.objects.filter(search_date=search_date):
-#         response = get_exchange_rate_info(search_date)
-#         if response:
-#             save_exchange_rate(response, search_date)
-
-#         else: # 비영업일이거나 영업 이전 시간이다
-#             while not response:
-#                 now = datetime.strptime(search_date, '%Y-%m-%d')
-#                 search_date = now - timedelta(days=1)
-#                 search_date = search_date.strftime('%Y-%m-%d')
-#                 response = get_exchange_rate_info(search_date)
-
-#             if not ExchangeRate.objects.filter(search_date=search_date): # 환율 데이터가 DB에 없다면 저장
-#                 save_exchange_rate(response, search_date)
-
-#     return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
-
-
 @api_view(['GET'])
 def calculate(request):
     search_date = request.GET.get('searchDate')
