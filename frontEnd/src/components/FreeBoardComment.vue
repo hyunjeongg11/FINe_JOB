@@ -1,0 +1,98 @@
+<template>
+  <div class="comments">
+    <h3>댓글 목록</h3>
+    <ul v-if="freeComments">
+      <li v-for="comment in freeComments" :key="comment.id" class="comment-item">
+        <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        <button @click="deleteComment(comment.id)">삭제</button>
+      </li>
+    </ul>
+    <p v-else>댓글이 없습니다!</p>
+    <CreateComment @comment-added="fetchComments" />
+  </div>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
+import { useBoardStore } from '@/stores/board'
+import { useRoute } from 'vue-router'
+import CreateComment from '@/components/FreeBoardCreateComment.vue'
+
+const store = useBoardStore()
+const userStore = userCheckStore()
+const route = useRoute()
+
+const freeComments = ref(null)
+const freeBoard = ref(null)
+
+const fetchComments = () => {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/api/v1/boards/free/${route.params.id}`,
+    headers: {
+      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
+    }
+  })
+    .then((res) => {
+      // console.log(res.data)
+      freeBoard.value = res.data
+      freeComments.value = res.data.free_comment
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+onMounted(() => {
+  fetchComments()
+})
+
+const deleteComment = (commentId) => {
+  if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+    axios({
+      method: 'delete',
+      url: `${store.API_URL}/api/v1/boards/free/comments/${commentId}`,
+      headers: {
+        Authorization: `Token ${userStore.token}`
+      }
+    })
+      .then(() => {
+        alert('댓글이 삭제되었습니다.')
+        fetchComments() // 댓글 삭제 후 댓글 목록 다시 불러오기
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('댓글 삭제에 실패했습니다.')
+      })
+  }
+}
+</script>
+
+<style scoped>
+.comments {
+  margin-top: 20px;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c82333;
+}
+</style>
