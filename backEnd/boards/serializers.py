@@ -11,15 +11,16 @@ class UsernameSerializer(serializers.ModelSerializer):
 
 
 class Age_BoardListSerializer(serializers.ModelSerializer):
-    nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
+    # nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
+    user = UsernameSerializer(read_only=True)
 
     class Meta:
         model = Age_Board
-        fields = ('id', 'title', 'content', 'nickname', 'created_at')
+        fields = ('id', 'user', 'title', 'content', 'created_at')
 
 
 class Age_CommentSerializer(serializers.ModelSerializer):
-    nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
+    # nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
     user = UsernameSerializer(read_only=True)
 
     class Meta:
@@ -31,7 +32,7 @@ class Age_CommentSerializer(serializers.ModelSerializer):
 class Age_BoardSerializer(serializers.ModelSerializer):
     age_comment = Age_CommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='age_comment.count', read_only=True)
-    nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
+    # nickname = serializers.CharField(source='user.detailuser.nickname', read_only=True)
     user = UsernameSerializer(read_only=True)
     
     class Meta:
@@ -47,10 +48,11 @@ class Age_BoardSerializer(serializers.ModelSerializer):
 
 class Free_BoardListSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='user.detailuser.address', read_only=True)
+    user = UsernameSerializer(read_only=True)
 
     class Meta:
         model = Free_Board
-        fields = ('id', 'title', 'content', 'address', 'created_at')
+        fields = ('id', 'user', 'title', 'content', 'address', 'created_at')
 
 
 class Free_CommentSerializer(serializers.ModelSerializer):

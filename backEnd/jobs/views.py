@@ -15,11 +15,9 @@ from rest_framework.permissions import IsAuthenticated
 allPage = 3
 keywords = ['IT', '서비스', '금융', '보험', '인사', '노무', '회계', '세무', '재무', '디자인', '생산', '영업', '상품기획', '교육', 'R&D', '의료', '건축', '전기', '기계', '고객상담', '운송', '미디어', '스포츠', '복지']
 
-# @permission_classes([IsAdminUser])
-@api_view(['GET'])
-def save_job_info(request): # 사람인 크롤링
+def save_job_info(): # 사람인 크롤링
     # https://www.saramin.co.kr/zf_user/search?searchType=auto&searchword=%ED%8C%8C%EC%9D%B4%EC%8D%AC&company_cd=0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C9%2C10&keydownAccess=&panel_type=&search_optional_item=y&search_done=y&panel_count=y&preview=y&recruitPage=1&recruitSort=accuracy&recruitPageCount=50&inner_com_type=&show_applied=&quick_apply=&except_read=&ai_head_hunting=&mainSearch=y
-
+    today = str(datetime.date.today())
     for keyword in keywords:
         for page in (1, int(allPage)+1):
             soup = requests.get('https://www.saramin.co.kr/zf_user/search?searchType=auto&searchword={}&company_cd=0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C9%2C10&keydownAccess=&panel_type=&search_optional_item=y&search_done=y&panel_count=y&preview=y&recruitPage={}&recruitSort=accuracy&recruitPageCount=50'.format(keyword, page), headers={'User-Agent': 'Mozilla/5.0'})
@@ -36,9 +34,9 @@ def save_job_info(request): # 사람인 크롤링
                     experience = job.select('div.job_condition > span')[1].text.strip()
                     requirement = job.select('div.job_condition > span')[2].text.strip()
                     jobtype = job.select('div.job_condition > span')[3].text.strip()
-                    # print(today, title, company, url, deadline, location, experience, requirement, jobtype)
                     
                     save_data = {
+                        'date': today,
                         'keyword': keyword,
                         'title': title,
                         'company': company,
@@ -53,16 +51,16 @@ def save_job_info(request): # 사람인 크롤링
                     serializer = JobInfoSerializer(data=save_data)
                     if serializer.is_valid(raise_exception=True):
                         serializer.save()
-
+                        
                 except Exception:
                     pass
-    return Response({'msg': 'save complete'}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 def get_job_info(request):
-    # job_info = get_list_or_404(JobInfo, keyword=request.GET['keyword'])
-    job_infos = get_list_or_404(JobInfo, keyword='복지')
+    if not JobInfo.objects.filter(date=datetime.date.today()):
+        save_job_info()
+    job_infos = get_list_or_404(JobInfo, keyword=request.GET['keyword'], date=datetime.date.today())
     serializer = JobInfoSerializer(job_infos, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

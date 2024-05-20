@@ -2,9 +2,15 @@
   <div id="app">
     <header>
       <div class="header-top">
-        <h1>FINe JOB</h1>
-        <nav class="auth-nav">
+        <RouterLink :to="{ name: 'main' }">
+          <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
+        </RouterLink>
+        <nav v-if="!store.token" class="auth-nav">
           <RouterLink :to="{ name: 'login' }">로그인</RouterLink> |
+        </nav>
+        <nav v-else class="auth-nav">
+          <p>{{ store.userId }}</p>
+          <button @click="store.logOut">로그아웃</button>|
           <RouterLink :to="{ name: 'userprofile' }">마이페이지</RouterLink> |
         </nav>
       </div>
@@ -28,6 +34,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import Footer from '@/components/Footer.vue'
+import { userCheckStore } from '@/stores/usercheck.js'
+
+const store = userCheckStore()
+
 </script>
 
 <style scoped>
@@ -38,7 +48,7 @@ import Footer from '@/components/Footer.vue'
 }
 
 header {
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
   padding: 1rem;
 }
 
@@ -47,6 +57,10 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.logo {
+  height: 40px;
 }
 
 .main-nav {

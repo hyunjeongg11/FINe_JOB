@@ -1,23 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPageView from '@/views/MainPageView.vue'
 import SearchBankView from '@/views/SearchBankView.vue'
-import FreeBoardView from '@/views/Board/FreeBoardView.vue'
-import FreeBoardCreateView from '@/views/Board/FreeBoardCreateView.vue'
-import FreeBoardDetailView from '@/views/Board/FreeBoardDetailView.vue'
-import AgeBoardView from '@/views/Board/AgeBoardView.vue'
-import AgeBoardCreateView from '@/views/Board/AgeBoardCreateView.vue'
-import AgeBoardDetailView from '@/views/Board/AgeBoardDetailView.vue'
-import FAQView from '@/views/Board/FAQView.vue'
-import DepositView from '@/views/DepositView.vue'
-import DepositDetailView from '@/views/DepositDetailView.vue'
-import SavingView from '@/views/SavingView.vue'
-import SavingDetailView from '@/views/SavingDetailView.vue'
+import FreeBoardView from '@/views/boards/FreeBoardView.vue'
+import FreeBoardCreateView from '@/views/boards/FreeBoardCreateView.vue'
+import FreeBoardDetailView from '@/views/boards/FreeBoardDetailView.vue'
+import FreeEditBoardView from '@/views/boards/FreeEditBoardView.vue'
+import AgeBoardView from '@/views/boards/AgeBoardView.vue'
+import AgeBoardCreateView from '@/views/boards/AgeBoardCreateView.vue'
+import AgeBoardDetailView from '@/views/boards/AgeBoardDetailView.vue'
+import AgeEditBoardView from '@/views/boards/AgeEditBoardView.vue'
+import FAQView from '@/views/boards/FAQView.vue'
+import DepositView from '@/views/finances/DepositView.vue'
+import DepositDetailView from '@/views/finances/DepositDetailView.vue'
+import SavingView from '@/views/finances/SavingView.vue'
+import SavingDetailView from '@/views/finances/SavingDetailView.vue'
 import JobView from '@/views/JobView.vue'
-import JobDetailView from '@/views/JobDetailView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import SignUpView from '@/views/accounts/SignUpView.vue'
 import UserProfileView from '@/views/accounts/UserProfileView.vue'
 import ChangePasswordView from '@/views/accounts/ChangePasswordView.vue'
+import UserProfileEditView from '@/views/accounts/UserProfileEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,9 +45,14 @@ const router = createRouter({
       component: FreeBoardCreateView
     },
     {
-      path: '/freeboarddetail',
+      path: '/freeboarddetail/:id',
       name: 'freeboarddetail',
       component: FreeBoardDetailView
+    },
+    {
+      path: '/freeboarddetail/:id/update',
+      name: 'freeditboard',
+      component: FreeEditBoardView
     },
     {
       path: '/ageboard',
@@ -58,9 +65,14 @@ const router = createRouter({
       component: AgeBoardCreateView
     },
     {
-      path: '/ageboarddetail',
+      path: '/ageboarddetail/:id',
       name: 'ageboarddetail',
       component: AgeBoardDetailView
+    },
+    {
+      path: '/ageboarddetail/:id/update',
+      name: 'ageeditboard',
+      component: AgeEditBoardView
     },
     {
       path: '/faq',
@@ -73,7 +85,7 @@ const router = createRouter({
       component: DepositView
     },
     {
-      path: '/depositdetail', 
+      path: '/deposit/:fin_prdt_cd/:id/', 
       name: 'depositdetail', 
       component: DepositDetailView
     },
@@ -83,7 +95,7 @@ const router = createRouter({
       component: SavingView
     },
     {
-      path: '/savingdetail', 
+      path: '/saving/:fin_prdt_cd/:id/', 
       name:'savingdetail', 
       component: SavingDetailView
     },
@@ -91,11 +103,6 @@ const router = createRouter({
       path: '/job', 
       name: 'job', 
       component: JobView
-    },
-    {
-      path: '/jobdetail', 
-      name: 'jobdetail', 
-      component: JobDetailView
     },
     {
       path: '/login',
@@ -117,8 +124,23 @@ const router = createRouter({
       path: '/changepassword', 
       name: 'changepassword', 
       component: ChangePasswordView
+    },
+    {
+      path: '/userprofileedit',
+      name: 'userprofileedit',
+      component: UserProfileEditView
     }
   ]
+})
+
+import { userCheckStore } from '@/stores/usercheck'
+
+router.beforeEach((to, from) => {
+  const store = userCheckStore()
+  if ((to.name === 'login' || to.name === 'signup') && (store.isLogin)){
+    window.alert('이미 로그인 하셨습니다.')
+    return { name: 'main' }
+  }
 })
 
 export default router

@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 import json
 from django.http import JsonResponse 
@@ -53,3 +53,4 @@ def user_detail(request, search_name):
         return Response(result, status=status.HTTP_200_OK)
     except:
         return Response({'message':'error'}, status=status.HTTP_404_NOT_FOUND)
+    

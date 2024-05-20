@@ -8,6 +8,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import TodayLuckSerializer, FAQSerializer
 from .models import TodayLuck, FAQ
+from django.core.management import call_command
 
 # @permission_classes([IsAdminUser])
 @api_view(['POST'])
@@ -20,6 +21,8 @@ def save_today_luck(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_today_luck(request):
+    if not TodayLuck.objects.exists():
+        call_command('loaddata', 'today_luck/today_luck.json')
     todayLucks = get_list_or_404(TodayLuck)
     random_luck = random.choice(todayLucks)
     serializer = TodayLuckSerializer(random_luck)
@@ -37,22 +40,25 @@ def get_faq_info(startDate, endDate):
     }
     return requests.get(base_url, params=params).json()
 
-# @permission_classes([IsAdminUser])
+
 @api_view(['GET'])
 def save_faq(request):
     # faq_info = get_faq_info('2023-05-01', '2023-05-31')
-    # print(faq_info.get('reponse').get('resultCnt'))
-    # print(faq_info.get('reponse'))
-    for year in range(2022, 2024):
-        for month in range(1, 13):
+    # for year in range(2022, 2024):
+    for year in range(2022, 2023):
+        # for month in range(1, 13):
+        for month in range(12, 13):
             startDate = f'{year}-{month}-01'
             endDate = f'{year}-{month}-31'
             faq_info = get_faq_info(startDate, endDate)
+            print(faq_info)
             for i in range(faq_info.get('reponse').get('resultCnt')):
                 subject = faq_info.get('reponse').get('result')[i].get('subject')
+                print(subject)
                 url = faq_info.get('reponse').get('result')[i].get('originUrl')
+                print(url)
                 registerDate = faq_info.get('reponse').get('result')[i].get('regDate')
-
+                print(registerDate)
                 save_data = {
                     'subject': subject,
                     'url': url,
@@ -61,6 +67,7 @@ def save_faq(request):
 
                 if not FAQ.objects.filter(subject=subject):
                     serializer = FAQSerializer(data=save_data)
+                    print(serializer)
                     if serializer.is_valid():
                         serializer.save()
                     else:

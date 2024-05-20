@@ -1,0 +1,92 @@
+<template>
+  <div class="create-comment">
+    <h3>댓글 작성</h3>
+    <form @submit.prevent="submitComment">
+      <div class="form-group">
+        <label for="content">내용</label>
+        <textarea id="content" v-model.trim="content" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit">작성</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref, defineEmits } from 'vue'
+import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
+import { useBoardStore } from '@/stores/board'
+import { useRoute } from 'vue-router'
+
+const userStore = userCheckStore()
+const store = useBoardStore()
+const route = useRoute()
+const content = ref('')
+
+const emits = defineEmits(['comment-added'])
+
+const submitComment = () => {
+  const data = {
+    content: content.value
+  }
+
+  axios({
+    method: 'post',
+    url: `${store.API_URL}/api/v1/boards/age/${route.params.id}/comments/`,
+    data: data,
+    headers: {
+      Authorization: `Token ${userStore.token}`
+    }
+  })
+    .then((res) => {
+      alert('댓글이 작성되었습니다.')
+      content.value = ''
+      emits('comment-added', res.data) // 부모 컴포넌트에 이벤트 발생, 작성된 댓글 데이터를 함께 전달
+    })
+    .catch((err) => {
+      console.log(err)
+      alert('댓글 작성에 실패했습니다.')
+    })
+}
+</script>
+
+<style scoped>
+.create-comment {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
