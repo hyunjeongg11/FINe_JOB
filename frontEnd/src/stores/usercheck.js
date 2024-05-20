@@ -78,5 +78,57 @@ export const userCheckStore = defineStore('usercheck', () => {
       })
   }
 
-  return { API_URL, token, userId, router, isSuperUser, isLogin, logIn, logOut, signUp }
+  const changePassword = function (payload) {
+    const { new_password1, new_password2, old_password } = payload
+
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/password/change/`,
+      data: {
+        new_password1, new_password2, old_password
+      },
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then((res) => {
+        // console.log(res.data)
+        window.alert('비밀번호가 변경되었습니다.')
+        router.go(-1)
+      })
+      .catch((err) => {
+        console.log(err)
+        window.alert("비밀번호는 8글자 이상이며, 영문과 숫자가 섞여야 합니다.")
+      })
+  }
+  const withdraw = function () {
+    const answer = window.confirm("회원탈퇴 하시겠습니까?")
+    if (answer) {
+      const re_answer = window.confirm("정말 회원탈퇴 하시겠습니까?")
+      if (re_answer) {
+        const re_re_answer = window.confirm("정말 정말 떠나시겠습니까? 모든 정보는 지워집니다.")
+        if (re_re_answer) {
+          axios({
+            method: 'delete',
+            url: `${API_URL}/api/v1/accounts/delete_user/`,
+            headers: {
+                Authorization: `Token ${token.value}`
+            }
+          })
+          .then((res) => {
+            token.value = null
+            userId.value = null
+            window.alert("회원탈퇴 되었습니다. 안녕히 가십시요.")
+            router.push({ name: 'main'})
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+      }
+    }
+  }
+
+
+  return { API_URL, token, userId, router, isSuperUser, isLogin, logIn, logOut, signUp, changePassword, withdraw }
 }, {persist: true})

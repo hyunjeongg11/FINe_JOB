@@ -19,6 +19,7 @@ import LoginView from '@/views/accounts/LoginView.vue'
 import SignUpView from '@/views/accounts/SignUpView.vue'
 import UserProfileView from '@/views/accounts/UserProfileView.vue'
 import ChangePasswordView from '@/views/accounts/ChangePasswordView.vue'
+import UserProfileEditView from '@/views/accounts/UserProfileEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -123,6 +124,11 @@ const router = createRouter({
       path: '/changepassword', 
       name: 'changepassword', 
       component: ChangePasswordView
+    },
+    {
+      path: '/userprofileedit',
+      name: 'userprofileedit',
+      component: UserProfileEditView
     }
   ]
 })

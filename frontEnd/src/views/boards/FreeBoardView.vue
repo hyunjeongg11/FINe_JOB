@@ -22,13 +22,13 @@ import { useBoardStore } from '@/stores/board'
 const store = useBoardStore()
 const router = useRouter();
 
+function goBack() {
+	router.back();
+}
 onMounted(() => {
 	store.getFreeBoards()
 })
 
-function goBack() {
-    router.back();
-}
 </script>
 
 <style scoped>
