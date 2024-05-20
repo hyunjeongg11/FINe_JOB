@@ -18,8 +18,6 @@ import NaverNews from '@/components/NaverNews.vue'
 import FreeBoardList from '@/components/FreeBoardList.vue'
 import AgeBoardList from '@/components/AgeBoardList.vue'
 import CurrencyConverter from '@/components/CurrencyConverter.vue'
-
-
 </script>
 
 <style scoped>

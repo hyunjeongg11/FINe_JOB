@@ -1,60 +1,69 @@
 <template>
-  <div>
-    <h1>회원가입</h1>
-    <form @submit.prevent="signUp">
-      <div>
-        <label for="username">username : </label>
-        <input type="text" v-model.trim="username" id="username">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <h1 class="mb-4">회원가입</h1>
+        <form @submit.prevent="signUp">
+          <div class="mb-2">
+            <label for="username" class="form-label">아이디</label>
+            <input type="text" class="form-control" v-model.trim="username" id="username">
+          </div>
+          <div class="mb-2">
+            <label for="password1" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" v-model.trim="password1" id="password1">
+          </div>
+          <div class="mb-2">
+            <label for="password2" class="form-label">비밀번호 확인</label>
+            <input type="password" class="form-control" v-model.trim="password2" id="password2">
+          </div>
+          <div class="mb-2">
+            <label for="email" class="form-label">이메일</label>
+            <input type="text" class="form-control" v-model.trim="email" id="email">
+          </div>
+          <div class="mb-2">
+            <label for="nickname" class="form-label">닉네임</label>
+            <input type="text" class="form-control" v-model.trim="nickname" id="nickname">
+          </div>
+          <div class="mb-2">
+            <label for="birthdate">생년월일</label>
+            <input type="date" class="form-control" v-model.trim="birthdate" id="birthdate">
+          </div>
+          <div class="mb-2">
+            <label for="gender" class="form-label">성별</label>
+            <div class="genderContainer">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="male" value="M" v-model="gender">
+                <label class="form-check-label" for="male">Male</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="female" value="F" v-model="gender">
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="address" class="form-label">주소</label>
+            <input type="text" class="form-control"  v-model.trim="address" id="address">
+          </div>
+          <div class="mb-2">
+            <label for="asset" class="form-label">자산</label>
+            <input type="text" class="form-control"  v-model.trim="asset" id="asset">
+          </div>
+          <div class="mb-2">
+            <label for="salary" class="form-label">월급</label>
+            <input type="text" class="form-control"  v-model.trim="salary" id="salary">
+          </div>
+          <div class="mb-2">
+            <label for="interest_industry" class="form-label">관심산업</label>
+            <input type="text" class="form-control"  v-model.trim="interest_industry" id="interest_industry">
+          </div>
+          <div class="text-center">
+            <input type="submit" value="가입하기">
+          </div>
+        </form>
+
       </div>
-      <div>
-        <label for="password1">password : </label>
-        <input type="password" v-model.trim="password1" id="password1">
-      </div>
-      <div>
-        <label for="password2">password confirmation : </label>
-        <input type="password" v-model.trim="password2" id="password2">
-      </div>
-      <div>
-        <label for="email">email : </label>
-        <input type="text" v-model.trim="email" id="email">
-      </div>
-      <div>
-        <label for="nickname">nickname : </label>
-        <input type="text" v-model.trim="nickname" id="nickname">
-      </div>
-      <div>
-        <label for="birthdate">birthdate : </label>
-        <input type="date" v-model.trim="birthdate" id="birthdate">
-      </div>
-      <div>
-        <label for="gender">Gender : </label>
-        <div>
-          <input type="radio" id="male" value="M" v-model="gender">
-          <label for="male">Male</label>
-        </div>
-        <div>
-          <input type="radio" id="female" value="F" v-model="gender">
-          <label for="female">Female</label>
-        </div>
-      </div>
-      <div>
-        <label for="address">address : </label>
-        <input type="text" v-model.trim="address" id="address">
-      </div>
-      <div>
-        <label for="asset">Asset : </label>
-        <input type="text" v-model.trim="asset" id="asset">
-      </div>
-      <div>
-        <label for="salary">Salary : </label>
-        <input type="text" v-model.trim="salary" id="salary">
-      </div>
-      <div>
-        <label for="interest_industry">interest_industry : </label>
-        <input type="text" v-model.trim="interest_industry" id="interest_industry">
-      </div>
-      <input type="submit">
-    </form>
+    </div>
   </div>
 
 </template>
@@ -100,5 +109,8 @@ const handleFileUpload = function (event) {
 </script>
 
 <style scoped>
-
+.genderContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
 </style>
