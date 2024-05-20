@@ -73,7 +73,7 @@ onMounted(() => {
   // }
   axios({
     method: 'get',
-    url: `${store.API_URL}/api/v1/financial_products/saving_product_detail/${fin_prdt_cd}`,
+    url: `${store.API_URL}/api/v1/financial_products/saving_product_detail/${fin_prdt_cd}/`,
     headers: {
         Authorization: `Token ${userStore.token}`
       }
@@ -91,7 +91,7 @@ onMounted(() => {
 const check_likes_user = function () {
   axios({
     method: 'get',
-    url: `${store.API_URL}/api/v1/financial_products/${route.params.id}/like_saving_check/`,
+    url: `${store.API_URL}/api/v1/financial_products/like_saving_check/${route.params.id}/`,
     headers: {
         Authorization: `Token ${userStore.token}`
 
@@ -114,7 +114,7 @@ const buttonText = ref('')
 const onClick = function () {
   axios({
     method: 'post',
-    url: `${store.API_URL}/api/v1/bank-financial_products/${route.params.id}/like_saving/`,
+    url: `${store.API_URL}/api/v1/financial_products/like_saving/${route.params.id}/`,
     headers: {
       Authorization: `Token ${userStore.token}`
     }
