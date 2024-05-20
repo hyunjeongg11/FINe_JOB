@@ -127,4 +127,14 @@ const router = createRouter({
   ]
 })
 
+import { userCheckStore } from '@/stores/usercheck'
+
+router.beforeEach((to, from) => {
+  const store = userCheckStore()
+  if ((to.name === 'login' || to.name === 'signup') && (store.isLogin)){
+    window.alert('이미 로그인 하셨습니다.')
+    return { name: 'main' }
+  }
+})
+
 export default router
