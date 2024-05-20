@@ -1,7 +1,7 @@
 <template>
 	<div>
     <button @click="goBack" class="back-button">뒤로 가기</button>
-		<h1>적금 상품</h1>
+		<!-- <h1>적금 상품</h1> -->
 		<!-- <RouterLink :to="{name: 'savingdetail'}">적금 상세 페이지</RouterLink> -->
 		<SavingList />
 	</div>
@@ -27,7 +27,7 @@ onMounted(() => {
 
 <style scoped>
 .back-button {
-    margin: 10px 0;
+    margin: 10px 10px;
     padding: 5px 10px;
     font-size: 16px;
     color: black;

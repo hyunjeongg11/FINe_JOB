@@ -1,4 +1,5 @@
 <template>
+  <button @click="goBack" class="back-button">뒤로 가기</button>
   <div class="container">
     <nav>
       <RouterLink :to="{ name: 'freeboard' }">자유게시판</RouterLink> |
@@ -24,8 +25,8 @@
         <p>첨부파일: <a :href="freeBoard.image" download>{{ fileName }}</a></p>
       </div>
       <div class="actions">
-        <button @click="goToEditPage">수정</button>
-        <button @click="deleteBoard">삭제</button>
+        <button class="fix" @click="goToEditPage">수정</button>
+        <button class="fix" @click="deleteBoard">삭제</button>
       </div>
     </div>
     <Comment />
@@ -46,6 +47,9 @@ const route = useRoute()
 const router = useRouter()
 const freeBoard = ref(null)
 
+function goBack() {
+    router.back();
+}
 onMounted(() => {
   axios({
     method: 'get',
@@ -165,7 +169,7 @@ nav {
   gap: 10px;
 }
 
-button {
+.fix {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
@@ -174,15 +178,30 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.fix:hover {
   background-color: #0056b3;
 }
 
-button + button {
+.fix + .fix {
   background-color: #dc3545;
 }
 
-button + button:hover {
+.fix + .fix:hover {
   background-color: #c82333;
+}
+
+.back-button {
+    margin: 10px 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: black;
+    /* background-color: #555; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: rgb(165, 165, 165);
 }
 </style>

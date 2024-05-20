@@ -51,7 +51,7 @@ nav {
 }
 
 .back-button {
-    margin: 10px 0;
+    margin: 10px 10px;
     padding: 5px 10px;
     font-size: 16px;
     color: black;

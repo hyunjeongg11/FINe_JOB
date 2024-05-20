@@ -1,4 +1,5 @@
 <template>
+  <button @click="goBack" class="back-button">뒤로 가기</button>
   <div class="container">
     <nav>
       <RouterLink :to="{ name: 'freeboard' }">자유게시판</RouterLink> | 
@@ -47,6 +48,10 @@ const route = useRoute()
 const router = useRouter()
 const ageBoard = ref(null)
 console.log(ageBoard)
+
+function goBack() {
+    router.back();
+}
 
 onMounted(() => {
   axios({
@@ -186,5 +191,20 @@ button + button {
 
 button + button:hover {
   background-color: #c82333;
+}
+
+.back-button {
+    margin: 10px 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: black;
+    /* background-color: #555; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: rgb(165, 165, 165);
 }
 </style>

@@ -48,7 +48,7 @@ const store = userCheckStore()
 }
 
 header {
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
   padding: 1rem;
 }
 
