@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h2>환율 계산기</h2>
-    <p>매매기준율로 계산됩니다.</p>
+  <div class="outer-box">
+    <h4 class="calculator">환율 계산기</h4>
+    <p class="calculator-info">※ 매매기준으로 계산됩니다.</p>
     <div class="container">
       <div class="row">
         <div class="col-10 my-1">
           <div class="source-input my-1 row">
-            <label for="source-input" class="w-25 fs-5 col-4">FROM</label>
-            <select id="source-input" v-model="from" class="form-select mx-1 col-6">
+            <label for="source-input" class="w-25 fs-5 col-4 fw-bold">FROM</label>
+            <select id="source-input" v-model="from" class="form-select col-4">
               <option value="AED">아랍에미리트 디르함</option>
               <option value="AUD">호주 달러</option>
               <option value="BHD">바레인 디나르</option>
@@ -32,11 +32,11 @@
               <option value="THB">태국 달러</option>
               <option value="USD">미국 달러</option>
             </select>
-            <img v-if="from" :src="`/assets/flags/${from}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
+            <img v-if="from" :src="`/assets/flags/${from}.png`" alt="" class="col-2 mx-3" style="width: 4rem; height: 2.5rem;">
           </div>
           <div class="source-output my-2 row">
-            <label for="source-output" class="w-25 fs-5 col-3">TO</label>
-            <select id="source-output" v-model="to" class="form-select mx-1 col-6">
+            <label for="source-output" class="w-25 fs-5 col-3 fw-bold">TO</label>
+            <select id="source-output" v-model="to" class="form-select col-6">
               <option value="AED">아랍에미리트 디르함</option>
               <option value="AUD">호주 달러</option>
               <option value="BHD">바레인 디나르</option>
@@ -61,22 +61,22 @@
               <option value="THB">태국 달러</option>
               <option value="USD">미국 달러</option>
             </select>
-            <img v-if="to" :src="`/assets/flags/${to}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
+            <img v-if="to" :src="`/assets/flags/${to}.png`" alt="" class="col-2 mx-3" style="width: 4rem; height: 2.5rem;">
           </div>
         </div>
-        <button @click="changeFromTo" class="btn col-2"><img style="width: 20px;" src="/assets/exchange.png" alt=""></button>
+        <button @click="changeFromTo" class="btn btn-exchange col-2"><img style="width: 40px;" src="/assets/exchange.png" alt=""></button>
       </div>
     </div>
     <button @click="calculate" class="btn btn-calc">계산하기</button>
       <div class="d-flex flex-column my-3 text-center">
         <div class="row m-2">
-          <input type="number" v-model="fromValue" id="source-input-value" placeholder="금액 입력" class="form-control col-8">
-          <p class="fw-bold fs-5 col-4 my-auto">{{ from.includes('(100)') ? from.slice(0,3) : from }}</p>
+          <input type="number" v-model="fromValue" id="source-input-value" placeholder="금액 입력" class="form-control col-8" style="text-align: right;">
+          <p class="fw-bold fs-5 col-1 my-auto">{{ from.includes('(100)') ? from.slice(0,3) : from }}</p>
         </div>
         <div class="row">
-          <p class="fw-bold col-2 fs-5"> = </p>
-          <p class="col-6 fs-5">{{ toValue }}</p>
-          <p class="fw-bold fs-5 col-3">{{ to.includes('(100)') ? to.slice(0,3) : to }}</p>
+          <p class="fw-bold col-2" style="margin-left: 16%; font-size: 1.5rem;"> = </p>
+          <p id="source-output-value" class="col-1">{{ toValue }}</p>
+          <p class="fw-bold fs-5 col-4">{{ to.includes('(100)') ? to.slice(0,3) : to }}</p>
         </div>
       </div>
   </div>
@@ -174,5 +174,57 @@ const changeFromTo = () => {
 </script>
 
 <style scoped>
+.outer-box {
+    padding: 10px;
+    background-color: rgb(180, 212, 255);
+    border-radius: 10px;
+    /* border: solid 3px #00B992 ; */
+}
 
+.calculator {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.calculator-info {
+  font-size: 1rem;
+  text-align: center;
+  color: gray;
+}
+
+.btn-calc {
+  background-color: rgb(134, 182, 246);
+  color: white;
+  display: block;
+  margin: 0 auto;
+}
+
+.source-input {
+  padding: 5px;
+}
+
+.source-output {
+  padding: 5px;
+}
+
+.form-select {
+  width: 50%; /* Ensure the select box only takes as much space as needed */
+}
+
+.btn-exchange {
+  background-color: rgb(134, 182, 246);
+  width: 10%;
+  height: 5%;
+  margin-top: 5%;
+}
+
+#source-input-value {
+  width: 31.5%;
+  margin-left: 21%;
+}
+
+#source-output-value {
+  font-size: 1.5rem;
+}
 </style>
