@@ -16,7 +16,7 @@
               {{ freeBoard.title }}
             </RouterLink>
           </td>
-          <td>{{ freeBoard.user.username}}</td>
+          <td>{{ freeBoard.user.username }}</td>
           <td>{{ formatDateTime(freeBoard.created_at) }}</td>
         </tr>
       </tbody>

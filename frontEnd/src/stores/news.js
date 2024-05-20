@@ -13,7 +13,7 @@ export const useApiStore = defineStore('news', () => {
           url: `${API_URL}/api/v1/naver_news/`
       })
           .then(res => {
-              console.log(res.data)
+            //   console.log(res.data)
               news.value = res.data.items
           })
           .catch(err => console.log(err))
