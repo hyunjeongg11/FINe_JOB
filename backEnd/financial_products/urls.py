@@ -2,10 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # -------------- 예,적금 DB에 저장 ------------------
-    path('save_deposit_products/', views.save_deposit_products),
-    path('save_saving_products/', views.save_saving_products),
-    
     # ------------ 예,적금 옵션이랑 합친 데이터 불러오기 ----------
     path('deposit_products/', views.deposit_products),
     path('saving_products/', views.saving_products),

@@ -23,8 +23,20 @@ User = get_user_model()
 # 예금 데이터
 # 예금 상품 목록 및 옵션 DB 저장
 # @permission_classes([IsAdminUser])
-@api_view(['GET'])
-def save_deposit_products(request):
+
+def isDepositSaved():
+    if not Deposit_Products.objects.exists():
+        return False
+    return True
+
+
+def isSavingSaved():
+    if not Saving_Products.objects.exists():
+        return False
+    return True
+
+
+def save_deposit_products():
     URL = BASE_URL + 'depositProductsSearch.json'
     params = {
         'auth' : settings.FINLIFE_API_KEY,
@@ -43,15 +55,14 @@ def save_deposit_products(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save(deposit_product=deposit_product)
 
-    return JsonResponse({'message': 'okay'})
-
         
 # 전체 예금 데이터 불러오기, 추가하기
+# @permission_classes([IsAuthenticated])
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
 def deposit_products(request):
     if request.method == "GET":
-        # deposit_product = Deposit_Products.objects.all()
+        if not isDepositSaved():
+            save_deposit_products()
         deposit_products = get_list_or_404(Deposit_Products)
         serializer = DepositProductsSerializer(deposit_products, many=True)
         return Response(serializer.data)
@@ -64,9 +75,11 @@ def deposit_products(request):
 
 # 특정 예금 상품 불러오기
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def deposit_product_detail(request, fin_prdt_cd):
     # deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    if not isDepositSaved():
+        save_deposit_products()
     deposit_product = get_object_or_404(Deposit_Products, fin_prdt_cd=fin_prdt_cd)
     serializer = DepositProductDetailSerializer(deposit_product)
     return Response(serializer.data)
@@ -77,6 +90,8 @@ def deposit_product_detail(request, fin_prdt_cd):
 @api_view(['GET'])
 def deposit_product_options(request, fin_prdt_cd):    
     # deposit_product = Deposit_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    if not isDepositSaved():
+        save_deposit_products()
     deposit_product = get_object_or_404(Deposit_Products, fin_prdt_cd=fin_prdt_cd)
     deposit_options = Deposit_Options.objects.filter(deposit_product=deposit_product)
     serializer = DepositOptionsSerializer(deposit_options, many=True)
@@ -115,8 +130,7 @@ def like_deposit_check(request, product_pk):
 # 적금 데이터
 # 적금 상품 목록 및 옵션 DB 저장
 # @permission_classes([IsAdminUser])
-@api_view(['GET'])
-def save_saving_products(request):
+def save_saving_products():
     URL = BASE_URL + 'savingProductsSearch.json'
     params = {
         'auth' : settings.FINLIFE_API_KEY,
@@ -136,15 +150,14 @@ def save_saving_products(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save(saving_product=saving_product)
 
-    return JsonResponse({'message': 'okay'})
-
                 
 # 전체 적금 데이터 불러오기, 추가하기
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def saving_products(request):
     if request.method == "GET":
-        # saving_product = Saving_Products.objects.all()
+        if not isSavingSaved():
+            save_saving_products()
         saving_products = get_list_or_404(Saving_Products)
         serializer = SavingProductsSerializer(saving_products, many= True)
         return Response(serializer.data)
@@ -157,9 +170,10 @@ def saving_products(request):
 
 # 특정 적금 상품 불러오기
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def saving_product_detail(request, fin_prdt_cd):    
-    # saving_product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    if not isSavingSaved():
+        save_saving_products()
     saving_product = get_object_or_404(Saving_Products, fin_prdt_cd=fin_prdt_cd)
     serializer = SavingProductDetailSerializer(saving_product)
     return Response(serializer.data)
@@ -169,7 +183,8 @@ def saving_product_detail(request, fin_prdt_cd):
 # @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def saving_product_options(request, fin_prdt_cd):
-    # saving_product = Saving_Products.objects.get(fin_prdt_cd=fin_prdt_cd)
+    if not isSavingSaved():
+        save_saving_products()
     saving_product = get_object_or_404(Saving_Products, fin_prdt_cd=fin_prdt_cd)
     options = Saving_Options.objects.filter(saving_product=saving_product)
     serializer = DepositOptionsSerializer(options, many=True)
