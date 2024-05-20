@@ -9,7 +9,6 @@ export const useBoardStore = defineStore('board', () => {
   const jobBoards = ref([])
   const store = userCheckStore()
   const todayLuck = ref('')
-  // const token = ref('f9ed05e26bf2a18c2c8a3793ad057fc9e5027499')
   const token = store.token
   const API_URL = 'http://127.0.0.1:8000'
   

@@ -34,9 +34,11 @@ import { RouterLink, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import axios from 'axios'
 import { useBoardStore } from '@/stores/board'
+import { userCheckStore } from '@/stores/usercheck'
 
 const router = useRouter()
 const store = useBoardStore()
+const userStore = userCheckStore()
 
 const title = ref('')
 const content = ref('')
@@ -68,7 +70,7 @@ const createBoard = () => {
 		url: `${store.API_URL}/api/v1/boards/free/`, // Ensure this is the correct endpoint
 		data: formData,
 		headers: {
-			Authorization: `Token ${store.token}`,
+			Authorization: `Token ${userStore.token}`,
 			// 'Content-Type': 'multipart/form-data',
 		},
 	})

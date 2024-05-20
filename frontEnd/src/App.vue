@@ -2,7 +2,9 @@
   <div id="app">
     <header>
       <div class="header-top">
-        <h1>FINe JOB</h1>
+        <RouterLink :to="{ name: 'main' }">
+          <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
+        </RouterLink>
         <nav v-if="!store.token" class="auth-nav">
           <RouterLink :to="{ name: 'login' }">로그인</RouterLink> |
         </nav>
