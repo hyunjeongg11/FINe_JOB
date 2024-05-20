@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>추천 공고</h2>
+    <h4>추천 공고</h4>
   </div>
 </template>
 

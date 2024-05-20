@@ -22,14 +22,6 @@
         <RecommendJobList />
       </div>
     </div>
-    <div class="boards">
-      <div class="free-board">
-        <FreeBoardList />
-      </div>
-      <div class="age-board">
-        <AgeBoardList />
-      </div>
-    </div>
   </main>
 </template>
 
@@ -49,8 +41,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
   display: grid;
   grid-template-areas:
     "currency-converter popular-products"
-    "news today-info"
-    "boards boards";
+    "news today-info";
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
@@ -77,13 +68,11 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
   grid-area: news;
   width: 85%;
   margin-left: 10%;
-
 }
 
 .today-info {
   grid-area: today-info;
   width: 90%;
-  /* display: flex; */
   justify-content: space-around;
 }
 
@@ -91,33 +80,11 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
   border: 1px solid black;
 }
 
-.today-luck {
-  order: 1; /* Set the order of TodayLuck to 1 */
-}
-
-.recommend-job {
-  order: 2; /* Set the order of RecommendJobList to 2 */
-}
-
-.boards {
-  grid-area: boards;
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  margin-left: 5%;
-}
 
 .popular-products > div {
   border: 1px solid black;
 }
 
-.boards > div {
-  border: 1px solid black;
-}
-
-.free-board, .age-board {
-  width: 47%;
-}
 
 .today-luck {
   height: 30%;
