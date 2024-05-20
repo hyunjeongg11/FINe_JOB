@@ -16,9 +16,11 @@
 <script setup>
 import { ref, defineEmits } from 'vue'
 import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
 import { useBoardStore } from '@/stores/board'
 import { useRoute } from 'vue-router'
 
+const userStore = userCheckStore()
 const store = useBoardStore()
 const route = useRoute()
 const content = ref('')
@@ -35,7 +37,7 @@ const submitComment = () => {
     url: `${store.API_URL}/api/v1/boards/age/${route.params.id}/comments/`,
     data: data,
     headers: {
-      Authorization: `Token ${store.token}`
+      Authorization: `Token ${userStore.token}`
     }
   })
     .then((res) => {

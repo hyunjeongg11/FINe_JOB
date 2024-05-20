@@ -10,7 +10,7 @@
       <div class="post-header">
         <h1>{{ ageBoard.title }}</h1>
         <div class="post-meta">
-          <p>작성자 : {{ ageBoard.user.username }}</p>
+          <!-- <p>작성자? : {{ ageBoard }}</p> -->
           <p>작성시간 : {{ formattedCreatedAt }}</p>
           <p>수정시간 : {{ formattedUpdatedAt }}</p>
         </div>
@@ -39,18 +39,21 @@ import AgeBoardComment from '@/components/AgeBoardComment.vue'
 import axios from 'axios'
 import { onMounted, ref, computed } from 'vue'
 import { useBoardStore } from '@/stores/board'
+import { userCheckStore } from '@/stores/usercheck'
 
 const store = useBoardStore()
+const userStore = userCheckStore()
 const route = useRoute()
 const router = useRouter()
 const ageBoard = ref(null)
+console.log(ageBoard)
 
 onMounted(() => {
   axios({
     method: 'get',
     url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
     headers: {
-      Authorization: `Token ${store.token}` // 인증 토큰을 헤더에 추가
+      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
     }
   })
     .then((res) => {
@@ -93,7 +96,7 @@ const deleteBoard = () => {
       method: 'delete',
       url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
       headers: {
-        Authorization: `Token ${store.token}`
+        Authorization: `Token ${userStore.token}`
       }
     })
       .then(() => {

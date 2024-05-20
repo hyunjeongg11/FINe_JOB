@@ -11,15 +11,13 @@ export const useFinanceStore = defineStore('Finance', () => {
   const savingList = ref([])
   const depositOption = ref([])
   const savingOption = ref([])
-  const token = ref('686276b9abaaa20636b9ed475cd1ae9b8af278aa')
 
   const getDepositList = function() {
     axios({
       method: 'get',
       url: `${API_URL}/api/v1/financial_products/deposit_products/`,
       headers: {
-        // Authorization: `Token ${store.token}`
-        Authorization: `Token ${token.value}`
+        Authorization: `Token ${store.token}`
       }
     })
       .then(res => {
@@ -34,8 +32,7 @@ export const useFinanceStore = defineStore('Finance', () => {
       method: 'get',
       url: `${API_URL}/api/v1/financial_products/saving_products/`,
       headers: {
-        // Authorization: `Token ${store.token}`
-        Authorization: `Token ${token.value}`
+        Authorization: `Token ${store.token}`
       }
     })
       .then(res => {
@@ -50,8 +47,7 @@ export const useFinanceStore = defineStore('Finance', () => {
       method: 'get',
       url: `${API_URL}/api/v1/financial_products/deposit_product_options/${fin_prdt_cd}`,
       headers: {
-        // Authorization: `Token ${store.token}`
-        Authorization: `Token ${token.value}`
+        Authorization: `Token ${store.token}`
       }
     })
       .then((res) => {
@@ -68,8 +64,7 @@ export const useFinanceStore = defineStore('Finance', () => {
       method: 'get',
       url: `${API_URL}/api/v1/financial_products/saving_product_options/${fin_prdt_cd}`,
       headers: {
-        // Authorization: `Token ${store.token}`
-        Authorization: `Token ${token.value}`
+        Authorization: `Token ${store.token}`
       }
     })
       .then((res) => {

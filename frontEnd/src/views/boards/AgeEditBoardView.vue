@@ -33,10 +33,12 @@
 import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
 import { useBoardStore } from '@/stores/board'
 
 const router = useRouter()
 const route = useRoute()
+const userStore = userCheckStore()
 const store = useBoardStore()
 
 const title = ref('')
@@ -60,7 +62,7 @@ const fetchBoardData = () => {
     method: 'get',
     url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
     headers: {
-      Authorization: `Token ${store.token}` // 인증 토큰을 헤더에 추가
+      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
     }
   })
     .then((res) => {
@@ -88,7 +90,7 @@ const submitEdit = () => {
     method: 'put',
     url: `${store.API_URL}/api/v1/boards/age/${route.params.id}/`,
     headers: {
-      Authorization: `Token ${store.token}`, // 인증 토큰을 헤더에 추가
+      Authorization: `Token ${userStore.token}`, // 인증 토큰을 헤더에 추가
       'Content-Type': 'multipart/form-data',
     },
     data: formData,

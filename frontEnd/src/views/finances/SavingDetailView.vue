@@ -57,7 +57,7 @@ import { userCheckStore } from '@/stores/usercheck'
 import { useRoute, useRouter } from 'vue-router'
 
 const store = useFinanceStore()
-const user_store = userCheckStore()
+const userStore = userCheckStore()
 const detail = ref('')
 
 const route = useRoute()
@@ -75,8 +75,7 @@ onMounted(() => {
     method: 'get',
     url: `${store.API_URL}/api/v1/financial_products/saving_product_detail/${fin_prdt_cd}`,
     headers: {
-        // Authorization: `Token ${user_store.token}`
-      Authorization: 'Token 686276b9abaaa20636b9ed475cd1ae9b8af278aa'
+        Authorization: `Token ${userStore.token}`
       }
   })
     .then((res) => {
@@ -94,8 +93,7 @@ const check_likes_user = function () {
     method: 'get',
     url: `${store.API_URL}/api/v1/financial_products/${route.params.id}/like_saving_check/`,
     headers: {
-        // Authorization: `Token ${user_store.token}`
-      Authorization: 'Token 686276b9abaaa20636b9ed475cd1ae9b8af278aa'
+        Authorization: `Token ${userStore.token}`
 
       }
   })
@@ -118,8 +116,7 @@ const onClick = function () {
     method: 'post',
     url: `${store.API_URL}/api/v1/bank-financial_products/${route.params.id}/like_saving/`,
     headers: {
-    //   Authorization: `Token ${user_store.token}`
-    Authorization: 'Token 686276b9abaaa20636b9ed475cd1ae9b8af278aa'
+      Authorization: `Token ${userStore.token}`
     }
   })
     .then((res) => {

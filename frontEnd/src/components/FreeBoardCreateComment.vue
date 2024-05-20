@@ -16,11 +16,13 @@
 <script setup>
 import { ref, defineEmits } from 'vue'
 import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
 import { useBoardStore } from '@/stores/board'
 import { useRoute } from 'vue-router'
 
 const store = useBoardStore()
 const route = useRoute()
+const userStore = userCheckStore()
 const content = ref('')
 
 const emits = defineEmits(['comment-added'])
@@ -35,7 +37,7 @@ const submitComment = () => {
     url: `${store.API_URL}/api/v1/boards/free/${route.params.id}/comments/`,
     data: data,
     headers: {
-      Authorization: `Token ${store.token}`
+      Authorization: `Token ${userStore.token}`
     }
   })
     .then((res) => {

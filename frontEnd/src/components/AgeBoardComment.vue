@@ -15,10 +15,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import { userCheckStore } from '@/stores/usercheck'
 import { useBoardStore } from '@/stores/board'
 import { useRoute } from 'vue-router'
 import CreateComment from '@/components/AgeBoardCreateComment.vue'
 
+const userStore = userCheckStore()
 const store = useBoardStore()
 const route = useRoute()
 
@@ -29,7 +31,7 @@ const fetchComments = () => {
     method: 'get',
     url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
     headers: {
-      Authorization: `Token ${store.token}` // 인증 토큰을 헤더에 추가
+      Authorization: `Token ${userStore.token}` 
     }
   })
     .then((res) => {
@@ -51,7 +53,7 @@ const deleteComment = (commentId) => {
       method: 'delete',
       url: `${store.API_URL}/api/v1/boards/age/comments/${commentId}`,
       headers: {
-        Authorization: `Token ${store.token}`
+        Authorization: `Token ${userStore.token}`
       }
     })
       .then(() => {
