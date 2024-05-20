@@ -47,12 +47,11 @@ class Age_BoardSerializer(serializers.ModelSerializer):
 #         fields = ('address', )
 
 class Free_BoardListSerializer(serializers.ModelSerializer):
-    address = serializers.CharField(source='user.detailuser.address', read_only=True)
     user = UsernameSerializer(read_only=True)
 
     class Meta:
         model = Free_Board
-        fields = ('id', 'user', 'title', 'content', 'address', 'created_at')
+        fields = ('id', 'user', 'title', 'content', 'created_at')
 
 
 class Free_CommentSerializer(serializers.ModelSerializer):

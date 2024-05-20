@@ -20,6 +20,10 @@ import SignUpView from '@/views/accounts/SignUpView.vue'
 import UserProfileView from '@/views/accounts/UserProfileView.vue'
 import ChangePasswordView from '@/views/accounts/ChangePasswordView.vue'
 import UserProfileEditView from '@/views/accounts/UserProfileEditView.vue'
+import SubscribeProductView from '@/views/accounts/SubscribeProductView.vue'
+import BoardRecordView from '@/views/accounts/BoardRecordView.vue'
+import UserProfileDetailView from '@/views/accounts/UserProfileDetailView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -129,6 +133,21 @@ const router = createRouter({
       path: '/userprofileedit',
       name: 'userprofileedit',
       component: UserProfileEditView
+    },
+    {
+      path: '/subscribeproduct',
+      name: 'subscribeproduct',
+      component: SubscribeProductView
+    },
+    {
+      path: '/boardrecord',
+      name: 'boardrecord',
+      component: BoardRecordView
+    },
+    {
+      path: '/userprofiledetail',
+      name: 'userprofiledetail',
+      component: UserProfileDetailView
     }
   ]
 })

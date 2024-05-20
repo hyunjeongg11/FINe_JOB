@@ -10,5 +10,5 @@ urlpatterns = [
     path('free/<int:free_pk>/', views.free_detail),
     path('free/<int:free_pk>/comments/', views.free_comment_create),
     path('free/comments/<int:comment_pk>', views.free_comment_detail),
-    # path('user_log/', views.show_logs)
+    path('user_log/', views.show_logs)
 ]

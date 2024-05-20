@@ -3,6 +3,7 @@ from .models import User
 from rest_framework import serializers
 from django.contrib.auth import get_user_model    
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from financial_products.serializers import DepositProductsSerializer, SavingProductsSerializer
 
 # 유저 프로필 
 User = get_user_model()
@@ -13,14 +14,33 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email')
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    address = serializers.CharField(source='user.detailuser.address', read_only=True)
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'nickname', 'birthday', 'gender', 'profile_img', 'asset', 'salary', 'interest_industry')
+        fields = ('username', 'email', 'nickname', 'birthday', 'gender', 'address', 'profile_img', 'asset', 'salary', 'interest_industry')
 
 class CustomUserEditSerializer(serializers.ModelSerializer):
+    address = serializers.CharField(source='user.detailuser.address', read_only=True)
+
     class Meta:
         model = User
-        fields = ['nickname', 'birthday', 'address', 'profile_img', 'asset', 'salary', 'interest_industry']
+        fields = ['nickname', 'birthday', 'address', 'gender', 'profile_img', 'asset', 'salary', 'interest_industry']
+
+# 관심 상품 리스트
+class UserLikeListSerializer(serializers.ModelSerializer):
+    deposit_list = serializers.SerializerMethodField()
+    saving_list = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = ('deposit_list', 'saving_list')
+
+    def get_deposit_list(self, obj):
+        return DepositProductsSerializer(obj.like_deposit.all(), many=True).data
+
+    def get_saving_list(self, obj):
+        return SavingProductsSerializer(obj.like_saving.all(), many=True).data
 
 
 GENDER_CHOICES = [
