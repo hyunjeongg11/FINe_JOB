@@ -9,6 +9,7 @@
           <RouterLink :to="{ name: 'login' }">로그인</RouterLink> |
         </nav>
         <nav v-else class="auth-nav">
+          <p>{{ store.userId }}</p>
           <button @click="store.logOut">로그아웃</button>|
           <RouterLink :to="{ name: 'userprofile' }">마이페이지</RouterLink> |
         </nav>
@@ -56,10 +57,6 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-}
-
-.logo {
-  height: 40px;
 }
 
 .main-nav {
