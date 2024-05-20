@@ -1,14 +1,24 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
+import { useBoardStore } from '@/stores/board'
 import axios from 'axios'
 
 export const userCheckStore = defineStore('usercheck', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
   const userId = ref(null)
+  const store = useBoardStore() 
   const router = useRouter()
   const isSuperUser = ref(false)
+
+  const isLogin = computed(() => {
+    if (token.value === null) {
+      return false
+    } else {
+      return true
+    }
+  })
 
   const logIn = function (payload) {
     const { username, password } = payload
@@ -23,7 +33,6 @@ export const userCheckStore = defineStore('usercheck', () => {
         console.log('로그인 완료')
         token.value = res.data.key
         userId.value = username
-        // console.log(res)
         // checkSuperUser()
         router.push({name: 'main'})
       })
@@ -42,6 +51,7 @@ export const userCheckStore = defineStore('usercheck', () => {
         console.log('로그아웃 완료')
         token.value = null
         userId.value = null
+        store.todayLuck = ''
         router.push({ name: 'main'})
       })
       .catch(err => {
@@ -60,12 +70,13 @@ export const userCheckStore = defineStore('usercheck', () => {
     })
       .then(res => {
         console.log('회원가입 완료')
-        router.push({ name: 'main'})
+        const password = password1
+        logIn({ username, password })
       })
       .catch(err => {
         console.log(err)
       })
   }
 
-  return { API_URL, token, userId, router, isSuperUser, logIn, logOut, signUp }
+  return { API_URL, token, userId, router, isSuperUser, isLogin, logIn, logOut, signUp }
 }, {persist: true})
