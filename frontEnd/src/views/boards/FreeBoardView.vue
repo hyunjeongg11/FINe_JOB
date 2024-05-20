@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<button @click="goBack" class="back-button">뒤로 가기</button>
 		<nav>
 			<RouterLink :to="{name: 'freeboard'}">자유게시판</RouterLink> | 
 			<RouterLink :to="{name: 'ageboard'}">연령별 게시판</RouterLink> | 
@@ -13,16 +14,21 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import FreeBoardList from '@/components/FreeBoardList.vue'
 import { onMounted } from 'vue'
 import { useBoardStore } from '@/stores/board'
 
 const store = useBoardStore()
+const router = useRouter();
 
 onMounted(() => {
 	store.getFreeBoards()
 })
+
+function goBack() {
+    router.back();
+}
 </script>
 
 <style scoped>
@@ -42,6 +48,21 @@ h1 {
 nav {
 	text-align: center;
 	margin-bottom: 20px;
+}
+
+.back-button {
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: black;
+    /* background-color: #555; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: rgb(165, 165, 165);
 }
   
 </style>
