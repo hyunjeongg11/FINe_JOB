@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th class="title-col">제목</th>
-          <th class="author-col">작성자(닉네임)</th>
+          <th class="author-col">작성자</th>
           <th class="date-col">작성일</th>
         </tr>
       </thead>
