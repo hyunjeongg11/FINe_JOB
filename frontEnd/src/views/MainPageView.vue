@@ -30,25 +30,28 @@ import PopularDepositList from '@/components/PopularDepositList.vue'
 import PopularSavingList from '@/components/PopularSavingList.vue'
 import TodayLuck from '@/components/TodayLuck.vue'
 import NaverNews from '@/components/NaverNews.vue'
-import FreeBoardList from '@/components/FreeBoardList.vue'
-import AgeBoardList from '@/components/AgeBoardList.vue'
 import CurrencyConverter from '@/components/CurrencyConverter.vue'
 import RecommendJobList from '@/components/RecommendJobList.vue'
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
 .main-container {
   display: grid;
   grid-template-areas:
     "currency-converter popular-products"
     "news today-info";
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 20px; /* 간격을 늘립니다. */
 }
 
 .main-container > div {
-  /* border: 1px solid black; */
-  padding: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .currency-converter {
@@ -77,22 +80,23 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 }
 
 .today-info > div {
-  border: 1px solid black;
+  margin-bottom: 5%;
+  background-color: rgb(238, 245, 255);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
 }
-
 
 .popular-products > div {
   border: 1px solid black;
 }
 
-
 .today-luck {
-  height: 30%;
-  margin-bottom: 5%;
+  height: 35%; /* 높이를 조금 늘려줍니다. */
 }
 
 .recommend-job {
-  height: 65%;
+  height: 60%;
 }
 
 .popular-saving, .popular-deposit {
