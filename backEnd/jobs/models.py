@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class JobInfo(models.Model):
+    date = models.CharField(max_length=10)
     keyword = models.TextField() # 분류
     title = models.TextField() # 제목
     company = models.TextField() # 회사
