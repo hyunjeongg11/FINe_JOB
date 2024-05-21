@@ -76,8 +76,8 @@
         </div>
         <div class="row">
           <p class="fw-bold col-2" style="margin-left: 16%; font-size: 1.5rem;"> = </p>
-          <p id="source-output-value" class="col-1">{{ toValue }}</p>
-          <p class="fw-bold fs-5 col-4">{{ to.includes('(100)') ? to.slice(0,3) : to }}</p>
+          <p id="source-output-value" class="col-2">{{ toValue }}</p>
+          <p class="fw-bold fs-5 col-6">{{ to.includes('(100)') ? to.slice(0,3) : to }}</p>
         </div>
       </div>
     </div>

@@ -138,7 +138,7 @@ export const userCheckStore = defineStore('usercheck', () => {
       }
     })
       .then((res) => {
-        // console.log(res.data)
+        console.log(res.data)
         recommendJobs.value = res.data
       })
       .catch((err) => {

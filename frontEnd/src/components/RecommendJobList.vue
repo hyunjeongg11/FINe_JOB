@@ -15,7 +15,7 @@
             </thead>
             <tbody>
               <tr v-for="job in store.recommendJobs" :key="job.id">
-                <td class="truncate td-title">{{ job.title }}</td>
+                <td class="truncate td-title"><a :href="job.url" target="_blank">{{ job.title }}</a></td>
                 <td class="truncate">{{ job.company }}</td>
                 <td class="truncate">{{ job.location }}</td>
                 <td class="truncate">{{ job.deadline }}</td>
