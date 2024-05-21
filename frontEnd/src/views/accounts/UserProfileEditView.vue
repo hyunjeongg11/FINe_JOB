@@ -1,5 +1,7 @@
 <template>
-  <button @click="goBack" class="back-button">뒤로 가기</button>
+      <button @click="goBack" class="back-button">
+      <img :src="`/assets/back.png`" alt="뒤로가기" style="width: 50px; height: 50px;">
+    </button>
   <div v-if="!userStore.token" class="container">
     <h3>비로그인 사용자입니다.</h3>
   </div>

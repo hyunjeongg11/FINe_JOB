@@ -1,6 +1,8 @@
 <template>
 	<div>
-    <button @click="goBack" class="back-button">뒤로 가기</button>
+    <button @click="goBack" class="back-button">
+      <img :src="`/assets/back.png`" alt="뒤로가기" style="width: 50px; height: 50px;">
+    </button>
 		<SavingList />
 	</div>
 </template>
@@ -24,11 +26,11 @@ onMounted(() => {
 
 <style scoped>
 .back-button {
-    margin: 10px 10px;
-    padding: 5px 10px;
+    margin: 0px 10px;
+    /* padding: 5px 10px; */
     font-size: 16px;
     color: black;
-    /* background-color: #555; */
+    background-color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
