@@ -15,6 +15,8 @@ import DepositDetailView from '@/views/finances/DepositDetailView.vue'
 import SavingView from '@/views/finances/SavingView.vue'
 import SavingDetailView from '@/views/finances/SavingDetailView.vue'
 import JobView from '@/views/JobView.vue'
+import RecommendJobListView from '@/views/RecommendJobListView.vue'
+import CurrencyConverterView from '@/views/CurrencyConverterView.vue'
 import LoginView from '@/views/accounts/LoginView.vue'
 import SignUpView from '@/views/accounts/SignUpView.vue'
 import UserProfileView from '@/views/accounts/UserProfileView.vue'
@@ -109,6 +111,16 @@ const router = createRouter({
       component: JobView
     },
     {
+      path: '/recommendjoblist',
+      name: 'recommendjoblist',
+      component: RecommendJobListView
+    },
+    {
+      path: '/currencyconverter',
+      name: 'currencyconverter',
+      component: CurrencyConverterView
+    },
+    {
       path: '/login',
       name: 'login',
       component: LoginView
@@ -148,7 +160,7 @@ const router = createRouter({
       path: '/userprofiledetail',
       name: 'userprofiledetail',
       component: UserProfileDetailView
-    }
+    },
   ]
 })
 

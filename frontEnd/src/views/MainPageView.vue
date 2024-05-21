@@ -7,14 +7,14 @@
       <PopularSavingList />
     </div>
     <div class="recommend-job">
-      <RecommendJobList />
+      <RecommendJobListView />
     </div>
     <div class="news">
       <NaverNews />
     </div>
     <div class="other-feature">
       <div class="currency-converter">
-        <CurrencyConverter />
+        <CurrencyConverterView />
       </div>
       <div class="today-luck">
         <TodayLuck />
@@ -28,8 +28,8 @@ import PopularDepositList from '@/components/PopularDepositList.vue'
 import PopularSavingList from '@/components/PopularSavingList.vue'
 import TodayLuck from '@/components/TodayLuck.vue'
 import NaverNews from '@/components/NaverNews.vue'
-import CurrencyConverter from '@/components/CurrencyConverter.vue'
-import RecommendJobList from '@/components/RecommendJobList.vue'
+import CurrencyConverterView from '@/views/CurrencyConverterView.vue'
+import RecommendJobListView from '@/views/RecommendJobListView.vue'
 </script>
 
 <style scoped>
