@@ -1,9 +1,8 @@
 <template>
-  
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <h1 class="mb-4">로그인</h1>
+  <div class="outer-box">
+    <div class="d-flex justify-content-center container">
+      <div class="col-md-6 login-outer position-relative">
+        <h1 class="mb-4 login-title">로그인</h1>
         <form @submit.prevent="logIn">
           <div class="mb-3">
             <label for="username" class="form-label">아이디</label>
@@ -14,12 +13,12 @@
             <input type="password" class="form-control" v-model.trim="password"><br>
           </div>
           <div class="text-center">
-            <input type="submit" value="로그인">
+            <input type="submit" class="login-btn" value="로그인">
           </div>
         </form>
+        <RouterLink class="router-link signup-link" :to="{name : 'signup'}">회원가입</RouterLink>
       </div>
     </div>
-    <RouterLink :to="{name : 'signup'}">회원가입</RouterLink> 
     <RouterView />
   </div>
 </template>
@@ -44,5 +43,45 @@ const logIn = function() {
 </script>
 
 <style scoped>
+.ms-3 {
+  margin-left: 1rem;
+}
 
+.outer-box {
+  margin-top: 2rem;
+}
+
+.login-title {
+  text-align: center;
+}
+
+.login-outer {
+  padding: 2rem;
+  border: 1px solid #e9ecef;
+  background-color: rgb(236, 245, 248);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.signup-link {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.login-btn {
+  width: 100px;
+  margin: 10px auto;
+  background-color: rgb(180, 212, 255);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: rgb(104, 142, 206);
+}
 </style>
