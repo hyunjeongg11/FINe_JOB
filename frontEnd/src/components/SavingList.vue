@@ -1,35 +1,60 @@
 <template>
- <div class="container">
+  <div class="container">
     <h1 class="mb-4">적금 상품</h1>
-    <h2 class="mb-3">검색하기</h2>
-    <h4 class="mb-3">검색 조건을 입력하세요</h4>
+    <div class="d-flex justify-content-between mb-3">
+      <button v-if="!isRecommendVisible" @click="toggleRecommend" class="btn button_blue">추천받기</button>
+      <button v-if="!isSearchVisible" @click="toggleSearch" class="btn button_blue">검색하기</button>
+    </div>
     <hr>
 
-    <form @submit.prevent="onClickFilter">
-      <div class="row">
-        <div class="col-md-4">
-          <p>은행을 선택하세요.</p>
-          <select name="bank" id="bank" v-model="bank" class="form-control">
-            <option value="전체 은행">전체 은행</option>
-            <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
-          </select>
+    <div v-if="isSearchVisible">
+      <h2 class="mb-3">검색 조건을 입력하세요</h2>
+      <form @submit.prevent="onClickFilter">
+        <div class="row">
+          <div class="col-md-4">
+            <p>은행을 선택하세요.</p>
+            <select name="bank" id="bank" v-model="bank" class="form-control">
+              <option value="전체 은행">전체 은행</option>
+              <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <p>예치기간을 선택하세요.</p>
+            <select name="term" id="term" v-model="term" class="form-control">
+              <option value="전체 기간">전체 기간</option>
+              <option value="6">6개월</option>
+              <option value="12">12개월</option>
+              <option value="24">24개월</option>
+              <option value="36">36개월</option>
+            </select>
+          </div>
+          <div class="col-md-2 mt-4 d-flex justify-content-center">
+            <input type="submit" value="검색" class="btn button_blue">
+          </div>
         </div>
-        <div class="col-md-4">
-          <p>예치기간을 선택하세요.</p>
-          <select name="term" id="term" v-model="term" class="form-control">
-            <option value="전체 기간">전체 기간</option>
-            <option>6</option>
-            <option>12</option>
-            <option>24</option>
-            <option>36</option>
-          </select>
+      </form>
+    </div>
+
+    <div v-if="isRecommendVisible">
+      <h2 class="mb-3">추천 조건을 입력하세요</h2>
+      <form @submit.prevent="onClickRecommend">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="inputAmount">예치금액을 입력하세요</label>
+            <input type="number" id="inputAmount" v-model="inputAmount" class="form-control" :min="0">
+          </div>
+          <div class="col-md-4">
+            <label for="targetAmount">목표 금액을 입력하세요</label>
+            <input type="number" id="targetAmount" v-model="targetAmount" class="form-control" :min="0">
+          </div>
+          <div class="col-md-2 mt-4 d-flex justify-content-center">
+            <input type="submit" value="추천받기" class="btn button_blue">
+          </div>
         </div>
-        <div class="col-md-2 mt-4 d-flex justify-content-center">
-          <input type="submit" value="검색" class="btn button_blue">
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
+
   <div class="container">
     <button @click="toggleCalculator" class="btn my-2 button_blue">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
     <div v-if="isOpen">
@@ -56,7 +81,7 @@
         <label for="save_trm">예금 기간 : </label>
         <input type="number" id="save_trm" v-model="save_trm" :min="0" class="form-control">(개월)
       </div>
-      <div>
+      <div>    
         <label for="intr_rate">연이자율 : </label>
         <input type="number" id="intr_rate" v-model="intr_rate" :min="0" class="form-control">(%)
       </div>
@@ -74,12 +99,21 @@
         <button @click.prevent="calculator()" class="btn button_blue">계산</button>
       </div>
     </div>
+
     <div>
       <hr>
       <h2>적금 리스트</h2>
-      <div>
+      <div v-if="isSearchVisible">
         <div class="grid-container" v-if="result.length > 0">
           <SavingListItem v-for="saving in result" :key="saving.id" :saving="saving" class="grid-item" />
+        </div>
+        <div v-else>
+          <p class="text-center">조건에 맞는 결과가 없습니다.</p>
+        </div>
+      </div>
+      <div v-else>
+        <div class="grid-container" v-if="store.recommendSavingList.length > 0">
+          <SavingListItem v-for="saving in store.recommendSavingList" :key="saving.id" :saving="saving" class="grid-item" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
@@ -90,9 +124,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 import SavingListItem from '@/components/SavingListItem.vue'
+import axios from 'axios';
 
 const store = useFinanceStore()
 const bankList = [
@@ -106,7 +141,24 @@ const bankList = [
 const bank = ref('전체 은행')
 const term = ref('전체 기간')
 
-// 기간만 필터링
+const isSearchVisible = ref(true)
+const isRecommendVisible = ref(false)
+
+const toggleSearch = () => {
+  isSearchVisible.value = true
+  isRecommendVisible.value = false
+}
+
+const toggleRecommend = () => {
+  isSearchVisible.value = false
+  isRecommendVisible.value = true
+}
+
+// Recommendation form data
+const inputAmount = ref(0)
+const targetAmount = ref(0)
+
+// Period only filter
 const termFilter = function (term) {
   const result = []
   for (const product of store.savingList) {
@@ -124,7 +176,7 @@ const termFilter = function (term) {
   return result
 }
 
-// 기간과 은행을 같이 필터링
+// Period and bank filter
 const termBankFilter = function (bank, term) {
   const result = []
   for (const product of store.savingList) {
@@ -144,17 +196,18 @@ const termBankFilter = function (bank, term) {
   return result
 }
 
+watch(() => store.recommendSavingList, (newValue) => {
+  result.value = newValue
+})
+
 const result = ref([])
 const onClickFilter = function () {
   if (bank.value === '전체 은행' && term.value === '전체 기간') {
     result.value = store.savingList
-
   } else if (bank.value === '전체 은행' && term.value !== '전체 기간') {
-
     result.value = termFilter(term.value)
-
   } else if (bank.value !== '전체 은행' && term.value === '전체 기간') {
-    // 은행만 필터링
+    // Bank only filter
     result.value = store.savingList.filter((item) => {
       if (item.kor_co_nm === bank.value) {
         return item
@@ -166,16 +219,26 @@ const onClickFilter = function () {
   // console.log(result.value.length)
 }
 
+const onClickRecommend = function () {
+  const amount = {
+    inputAmount: inputAmount.value,
+    targetAmount: targetAmount.value
+  }
+  store.getSavingRecommendation(amount)
+}
+
+
+
 const isOpen = ref(false)
-const type = ref('')  //예,적금 형식
-const inputmoney = ref('')  // 예치 금액
-const intr_rate_type = ref('')  // 예치 유형
-const save_trm = ref('')  // 예금 기간
-const intr_rate = ref('')  // 기본금리
-const calinput = ref('')  // 원금 총액
-const beforintr = ref('')  // 세전 이율
-const taxintr = ref('')  // 과세 금액
-const mymoney = ref('')  // 예상 금액
+const type = ref('')  // Deposit or savings type
+const inputmoney = ref('')  // Deposit amount
+const intr_rate_type = ref('')  // Interest rate type
+const save_trm = ref('')  // Deposit period
+const intr_rate = ref('')  // Basic interest rate
+const calinput = ref('')  // Total principal amount
+const beforintr = ref('')  // Pre-tax interest
+const taxintr = ref('')  // Tax amount
+const mymoney = ref('')  // Expected amount
 
 const calculator = function () {
   if (type.value === "예금") {
@@ -184,8 +247,7 @@ const calculator = function () {
       beforintr.value = (calinput.value * (intr_rate.value / 100))
       taxintr.value = (beforintr.value * 0.154)
       mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    }
-    else {
+    } else {
       calinput.value = inputmoney.value * (save_trm.value / 12)
       beforintr.value = (inputmoney.value * ((1+(intr_rate.value/1200))*save_trm.value) - inputmoney.value)
       taxintr.value = (beforintr.value * 0.154)
@@ -197,10 +259,9 @@ const calculator = function () {
       beforintr.value = (inputmoney.value * (intr_rate.value / 1200) * (Math.round(((save_trm.value + 1) * save_trm.value) / 2)))
       taxintr.value = (beforintr.value * 0.154)
       mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    }
-    else {
+    } else {
       calinput.value = inputmoney.value * save_trm.value
-      beforintr.value = ((inputmoney.value*((1+intr_rate.value/1200)(save_trm.value+1))) - (inputmoney.value*(1+intr_rate.value/1200))) / (1+intr_rate.value/1200)
+      beforintr.value = ((inputmoney.value*((1+intr_rate.value/1200)*(save_trm.value+1))) - (inputmoney.value*(1+intr_rate.value/1200))) / (1+intr_rate.value/1200)
       taxintr.value = (beforintr.value * 0.154)
       mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
     }

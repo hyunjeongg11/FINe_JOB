@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { userCheckStore } from '@/stores/usercheck.js'
 import axios from 'axios'
+import { Colors } from 'chart.js'
 
 export const useFinanceStore = defineStore('Finance', () => {
   const API_URL = 'http://127.0.0.1:8000'
@@ -11,6 +12,7 @@ export const useFinanceStore = defineStore('Finance', () => {
   const savingList = ref([])
   const depositOption = ref([])
   const savingOption = ref([])
+  const recommendSavingList = ref([])
 
   const getDepositList = function() {
     axios({
@@ -36,7 +38,7 @@ export const useFinanceStore = defineStore('Finance', () => {
       }
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         savingList.value = res.data
       })
       .catch(err => console.log(err))
@@ -156,6 +158,23 @@ export const useFinanceStore = defineStore('Finance', () => {
     return bank.length > 0 ? bank[0].bank_url : ''
   }
 
-  return { API_URL, depositList, savingList, depositOption, savingOption, 
-    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink }
+  const getSavingRecommendation = (amountData) => {
+    const { inputAmount, targetAmount } = amountData
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/financial_products/recommend_saving_products/?monthlyAmount=${inputAmount}&targetAmount=${targetAmount}`,
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    })
+      .then(res => {
+        recommendSavingList.value = res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  return { API_URL, depositList, savingList, depositOption, savingOption, recommendSavingList,
+    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink, getSavingRecommendation }
 }, {persist: true})

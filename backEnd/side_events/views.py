@@ -30,7 +30,10 @@ def generate_hash(birthday, today):
     return hash_value
 
 def hash(request, lenOfTodayLucks):
-    birthday = datetime.strptime(request.user.birthday, '%Y-%m-%d').strftime('%Y-%m-%d')
+    try:
+        birthday = datetime.strptime(request.user.birthday, '%Y-%m-%d').strftime('%Y-%m-%d')
+    except:
+        birthday = datetime.now().strftime('%Y-%m-%d')
     today = datetime.now().strftime('%Y-%m-%d')
     hash = generate_hash(birthday, today)
     # lenOfTodayLucks로 나눈 나머지 반환
