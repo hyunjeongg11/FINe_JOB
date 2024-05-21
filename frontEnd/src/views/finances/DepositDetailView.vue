@@ -5,7 +5,7 @@
 
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <div class="btn-group me-2" role="group" aria-label="First group">
-        <button @click="onClick" class="btn" :class="{'btn-primary': buttonText === '관심있어요', 'btn-danger': buttonText === '관심없어요'}">{{ buttonText }}</button>
+        <button @click="onClick" class="btn" :class="{'btn-primary': buttonText === '가입하기', 'btn-danger': buttonText === '해지하기'}">{{ buttonText }}</button>
       </div>
       <div class="btn-group me-2" role="group" aria-label="Second group">
         <button @click="moveToLink(store.searchBankLink(detail.kor_co_nm))" class="btn btn-secondary">은행홈페이지</button>
@@ -100,10 +100,10 @@ const check_likes_user = function () {
   })
     .then((res) => {
       if (res.data.user) {
-        buttonText.value = '관심없어요'
+        buttonText.value = '해지하기'
       }
       else {
-        buttonText.value = '관심있어요'
+        buttonText.value = '가입하기'
       }
     })
     .catch((err) => {
@@ -124,9 +124,9 @@ const onClick = function () {
     .then((res) => {
       // console.log(res.data.liked)
       if (res.data.liked) {
-        buttonText.value = "관심없어요"
+        buttonText.value = "해지하기"
       } else {
-        buttonText.value = "관심있어요"
+        buttonText.value = "가입하기"
       }
     })
     .catch((err) => {

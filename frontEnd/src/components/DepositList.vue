@@ -1,6 +1,6 @@
 <template>
- <div>
-    <!-- <h1 class="mb-4">예금 상품</h1> -->
+  <div class="container">
+    <h1 class="mb-4">예금 상품</h1>
     <h2 class="mb-3">검색하기</h2>
     <h4 class="mb-3">검색 조건을 입력하세요</h4>
     <hr>
@@ -24,13 +24,13 @@
           </select>
         </div>
         <div class="col-md-2 mt-4 d-flex justify-content-center">
-          <input type="submit" value="검색" class="btn btn-primary">
+          <input type="submit" value="검색" class="btn button_blue">
         </div>
       </div>
     </form>
   </div>
   <div class="container">
-    <button @click="toggleCalculator" class="btn btn-primary my-2">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
+    <button @click="toggleCalculator" class="btn button_blue my-2">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
     <div v-if="isOpen">
       <h4>간편 예적금 계산기</h4>
       <div>저축 방식 :
@@ -70,15 +70,15 @@
       </div>
       <div>
         <p><strong>세후 수령액 :</strong>{{ mymoney.toLocaleString('ko-KR') }}(원)</p>
-        <button @click.prevent="calculator()" class="btn btn-primary">계산</button>
+        <button @click.prevent="calculator()" class="btn button_blue">계산</button>
       </div>
     </div>
     <div>
       <hr>
-      <h2 class="mt-4">예금 리스트</h2>
-      <div class="row">
-        <div v-if="result.length > 0">
-          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" />
+      <h2>예금 리스트</h2>
+      <div>
+        <div class="grid-container" v-if="result.length > 0">
+          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" class="grid-item" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
@@ -219,8 +219,36 @@ const toggleCalculator = function () {
 </script>
 
 <style scoped>
-.sort {
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-container {
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for wider items */
+  gap: 20px;
+}
+
+.grid-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  height: auto; /* Adjusted to auto for flexible height */
+  width: 100%; /* Ensure items take full width of their grid area */
+}
+
+.button_blue {
+  background-color: rgb(59 130 153);
+  color: white;
+}
+
+button.button_blue.my-2 {
+  display: block;
+  margin: 20px auto;
 }
 </style>

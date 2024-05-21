@@ -8,51 +8,60 @@
     </nav>
     <div class="container">
       <h1>FAQ 페이지</h1>
+      <FAQBoardList />
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import FAQBoardList from '@/components/FAQBoardList.vue'
+import { useBoardStore } from '@/stores/board'
 
+const store = useBoardStore()
 const router = useRouter();
 
 function goBack() {
-    router.back();
+  router.back();
 }
+
+onMounted(() => {
+	store.getFaqBoards()
+})
 </script>
 
 <style scoped>
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .container {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
 
-  nav {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .back-button {
-    margin: 10px 10px;
-    padding: 5px 10px;
-    font-size: 16px;
-    color: black;
-    /* background-color: #555; */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.back-button {
+  margin: 10px 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  color: black;
+  /* background-color: #555; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .back-button:hover {
-    background-color: rgb(165, 165, 165);
+  background-color: rgb(165, 165, 165);
 }
 </style>

@@ -245,8 +245,8 @@ def deposit_calculate_interest(deposit_amount, target_amount, interest_type, int
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recommend_deposit_products(request):
-    # deposit_amount = request.GET['depositAmount']
-    # target_amount = request.GET['targetAmount']
+    deposit_amount = request.GET['depositAmount']
+    target_amount = request.GET['targetAmount']
     deposit_products = get_list_or_404(Deposit_Products)
     data = {}
     for deposit_product in deposit_products:
@@ -256,8 +256,7 @@ def recommend_deposit_products(request):
             intr_rate = option.intr_rate
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = deposit_calculate_interest(1000, 1050, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
-            # result = calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            result = deposit_calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
             if result:
                 data[deposit_product.fin_prdt_cd] = (result, save_trm)
                 break
@@ -293,10 +292,11 @@ def saving_calculate_interest(monthly_amount, target_amount, interest_type, intr
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recommend_saving_products(request):
-    # monthly_amount = request.GET['monthlyAmount']
-    # target_amount = request.GET['targetAmount']
+    monthly_amount = int(request.GET['monthlyAmount'])
+    target_amount = int(request.GET['targetAmount'])
     saving_products = get_list_or_404(Saving_Products)
-    data = {}
+    # data = {}
+    recommend_saving_products_codes = []
     for saving_product in saving_products:
         options = Saving_Options.objects.filter(saving_product=saving_product)
         for option in options:
@@ -304,11 +304,14 @@ def recommend_saving_products(request):
             intr_rate = option.intr_rate
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = saving_calculate_interest(1000000, 24000000, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
-            # result = calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            result = saving_calculate_interest(monthly_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
             if result:
-                data[saving_product.fin_prdt_cd] = (result, save_trm)
+                # data[saving_product.fin_prdt_cd] = (result, save_trm)
+                recommend_saving_products_codes.append(saving_product.fin_prdt_cd)
                 break
-    if data:
-        return Response({'message': 'okay', 'data': data})
-    return Response({'message': 'no data'})
+
+    if recommend_saving_products_codes:
+        recommend_saving_products = Saving_Products.objects.filter(fin_prdt_cd__in=recommend_saving_products_codes)
+        serializer = SavingProductsSerializer(recommend_saving_products, many=True)
+        return Response(serializer.data, status=200)
+    return Response({'message': 'no data'}, status=200)

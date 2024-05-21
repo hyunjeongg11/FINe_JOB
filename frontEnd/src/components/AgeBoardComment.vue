@@ -4,7 +4,7 @@
     <ul v-if="ageComments">
       <li v-for="comment in ageComments" :key="comment.id" class="comment-item">
         <p>{{ comment.user.username }}: {{ comment.content }}</p>
-        <button @click="deleteComment(comment.id)">삭제</button>
+        <button v-if="comment.user.username === userStore.userId" @click="deleteComment(comment.id)">삭제</button>
       </li>
     </ul>
     <p v-else>댓글이 없습니다!</p>
@@ -58,7 +58,7 @@ const deleteComment = (commentId) => {
     })
       .then(() => {
         alert('댓글이 삭제되었습니다.')
-        fetchComments() // 댓글 삭제 후 댓글 목록 다시 불러오기
+        fetchComments()
       })
       .catch((err) => {
         console.log(err)

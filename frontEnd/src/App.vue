@@ -45,6 +45,7 @@ const store = userCheckStore()
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* background-color: rgb(219, 236, 241); */
 }
 
 header {

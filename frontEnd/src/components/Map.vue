@@ -9,6 +9,7 @@
 <script>
 import SearchBar from './SearchBar.vue';
 import PlaceList from './PlaceList.vue';
+import { useFinanceStore } from '@/stores/finance';
 
 export default {
   name: "KakaoMap",
@@ -22,6 +23,7 @@ export default {
       places: [],
       markers: [],
       infowindow: null,
+      searchTriggered: false, // 검색 버튼 클릭 여부
     };
   },
   mounted() {
@@ -75,10 +77,15 @@ export default {
       };
       this.map = new window.kakao.maps.Map(container, options);
 
-      window.kakao.maps.event.addListener(this.map, 'dragend', this.searchNearbyBanks);
-      window.kakao.maps.event.addListener(this.map, 'zoom_changed', this.searchNearbyBanks);
+      window.kakao.maps.event.addListener(this.map, 'dragend', this.handleMapEvents);
+      window.kakao.maps.event.addListener(this.map, 'zoom_changed', this.handleMapEvents);
 
       this.searchNearbyBanks();
+    },
+    handleMapEvents() {
+      if (!this.searchTriggered) {
+        this.searchNearbyBanks();
+      }
     },
     searchNearbyBanks() {
       const center = this.map.getCenter();
@@ -90,6 +97,7 @@ export default {
       });
     },
     searchPlaces({ province, country, bank }) {
+      this.searchTriggered = true; // 검색 버튼 클릭으로 인한 검색 실행
       const query = `${province} ${country} ${bank}`;
       const ps = new window.kakao.maps.services.Places();
       ps.keywordSearch(query, this.placesSearchCB);
@@ -100,7 +108,9 @@ export default {
         this.displayPlaces(data);
       } else {
         this.places = [];
+        this.displayPlaces([]);
       }
+      this.searchTriggered = false; // 검색 버튼 클릭 후 이벤트 처리 완료
     },
     displayPlaces(places) {
       const bounds = new window.kakao.maps.LatLngBounds();
@@ -109,13 +119,17 @@ export default {
       for (let i = 0; i < places.length; i++) {
         const place = places[i];
         const placePosition = new window.kakao.maps.LatLng(place.y, place.x);
-        const marker = this.addMarker(placePosition, i, place.place_name);
+        const marker = this.addMarker(placePosition, i, place.place_name, place.category_name);
         bounds.extend(placePosition);
       }
 
-      this.map.setBounds(bounds);
+      if (places.length > 0) {
+        this.map.setBounds(bounds);
+      } else {
+        this.map.setCenter(this.map.getCenter());
+      }
     },
-    addMarker(position, idx, title) {
+    addMarker(position, idx, title, bankName) {
       const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
       const imageSize = new window.kakao.maps.Size(36, 37);
       const imgOptions = {
@@ -142,7 +156,13 @@ export default {
       });
 
       window.kakao.maps.event.addListener(marker, "click", () => {
-        this.map.setCenter(position);
+        const store = useFinanceStore();
+        console.log(title)
+        const bankUrl = store.searchBankLink(title);
+        if (bankUrl) {
+          console.log('click')
+          window.open(bankUrl, "_blank");
+        }
       });
 
       return marker;

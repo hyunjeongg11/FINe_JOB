@@ -11,8 +11,9 @@ from .serializers import JobInfoSerializer
 from .models import JobInfo
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
+import random
 
-allPage = 3
+allPage = 1
 keywords = ['IT', '서비스', '금융', '보험', '인사', '노무', '회계', '세무', '재무', '디자인', '생산', '영업', '상품기획', '교육', 'R&D', '의료', '건축', '전기', '기계', '고객상담', '운송', '미디어', '스포츠', '복지']
 
 def save_job_info(): # 사람인 크롤링
@@ -77,3 +78,18 @@ def like_job_info(request, job_info_pk):
         job_info.like_users.add(request.user)
         liked = True
     return Response({'liked': liked})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_job(request):
+    # print(str(request.user.interest_industry))
+    if not JobInfo.objects.filter(date=datetime.date.today()):
+        save_job_info()
+    try:
+        job_infos = get_list_or_404(JobInfo, keyword=request.user.interest_industry, date=datetime.date.today())
+        job_infos = random.sample(job_infos, 5)
+        serializer = JobInfoSerializer(job_infos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception:
+        return Response({'message': '관심 산업을 등록하세요.'}, status=status.HTTP_200_OK)

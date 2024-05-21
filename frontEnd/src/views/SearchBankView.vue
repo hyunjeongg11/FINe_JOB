@@ -21,6 +21,10 @@ function goBack() {
 </script>
 
 <style scoped>
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 .back-button {
     margin: 10px 10px;
     padding: 5px 10px;

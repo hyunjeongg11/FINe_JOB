@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 import json
 from django.http import JsonResponse 
-from .serializers import CustomUserEditSerializer, UserDetailSerializer
+from .serializers import CustomUserEditSerializer, UserDetailSerializer, UserLikeListSerializer
 from .models import User
 
 # permission Decorators
@@ -54,3 +54,8 @@ def user_detail(request, search_name):
     except:
         return Response({'message':'error'}, status=status.HTTP_404_NOT_FOUND)
     
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def like_list(request):
+    serializer = UserLikeListSerializer(request.user)
+    return Response(serializer.data, status=status.HTTP_200_OK)

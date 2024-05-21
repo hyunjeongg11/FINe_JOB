@@ -6,30 +6,32 @@
       <RouterLink :to="{ name: 'ageboard' }">연령별 게시판</RouterLink> |
       <RouterLink :to="{ name: 'FAQ' }">FAQ</RouterLink>
     </nav>
-    <div v-if="freeBoard">
-      <h3>자유게시판</h3>
-      <div class="post-header">
-        <h1>{{ freeBoard.title }}</h1>
-        <div class="post-meta">
-          <p>작성자 : {{ freeBoard.user.username }}</p>
-          <p>작성시간 : {{ formattedCreatedAt }}</p>
-          <p>수정시간 : {{ formattedUpdatedAt }}</p>
+    <div v-if="isLogin">
+      <div v-if="freeBoard">
+        <h3>자유게시판</h3>
+        <div class="post-header">
+          <h1>{{ freeBoard.title }}</h1>
+          <div class="post-meta">
+            <p>작성자 : {{ freeBoard.user.username }}</p>
+            <p>작성시간 : {{ formattedCreatedAt }}</p>
+            <p>수정시간 : {{ formattedUpdatedAt }}</p>
+          </div>
+        </div>
+        <div class="post-content">
+          <div class="content-box">
+            <p>{{ freeBoard.content }}</p>
+          </div>
+        </div>
+        <div v-if="freeBoard.image" class="attachment">
+          <p>첨부파일: <a :href="freeBoard.image" download>{{ fileName }}</a></p>
+        </div>
+        <div class="actions">
+          <button class="fix" v-if="freeBoard.user.username === userStore.userId" @click="goToEditPage">수정</button>
+          <button class="fix" v-if="freeBoard.user.username === userStore.userId" @click="deleteBoard">삭제</button>
         </div>
       </div>
-      <div class="post-content">
-        <div class="content-box">
-          <p>{{ freeBoard.content }}</p>
-        </div>
-      </div>
-      <div v-if="freeBoard.image" class="attachment">
-        <p>첨부파일: <a :href="freeBoard.image" download>{{ fileName }}</a></p>
-      </div>
-      <div class="actions">
-        <button class="fix" @click="goToEditPage">수정</button>
-        <button class="fix" @click="deleteBoard">삭제</button>
-      </div>
+      <Comment />
     </div>
-    <Comment />
   </div>
 </template>
 
@@ -46,25 +48,32 @@ const userStore = userCheckStore()
 const route = useRoute()
 const router = useRouter()
 const freeBoard = ref(null)
+const isLogin = computed(() => userStore.isLogin)
 
 function goBack() {
-    router.back();
+    router.back()
 }
+
 onMounted(() => {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/api/v1/boards/free/${route.params.id}`,
-    headers: {
-      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
-    }
-  })
-    .then((res) => {
-      console.log(res.data)
-      freeBoard.value = res.data
+  if (!isLogin.value) {
+    alert('로그인 해주세요')
+    router.push({ name: 'login' })
+  } else {
+    axios({
+      method: 'get',
+      url: `${store.API_URL}/api/v1/boards/free/${route.params.id}`,
+      headers: {
+        Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
+      }
     })
-    .catch((err) => {
-      console.log(err)
-    })
+      .then((res) => {
+        console.log(res.data)
+        freeBoard.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 })
 
 const formatDateTime = (datetime) => {
