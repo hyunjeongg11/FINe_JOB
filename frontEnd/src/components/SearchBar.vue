@@ -3,6 +3,12 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" @click="moveToCurrentLocation">
+              <img :src="`/assets/target_icon.png`" alt="현위치" style="height: 20px; width: 20px;">
+              현위치
+            </button>
+          </div>
           <select v-model="selectedProvince" @change="updateCountryList" class="form-select">
             <option v-for="(province, index) in provinces" :key="index" :value="province">{{ province }}</option>
           </select>
@@ -13,13 +19,10 @@
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
           <div class="input-group-append">
-            <button class="btn btn-primary search-button" type="button" @click="searchPlaces">검색</button>
+            <button class="btn search-button btn-success" type="button" @click="searchPlaces">검색</button>
           </div>
         </div>
       </div>
-    </div>
-    <div class="text-center mb-3">
-      <button class="btn btn-secondary" @click="moveToCurrentLocation">현재 위치로 이동</button>
     </div>
   </div>
 </template>
@@ -79,3 +82,18 @@ export default {
   }
 };
 </script>
+
+<style>
+.input-group-prepend {
+  margin-right: 5px;
+}
+.search-button{
+  background-color: rgb(59 130 153);
+  color: white;
+}
+
+button.button_blue.my-2 {
+  display: block;
+  margin: 20px auto;
+}
+</style>
