@@ -78,7 +78,7 @@
       <h2 class="mt-4">예금 리스트</h2>
       <div class="row">
         <div v-if="result.length > 0">
-          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" />
+          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" :depositList="depositList" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
