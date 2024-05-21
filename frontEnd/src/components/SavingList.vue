@@ -44,7 +44,7 @@
             <input type="number" id="inputAmount" v-model="inputAmount" class="form-control" :min="0">
           </div>
           <div class="col-md-4">
-            <label for="targetAmount">목표 금액을 입력하세요</label>
+            <label for="targetAmount">목표금액을 입력하세요</label>
             <input type="number" id="targetAmount" v-model="targetAmount" class="form-control" :min="0">
           </div>
           <div class="col-md-2 mt-4 d-flex justify-content-center">

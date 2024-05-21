@@ -1,33 +1,57 @@
 <template>
   <div class="container">
     <h1 class="mb-4">예금 상품</h1>
-    <h2 class="mb-3">검색하기</h2>
-    <h4 class="mb-3">검색 조건을 입력하세요</h4>
+    <div class="d-flex justify-content-between mb-3">
+      <button v-if="!isRecommendVisible" @click="toggleRecommend" class="btn button_blue">추천받기</button>
+      <button v-if="!isSearchVisible" @click="toggleSearch" class="btn button_blue">검색하기</button>
+    </div>
     <hr>
-    <form @submit.prevent="onClickFilter">
-      <div class="row">
-        <div class="col-md-4">
-          <p>은행을 선택하세요.</p>
-          <select name="bank" id="bank" v-model="bank" class="form-control">
-            <option value="전체 은행">전체 은행</option>
-            <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
-          </select>
+
+    <div v-if="isSearchVisible">
+      <h2 class="mb-3">검색 조건을 입력하세요</h2>
+      <form @submit.prevent="onClickFilter">
+        <div class="row">
+          <div class="col-md-4">
+            <p>은행을 선택하세요.</p>
+            <select name="bank" id="bank" v-model="bank" class="form-control">
+              <option value="전체 은행">전체 은행</option>
+              <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <p>예치기간을 선택하세요.</p>
+            <select name="term" id="term" v-model="term" class="form-control">
+              <option value="전체 기간">전체 기간</option>
+              <option>6</option>
+              <option>12</option>
+              <option>24</option>
+              <option>36</option>
+            </select>
+          </div>
+          <div class="col-md-2 mt-4 d-flex justify-content-center">
+            <input type="submit" value="검색" class="btn button_blue">
+          </div>
         </div>
-        <div class="col-md-4">
-          <p>예치기간을 선택하세요.</p>
-          <select name="term" id="term" v-model="term" class="form-control">
-            <option value="전체 기간">전체 기간</option>
-            <option>6</option>
-            <option>12</option>
-            <option>24</option>
-            <option>36</option>
-          </select>
+      </form>
+    </div>
+    <div v-if="isRecommendVisible">
+      <h2 class="mb-3">추천 조건을 입력하세요</h2>
+      <form @submit.prevent="onClickRecommend">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="inputAmount">예치금액을 입력하세요</label>
+            <input type="number" id="inputAmount" v-model="inputAmount" class="form-control" :min="0">
+          </div>
+          <div class="col-md-4">
+            <label for="targetAmount">목표금액을 입력하세요</label>
+            <input type="number" id="targetAmount" v-model="targetAmount" class="form-control" :min="0">
+          </div>
+          <div class="col-md-2 mt-4 d-flex justify-content-center">
+            <input type="submit" value="추천받기" class="btn button_blue">
+          </div>
         </div>
-        <div class="col-md-2 mt-4 d-flex justify-content-center">
-          <input type="submit" value="검색" class="btn button_blue">
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
   <div class="container">
     <button @click="toggleCalculator" class="btn button_blue my-2">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
@@ -76,9 +100,17 @@
     <div>
       <hr>
       <h2>예금 리스트</h2>
-      <div>
+      <div v-if="isSearchVisible">
         <div class="grid-container" v-if="result.length > 0">
           <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" class="grid-item" />
+        </div>
+        <div v-else>
+          <p class="text-center">조건에 맞는 결과가 없습니다.</p>
+        </div>
+      </div>
+      <div v-else>
+        <div class="grid-container" v-if="store.recommendDepositList.length > 0">
+          <DepositListItem v-for="deposit in store.recommendDepositList" :key="deposit.id" :deposit="deposit" class="grid-item" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
@@ -89,7 +121,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 import DepositListItem from '@/components/DepositListItem.vue'
 
@@ -105,6 +137,22 @@ const bankList = [
 const bank = ref('전체 은행')
 const term = ref('전체 기간')
 
+const isSearchVisible = ref(true)
+const isRecommendVisible = ref(false)
+
+const toggleSearch = () => {
+  isSearchVisible.value = true
+  isRecommendVisible.value = false
+}
+
+const toggleRecommend = () => {
+  isSearchVisible.value = false
+  isRecommendVisible.value = true
+}
+
+// Recommendation form data
+const inputAmount = ref(0)
+const targetAmount = ref(0)
 
 // 기간만 필터링
 const termFilter = function (term) {
@@ -148,6 +196,9 @@ const termBankFilter = function (bank, term) {
   return result
 }
 
+watch(() => store.recommendSavingList, (newValue) => {
+  result.value = newValue
+})
 
 const result = ref([])
 const onClickFilter = function () {
@@ -170,6 +221,14 @@ const onClickFilter = function () {
     result.value = termBankFilter(bank.value, term.value)
   }
   console.log(result.value)
+}
+
+const onClickRecommend = function () {
+  const amount = {
+    inputAmount: inputAmount.value,
+    targetAmount: targetAmount.value
+  }
+  store.getDepositRecommendation(amount)
 }
 
 const isOpen = ref(false)
