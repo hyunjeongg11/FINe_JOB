@@ -31,18 +31,6 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="birthday" class="form-label">생년월일 :</label>
-            <input type="text" id="birthday" class="form-control" placeholder="YYYYMMDD" v-model="birthday" style="width: 70%;">
-          </div>
-          <div class="mb-3">
-            <label for="gender" class="form-label">성별 :</label>
-            <select id="gender" class="form-select" v-model="gender" style="width: 70%;">
-              <option disabled value="">다음 중 하나를 선택하세요</option>
-              <option value="M">남성</option>
-              <option value="W">여성</option>
-            </select>
-          </div>
-          <div class="mb-3">
             <label for="asset" class="form-label">자산 :</label>
             <input type="text" id="asset" class="form-control" v-model="asset" style="width: 70%;">원
           </div>
@@ -131,8 +119,8 @@ const checkUser = function () {
       username.value = res.data.user_data.username
       email.value = res.data.user_data.email
       nickname.value = res.data.user_data.nickname
-      birthday.value = res.data.user_data.birthday
-      gender.value = res.data.user_data.gender
+      // birthday.value = res.data.user_data.birthday
+      // gender.value = res.data.user_data.gender
       // province.value = res.data.user_data.address.split(' ')[0]
       // country.value = res.data.user_data.address.split(' ')[1]
       asset.value = res.data.user_data.asset
@@ -155,8 +143,8 @@ const updateDetail = function () {
     data: {
       email: email.value,
       nickname: nickname.value,
-      gender: gender.value,
-      birthday: birthday.value,
+      // gender: gender.value,
+      // birthday: birthday.value,
       address: address.value,
       asset: asset.value,
       salary: salary.value,
