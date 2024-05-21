@@ -16,6 +16,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
@@ -44,45 +45,67 @@ const calculateMaxRate = (depositOptions) => {
 </script>
 
 <style scoped>
+.container-fluid {
+  width: 30%;
+  margin: 0 auto; /* Center the container */
+}
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Add space between the cards */
-  justify-content: center; /* Center the cards horizontally */
+  justify-content: space-around;
+  margin: 20px 0;
 }
+
 .card-container {
-  flex: 0 0 calc(33.33% - 20px); /* Ensure three cards per row */
-  box-sizing: border-box;
+  flex: 1 1 30%;
+  margin: 10px;
 }
+
 .card {
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  width: 100%; /* Make sure the card takes full width of its container */
+  justify-content: space-between;
+  height: 400px; /* Adjusted height to fit all content */
 }
+
 .card-img-top {
-  width: 80%;
-  margin: 0 auto;
-  padding: 20px;
-  height: auto;
-  object-fit: cover;
-}
-.card-body {
-  border: 2px solid rgba(173, 170, 170, 0.555);
-  padding: 15px;
   width: 100%;
-  text-align: center; /* Center text inside the card */
+  height: 150px; /* Fixed height to maintain aspect ratio */
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
+
+.card-body {
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.card-text {
+  margin: 5px 0;
+  flex-grow: 1; /* Allow text to grow and take available space */
+}
+
 .btn-primary {
-  margin-top: 10px;
-  background-color: rgba(113, 166, 201, 0.856);
+  background-color: #007bff;
   border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
   color: white;
 }
-h3 {
-  margin-bottom: 20px;
+
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 </style>

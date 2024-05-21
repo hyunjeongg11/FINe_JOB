@@ -1,11 +1,11 @@
 <template>
- <div class="container">
+  <div class="container">
     <h1 class="mb-4">예금 상품</h1>
     <h2 class="mb-3">검색하기</h2>
     <h4 class="mb-3">검색 조건을 입력하세요</h4>
     <hr>
     <form @submit.prevent="onClickFilter">
-      <div class="row">
+      <div>
         <div class="col-md-4">
           <p>은행을 선택하세요.</p>
           <select name="bank" id="bank" v-model="bank" class="form-control">
@@ -13,7 +13,7 @@
             <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
           </select>
         </div>
-        <div class="col-md-4">
+        <div>
           <p>예치기간을 선택하세요.</p>
           <select name="term" id="term" v-model="term" class="form-control">
             <option value="전체 기간">전체 기간</option>
@@ -75,10 +75,10 @@
     </div>
     <div>
       <hr>
-      <h2 class="mt-4">예금 리스트</h2>
-      <div class="row">
-        <div v-if="result.length > 0">
-          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" />
+      <h2>예금 리스트</h2>
+      <div>
+        <div class="grid-container" v-if="result.length > 0">
+          <DepositListItem v-for="deposit in result" :key="deposit.id" :deposit="deposit" class="grid-item" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
@@ -219,12 +219,36 @@ const toggleCalculator = function () {
 </script>
 
 <style scoped>
-.sort {
-  display: grid;
-  place-items: center;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for wider items */
+  gap: 20px;
+}
+
+.grid-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  height: auto; /* Adjusted to auto for flexible height */
+  width: 100%; /* Ensure items take full width of their grid area */
+}
+
 .button_blue {
   background-color: rgb(59 130 153);
   color: white;
+}
+
+button.button_blue.my-2 {
+  display: block;
+  margin: 20px auto;
 }
 </style>
