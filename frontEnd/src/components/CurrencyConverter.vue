@@ -225,7 +225,7 @@ const changeFromTo = () => {
 
 .btn-exchange {
   background-color: rgb(180, 212, 255);
-  width: 13%;
+  width: 15%;
   height: 5%;
   margin-top: 5%;
 }

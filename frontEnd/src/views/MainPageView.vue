@@ -1,25 +1,23 @@
 <template>
   <main class="main-container">
-    <div class="currency-converter">
-      <CurrencyConverter />
+    <div class="popular-deposit">
+      <PopularDepositList />
     </div>
-    <div class="popular-products">
-      <div class="popular-deposit">
-        <PopularDepositList />
-      </div>
-      <div class="popular-saving">
-        <PopularSavingList />
-      </div>
+    <div class="popular-saving">
+      <PopularSavingList />
+    </div>
+    <div class="recommend-job">
+      <RecommendJobList />
     </div>
     <div class="news">
       <NaverNews />
     </div>
-    <div class="today-info">
+    <div class="other-feature">
+      <div class="currency-converter">
+        <CurrencyConverter />
+      </div>
       <div class="today-luck">
         <TodayLuck />
-      </div>
-      <div class="recommend-job">
-        <RecommendJobList />
       </div>
     </div>
   </main>
@@ -35,6 +33,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 </script>
 
 <style scoped>
+/* Existing styles */
 * {
   box-sizing: border-box;
 }
@@ -42,64 +41,53 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 .main-container {
   display: grid;
   grid-template-areas:
-    "currency-converter popular-products"
-    "news today-info";
-  grid-template-columns: 1fr 1fr;
-  gap: 20px; /* 간격을 늘립니다. */
+    "popular-deposit popular-saving recommend-job"
+    "news news other-feature";
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 84%;
+  margin-left: 5%;
 }
 
 .main-container > div {
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin: 4%;
+  padding: 3%;
 }
 
-.currency-converter {
-  grid-area: currency-converter;
-  width: 60%;
-  margin-left: 22.5%;
+.popular-deposit {
+  grid-area: popular-deposit;
 }
 
-.popular-products {
-  grid-area: popular-products;
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
-}
-
-.news {
-  grid-area: news;
-  width: 85%;
-  margin-left: 10%;
-}
-
-.today-info {
-  grid-area: today-info;
-  width: 90%;
-  justify-content: space-around;
-}
-
-.today-info > div {
-  margin-bottom: 5%;
-  background-color: rgb(236, 245, 248);
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-}
-
-.popular-products > div {
-  border: 1px solid black;
-}
-
-.today-luck {
-  height: 40%;
+.popular-saving {
+  grid-area: popular-saving;
 }
 
 .recommend-job {
-  height: 60%;
+  grid-area: recommend-job;
 }
 
-.popular-saving, .popular-deposit {
-  width: 48%;
+.other-feature {
+  grid-area: other-feature;
+  display: flex;
+  width: 175%;
+  height: 60%;
+  /* padding-left: 8%; Use padding instead of margin */
+  margin-top: 10%; /* Add margin-top to create space */
+  transform: translateX(-250px);
+  gap: 5%;
 }
+
+/* Resetting margin for news section */
+.news {
+  width: 150%;
+  margin-top: 0; /* Reset margin-top */
+  transform: translateX(-50px); 
+}
+
+.currency-converter, .today-luck {
+  flex: 1;
+}
+
 </style>
