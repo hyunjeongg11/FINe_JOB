@@ -5,7 +5,7 @@
     <h4 class="mb-3">검색 조건을 입력하세요</h4>
     <hr>
     <form @submit.prevent="onClickFilter">
-      <div>
+      <div class="row">
         <div class="col-md-4">
           <p>은행을 선택하세요.</p>
           <select name="bank" id="bank" v-model="bank" class="form-control">
@@ -13,7 +13,7 @@
             <option :value="bk" v-for="bk in bankList">{{ bk }}</option>
           </select>
         </div>
-        <div>
+        <div class="col-md-4">
           <p>예치기간을 선택하세요.</p>
           <select name="term" id="term" v-model="term" class="form-control">
             <option value="전체 기간">전체 기간</option>

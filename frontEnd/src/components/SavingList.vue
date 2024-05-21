@@ -76,10 +76,10 @@
     </div>
     <div>
       <hr>
-      <h2 class="mt-4">적금 리스트</h2>
-      <div class="row">
-        <div v-if="result.length > 0">
-          <SavingListItem v-for="saving in result" :key="saving.id" :saving="saving" />
+      <h2>적금 리스트</h2>
+      <div>
+        <div class="grid-container" v-if="result.length > 0">
+          <SavingListItem v-for="saving in result" :key="saving.id" :saving="saving" class="grid-item" />
         </div>
         <div v-else>
           <p class="text-center">조건에 맞는 결과가 없습니다.</p>
@@ -213,8 +213,36 @@ const toggleCalculator = function () {
 </script>
 
 <style scoped>
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for wider items */
+  gap: 20px;
+}
+
+.grid-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  height: auto; /* Adjusted to auto for flexible height */
+  width: 100%; /* Ensure items take full width of their grid area */
+}
+
 .button_blue {
   background-color: rgb(59 130 153);
   color: white;
+}
+
+button.button_blue.my-2 {
+  display: block;
+  margin: 20px auto;
 }
 </style>
