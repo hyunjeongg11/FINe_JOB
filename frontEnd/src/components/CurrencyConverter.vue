@@ -71,7 +71,7 @@
     <button @click="calculate" class="btn btn-calc">계산하기</button>
       <div class="d-flex flex-column my-3 text-center">
         <div class="row m-2">
-          <input type="number" v-model="fromValue" id="source-input-value" placeholder="금액 입력" class="form-control col-8" style="text-align: right;">
+          <input type="number" v-model="fromValue" id="source-input-value" placeholder="금액 입력" class="form-control col-8" style="text-align: right;" :min="0">
           <p class="fw-bold fs-5 col-1 my-auto">{{ from.includes('(100)') ? from.slice(0,3) : from }}</p>
         </div>
         <div class="row">

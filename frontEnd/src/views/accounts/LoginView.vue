@@ -3,19 +3,21 @@
     <div class="d-flex justify-content-center container">
       <div class="col-md-6 login-outer position-relative">
         <h1 class="mb-4 login-title">로그인</h1>
-        <form @submit.prevent="logIn">
-          <div class="mb-3">
-            <label for="username" class="form-label">아이디</label>
-            <input type="text" class="form-control" v-model.trim="username"><br>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" v-model.trim="password"><br>
-          </div>
-          <div class="text-center">
-            <input type="submit" class="login-btn" value="로그인">
-          </div>
-        </form>
+        <div class="login-content">
+          <form @submit.prevent="logIn">
+            <div class="mb-3">
+              <label for="username" class="form-label">아이디</label>
+              <input type="text" class="form-control" v-model.trim="username"><br>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">비밀번호</label>
+              <input type="password" class="form-control" v-model.trim="password"><br>
+            </div>
+            <div class="text-center">
+              <input type="submit" class="login-btn" value="로그인">
+            </div>
+          </form>
+        </div>
         <RouterLink class="router-link signup-link" :to="{name : 'signup'}">회원가입</RouterLink>
       </div>
     </div>
@@ -56,7 +58,7 @@ const logIn = function() {
 }
 
 .login-outer {
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px solid #e9ecef;
   background-color: rgb(236, 245, 248);
   border-radius: 10px;
@@ -66,8 +68,14 @@ const logIn = function() {
 
 .signup-link {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.login-content {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .login-btn {
