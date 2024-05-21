@@ -7,6 +7,7 @@ export const useBoardStore = defineStore('board', () => {
   const freeBoards = ref([])
   const ageBoards = ref([])
   const jobBoards = ref([])
+  const faqBoards = ref([])
   const store = userCheckStore()
   const todayLuck = ref('')
   const token = store.token
@@ -62,5 +63,16 @@ export const useBoardStore = defineStore('board', () => {
       .catch(err => console.log(err))
   }
 
-  return { freeBoards, ageBoards, API_URL, token, todayLuck, jobBoards, getFreeBoards, getAgeBoards, getTodayLuck, getJobBoards }
+  const getFaqBoards = function() {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/side_events/get_faq/`,
+    })
+      .then(res => {
+        faqBoards.value = res.data
+      })
+      .catch(err => console.log(err))
+  }
+
+  return { freeBoards, ageBoards, faqBoards, API_URL, token, todayLuck, jobBoards, getFreeBoards, getAgeBoards, getTodayLuck, getJobBoards, getFaqBoards }
 }, {persist: true})
