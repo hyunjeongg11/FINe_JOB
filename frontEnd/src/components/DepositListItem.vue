@@ -20,14 +20,21 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
+import { userCheckStore } from '@/stores/usercheck' // 사용자 스토어 임포트
 
 const router = useRouter()
+const userStore = userCheckStore() // 사용자 스토어 사용
 const props = defineProps({
   deposit: Object
 })
 
 const goDetail = function (bank, id) {
-  router.push({ name: 'depositdetail', params: { fin_prdt_cd: bank, id: id } })
+  if (!userStore.isLoggedIn) {
+    alert('로그인 해주세요')
+    router.push({ name: 'login' })
+  } else {
+    router.push({ name: 'depositdetail', params: { fin_prdt_cd: bank, id: id } })
+  }
 }
 
 const calculateMaxRate = (depositOptions) => {
