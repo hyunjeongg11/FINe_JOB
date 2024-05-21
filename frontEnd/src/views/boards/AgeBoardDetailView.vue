@@ -4,9 +4,9 @@
     </button>
   <div class="container">
     <nav>
-      <RouterLink :to="{ name: 'freeboard' }">자유게시판</RouterLink> | 
-      <RouterLink :to="{ name: 'ageboard' }">연령별게시판</RouterLink> | 
-      <RouterLink :to="{ name: 'FAQ' }">FAQ</RouterLink>
+      <RouterLink :to="{ name: 'freeboard' }" class="nav-item">자유게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'ageboard' }" class="nav-item-here">연령별게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'FAQ' }" class="nav-item">FAQ</RouterLink>
     </nav>
     <div v-if="ageBoard">
       <h3>연령별게시판</h3>
@@ -141,6 +141,15 @@ const fileName = computed(() => {
 
 nav {
   margin-bottom: 20px;
+}
+
+.nav-item {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-item-here {
+  color: black;
 }
 
 .post-header {
