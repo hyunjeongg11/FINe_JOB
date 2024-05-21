@@ -100,10 +100,10 @@ const check_likes_user = function () {
   })
     .then((res) => {
       if (res.data.user) {
-        buttonText.value = '가입하기'
+        buttonText.value = '해지하기'
       }
       else {
-        buttonText.value = '해지하기'
+        buttonText.value = '가입하기'
       }
     })
     .catch((err) => {
