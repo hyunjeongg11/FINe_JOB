@@ -57,6 +57,15 @@
                 <RouterLink :to="{ name: 'freeboard' }" class="nav-link" aria-current="page">커뮤니티</RouterLink>
               </li>
             </ul>
+            <form class="d-flex position-relative" role="search" @submit.prevent="performSearch">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="searchQuery" @focus="showSearchResults" @input="updateSearchResults" @blur="hideSearchResults">
+              <button class="btn btn-outline-success" type="submit" :style="{ backgroundColor: 'rgb(59, 130, 153)', borderColor: 'rgb(59, 130, 153)', color: 'white' }">Search</button>
+              <ul class="dropdown-menu search-results" :class="{ show: searchResultsVisible }">
+                <li v-for="result in searchResults" :key="result.name">
+                  <RouterLink :to="result.link" class="dropdown-item" @mousedown.prevent="navigateTo(result.link)">{{ result.name }}</RouterLink>
+                </li>
+              </ul>
+            </form>
           </div>
         </div>
       </nav>
@@ -70,12 +79,58 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 import { userCheckStore } from '@/stores/usercheck.js'
-import { onMounted } from 'vue'
 
 const store = userCheckStore()
+const searchQuery = ref('')
+const searchResults = ref([])
+const searchResultsVisible = ref(false)
+const router = useRouter()
+
+const navigationItems = [
+  { name: '예금 상품', link: { name: 'deposit' } },
+  { name: '적금 상품', link: { name: 'saving' } },
+  { name: '일자리 목록', link: { name: 'job' } },
+  { name: '추천 일자리', link: { name: 'recommendjoblist' } },
+  { name: '주변 은행 찾기', link: { name: 'searchbank' } },
+  { name: '환율 계산기', link: { name: 'currencyconverter' } },
+  { name: '커뮤니티', link: { name: 'freeboard' } }
+]
+
+const updateSearchResults = () => {
+  searchResults.value = navigationItems.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+  searchResultsVisible.value = true
+}
+
+const performSearch = () => {
+  if (searchResults.value.length) {
+    router.push(searchResults.value[0].link)
+    searchQuery.value = ''
+    searchResults.value = []
+    searchResultsVisible.value = false
+  }
+}
+
+const showSearchResults = () => {
+  if (searchResults.value.length > 0) {
+    searchResultsVisible.value = true
+  }
+}
+
+const hideSearchResults = () => {
+  setTimeout(() => {
+    searchResultsVisible.value = false
+  }, 200)
+}
+
+const navigateTo = (link) => {
+  router.push(link)
+}
 
 onMounted(() => {
   const dropdowns = document.querySelectorAll('.nav-item.dropdown');
@@ -158,8 +213,17 @@ header {
   transform: translateX(-50%);
 }
 
+
 .dropdown-item:hover {
   background-color: rgb(219, 236, 241);
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 main {
