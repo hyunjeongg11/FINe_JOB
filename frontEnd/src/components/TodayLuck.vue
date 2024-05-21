@@ -1,18 +1,21 @@
 <template>
   <div class="outer-box">
     <h4 class="luck-header">오늘의 운세</h4>
-    <div class="luck-container" v-if="userStore.token">
-      <div v-if="todayLuckTitle">
-        <p class="luck-title">오늘의 총운은 <span class="highlight">{{ todayLuckTitle }}</span>입니다.</p>
-        <p class="luck-content">{{ todayLuckContent }}</p>
+    <div class="luck-border">
+      <div class="luck-container" v-if="userStore.token">
+        <div v-if="todayLuckTitle">
+          <p class="luck-title">오늘의 총운은 <span class="highlight">{{ todayLuckTitle }}</span>입니다.</p>
+          <hr>
+          <p class="luck-content">{{ todayLuckContent }}</p>
+        </div>
+        <div v-else class="luck-info">
+          <p>오늘의 운세를 확인하세요.</p>
+          <button class="btn-luck" @click="getTodayLuck">운세 보기</button>
+        </div>
       </div>
-      <div v-else class="luck-info">
-        <p>오늘의 운세를 확인하세요.</p>
-        <button class="btn-luck" @click="getTodayLuck">운세 보기</button>
+      <div class="luck-container" v-else>
+        <p class="luck-info">오늘의 운세를 보려면 로그인하세요.</p>
       </div>
-    </div>
-    <div class="luck-container" v-else>
-      <p class="luck-info">오늘의 운세를 보려면 로그인하세요.</p>
     </div>
   </div>
 </template>
@@ -58,26 +61,33 @@ const getTodayLuck = function() {
   height: 100%; /* 높이를 100%로 설정합니다. */
 }
 
+.luck-border {
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 10px;
+  padding: 0px 10px;
+  background-color: white;
+}
+
 .luck-header {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  /* background-color: rgb(224, 224, 224); */
-  padding: 15px 0;
+  padding: 5px 0px;
   border-radius: 10px;
 }
 
 .luck-title {
   font-size: 1.2rem;
+  margin-top: 10px;
   font-weight: bold;
   text-align: center;
 }
 
 .luck-content {
   font-size: 1rem;
-  padding: 2%;
+  padding: 5px 0px;
   background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;
 }
 
@@ -93,7 +103,7 @@ const getTodayLuck = function() {
 }
 
 .highlight {
-  color: blue;
+  color: rgb(134, 182, 246);
   font-size: 1.4rem;
 }
 </style>

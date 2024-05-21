@@ -92,7 +92,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 }
 
 .today-luck {
-  height: 35%; /* 높이를 조금 늘려줍니다. */
+  height: 38%;
 }
 
 .recommend-job {
