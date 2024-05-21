@@ -22,7 +22,7 @@
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
           <div class="input-group-append">
-            <button class="btn search-button btn-success" type="button" @click="searchPlaces">검색</button>
+            <button class="btn search-button" type="button" @click="searchPlaces">검색</button>
           </div>
         </div>
       </div>
@@ -86,12 +86,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .input-group-prepend {
   margin-right: 5px;
 }
-.search-button{
-  background-color: rgb(59 130 153);
+
+.search-button {
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<button @click="goBack" class="back-button">뒤로 가기</button>
-		<h1>근처 은행 찾기</h1>
+		<h1>주변 은행 찾기</h1>
 		<Map />
 	</div>
 </template>
