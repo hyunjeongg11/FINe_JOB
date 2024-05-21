@@ -4,7 +4,7 @@
     <ul v-if="freeComments">
       <li v-for="comment in freeComments" :key="comment.id" class="comment-item">
         <p>{{ comment.user.username }}: {{ comment.content }}</p>
-        <button @click="deleteComment(comment.id)">삭제</button>
+        <button @click="deleteComment(comment.id)" v-if="comment.user.username === userStore.userId">삭제</button>
       </li>
     </ul>
     <p v-else>댓글이 없습니다!</p>

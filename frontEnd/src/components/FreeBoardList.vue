@@ -24,7 +24,7 @@
     <div v-else>
       게시글이 없습니다!
     </div>
-    <div class="actions">
+    <div class="actions" v-if="isLogin">
       <RouterLink :to="{ name: 'freeboardcreate' }" class="create-button">게시글 생성</RouterLink>
     </div>
     <div class="pagination">
@@ -44,6 +44,7 @@ import { userCheckStore } from '@/stores/usercheck'
 import { useRouter, RouterLink } from 'vue-router'
 
 const store = useBoardStore()
+const userStore = userCheckStore() // 사용자 스토어 사용
 const router = useRouter()
 const currentPage = ref(1)
 const itemsPerPage = 10
@@ -82,6 +83,9 @@ const formatDateTime = (datetime) => {
   const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
 }
+
+const isLogin = computed(() => userStore.isLogin) // 로그인 상태 계산
+
 </script>
 
 <style scoped>

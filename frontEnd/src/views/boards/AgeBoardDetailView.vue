@@ -11,7 +11,7 @@
       <div class="post-header">
         <h1>{{ ageBoard.title }}</h1>
         <div class="post-meta">
-          <!-- <p>작성자? : {{ ageBoard }}</p> -->
+          <p>작성자 : {{ ageBoard.user.username }}</p>
           <p>작성시간 : {{ formattedCreatedAt }}</p>
           <p>수정시간 : {{ formattedUpdatedAt }}</p>
         </div>
@@ -25,8 +25,8 @@
         <p>첨부파일: <a :href="ageBoard.image" download>{{ fileName }}</a></p>
       </div>
       <div class="actions">
-        <button @click="goToEditPage">수정</button>
-        <button @click="deleteBoard">삭제</button>
+        <button v-if="ageBoard.user.username === userStore.userId" @click="goToEditPage" class="fix">수정</button>
+        <button v-if="ageBoard.user.username === userStore.userId" @click="deleteBoard" class="fix">삭제</button>
       </div>
     </div>
     <AgeBoardComment />
@@ -47,27 +47,30 @@ const userStore = userCheckStore()
 const route = useRoute()
 const router = useRouter()
 const ageBoard = ref(null)
-console.log(ageBoard)
+const isLogin = computed(() => userStore.isLogin) // 로그인 상태 계산
 
 function goBack() {
     router.back();
 }
 
-onMounted(() => {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
-    headers: {
-      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
+onMounted(async () => {
+  if (!isLogin.value) {
+    alert('로그인 해주세요')
+    router.push({ name: 'login' })
+  } else {
+    try {
+      const res = await axios({
+        method: 'get',
+        url: `${store.API_URL}/api/v1/boards/age/${route.params.id}`,
+        headers: {
+          Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
+        }
+      });
+      ageBoard.value = res.data;
+    } catch (err) {
+      console.log(err);
     }
-  })
-    .then((res) => {
-      // console.log(res.data)
-      ageBoard.value = res.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  }
 })
 
 const formatDateTime = (datetime) => {
@@ -172,7 +175,8 @@ nav {
   gap: 10px;
 }
 
-button {
+
+.fix {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
@@ -181,15 +185,15 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.fix:hover {
   background-color: #0056b3;
 }
 
-button + button {
+.fix + .fix {
   background-color: #dc3545;
 }
 
-button + button:hover {
+.fix + .fix:hover {
   background-color: #c82333;
 }
 
