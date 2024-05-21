@@ -13,7 +13,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  background-color: rgb(224, 224, 224);
+  /* background-color: rgb(224, 224, 224); */
   padding: 15px 0;
   border-radius: 10px;
 }

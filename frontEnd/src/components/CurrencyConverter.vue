@@ -3,70 +3,71 @@
     <h4 class="calculator-title">환율 계산기</h4>
     <p class="calculator-info">※ 매매기준으로 계산됩니다.</p>
     <div class="container">
-      <div class="row">
-        <div class="col-10 my-1">
-          <div class="source-input my-1 row">
-            <label for="source-input" class="w-25 fs-5 col-4 fw-bold">FROM</label>
-            <select id="source-input" v-model="from" class="form-select col-4">
-              <option value="AED">아랍에미리트 디르함</option>
-              <option value="AUD">호주 달러</option>
-              <option value="BHD">바레인 디나르</option>
-              <option value="BND">브루나이 달러</option>
-              <option value="CAD">캐나다 달러</option>
-              <option value="CHF">스위스 프랑</option>
-              <option value="CNH">중국 위안화</option>
-              <option value="DKK">덴마크 크로네</option>
-              <option value="EUR">유럽연합 유로</option>
-              <option value="GBP">영국 파운드</option>
-              <option value="HKD">홍콩 달러</option>
-              <option value="IDR(100)">인도네시아 루피아</option>
-              <option value="JPY(100)">일본 엔</option>
-              <option value="KRW">한국 원</option>
-              <option value="KWD">쿠웨이트 디나르</option>
-              <option value="MYR">말레이시아 링깃</option>
-              <option value="NOK">노르웨이 크로네</option>
-              <option value="NZD">뉴질랜드 달러</option>
-              <option value="SAR">사우디 리얄</option>
-              <option value="SEK">스웨덴 크로나</option>
-              <option value="SGD">싱가포르 달러</option>
-              <option value="THB">태국 달러</option>
-              <option value="USD">미국 달러</option>
-            </select>
-            <img v-if="from" :src="`/assets/flags/${from}.png`" alt="" class="col-2 mx-3" style="width: 4rem; height: 2.5rem;">
+      <div>
+        <div class="row">
+          <div class="col-10 my-1">
+            <div class="source-input my-1 row">
+              <label for="source-input" class="w-25 fs-5 col-4 fw-bold">FROM</label>
+              <img v-if="from" :src="`/assets/flags/${from}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
+              <select id="source-input" v-model="from" class="form-select col-4">
+                <option value="AED">아랍에미리트 디르함</option>
+                <option value="AUD">호주 달러</option>
+                <option value="BHD">바레인 디나르</option>
+                <option value="BND">브루나이 달러</option>
+                <option value="CAD">캐나다 달러</option>
+                <option value="CHF">스위스 프랑</option>
+                <option value="CNH">중국 위안화</option>
+                <option value="DKK">덴마크 크로네</option>
+                <option value="EUR">유럽연합 유로</option>
+                <option value="GBP">영국 파운드</option>
+                <option value="HKD">홍콩 달러</option>
+                <option value="IDR(100)">인도네시아 루피아</option>
+                <option value="JPY(100)">일본 엔</option>
+                <option value="KRW">한국 원</option>
+                <option value="KWD">쿠웨이트 디나르</option>
+                <option value="MYR">말레이시아 링깃</option>
+                <option value="NOK">노르웨이 크로네</option>
+                <option value="NZD">뉴질랜드 달러</option>
+                <option value="SAR">사우디 리얄</option>
+                <option value="SEK">스웨덴 크로나</option>
+                <option value="SGD">싱가포르 달러</option>
+                <option value="THB">태국 달러</option>
+                <option value="USD">미국 달러</option>
+              </select>
+            </div>
+            <div class="source-output my-2 row">
+              <label for="source-output" class="w-25 fs-5 col-3 fw-bold">TO</label>
+              <img v-if="to" :src="`/assets/flags/${to}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
+              <select id="source-output" v-model="to" class="form-select col-6">
+                <option value="AED">아랍에미리트 디르함</option>
+                <option value="AUD">호주 달러</option>
+                <option value="BHD">바레인 디나르</option>
+                <option value="BND">브루나이 달러</option>
+                <option value="CAD">캐나다 달러</option>
+                <option value="CHF">스위스 프랑</option>
+                <option value="CNH">중국 위안화</option>
+                <option value="DKK">덴마크 크로네</option>
+                <option value="EUR">유럽연합 유로</option>
+                <option value="GBP">영국 파운드</option>
+                <option value="HKD">홍콩 달러</option>
+                <option value="IDR(100)">인도네시아 루피아</option>
+                <option value="JPY(100)">일본 엔</option>
+                <option value="KRW">한국 원</option>
+                <option value="KWD">쿠웨이트 디나르</option>
+                <option value="MYR">말레이시아 링깃</option>
+                <option value="NOK">노르웨이 크로네</option>
+                <option value="NZD">뉴질랜드 달러</option>
+                <option value="SAR">사우디 리얄</option>
+                <option value="SEK">스웨덴 크로나</option>
+                <option value="SGD">싱가포르 달러</option>
+                <option value="THB">태국 달러</option>
+                <option value="USD">미국 달러</option>
+              </select>
+            </div>
           </div>
-          <div class="source-output my-2 row">
-            <label for="source-output" class="w-25 fs-5 col-3 fw-bold">TO</label>
-            <select id="source-output" v-model="to" class="form-select col-6">
-              <option value="AED">아랍에미리트 디르함</option>
-              <option value="AUD">호주 달러</option>
-              <option value="BHD">바레인 디나르</option>
-              <option value="BND">브루나이 달러</option>
-              <option value="CAD">캐나다 달러</option>
-              <option value="CHF">스위스 프랑</option>
-              <option value="CNH">중국 위안화</option>
-              <option value="DKK">덴마크 크로네</option>
-              <option value="EUR">유럽연합 유로</option>
-              <option value="GBP">영국 파운드</option>
-              <option value="HKD">홍콩 달러</option>
-              <option value="IDR(100)">인도네시아 루피아</option>
-              <option value="JPY(100)">일본 엔</option>
-              <option value="KRW">한국 원</option>
-              <option value="KWD">쿠웨이트 디나르</option>
-              <option value="MYR">말레이시아 링깃</option>
-              <option value="NOK">노르웨이 크로네</option>
-              <option value="NZD">뉴질랜드 달러</option>
-              <option value="SAR">사우디 리얄</option>
-              <option value="SEK">스웨덴 크로나</option>
-              <option value="SGD">싱가포르 달러</option>
-              <option value="THB">태국 달러</option>
-              <option value="USD">미국 달러</option>
-            </select>
-            <img v-if="to" :src="`/assets/flags/${to}.png`" alt="" class="col-2 mx-3" style="width: 4rem; height: 2.5rem;">
-          </div>
+          <button @click="changeFromTo" class="btn btn-exchange col-2"><img style="width: 40px;" src="/assets/exchange.png" alt=""></button>
         </div>
-        <button @click="changeFromTo" class="btn btn-exchange col-2"><img style="width: 40px;" src="/assets/exchange.png" alt=""></button>
       </div>
-    </div>
     <button @click="calculate" class="btn btn-calc">계산하기</button>
       <div class="d-flex flex-column my-3 text-center">
         <div class="row m-2">
@@ -79,6 +80,7 @@
           <p class="fw-bold fs-5 col-4">{{ to.includes('(100)') ? to.slice(0,3) : to }}</p>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -176,7 +178,7 @@ const changeFromTo = () => {
 <style scoped>
 .outer-box {
   padding: 10px;
-  background-color: rgb(238, 245, 255);
+  background-color: rgb(236, 245, 248);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -185,9 +187,9 @@ const changeFromTo = () => {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  background-color: rgb(224, 224, 224);
+  /* background-color: rgb(224, 224, 224); */
   border-radius: 10px;
-  padding: 15px 0;
+  padding: 5px 0;
 }
 
 .calculator-info {
@@ -196,8 +198,14 @@ const changeFromTo = () => {
   color: gray;
 }
 
+.container {
+  background-color: white;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 10px;
+}
+
 .btn-calc {
-  background-color: rgb(134, 182, 246);
+  background-color: rgb(180, 212, 255);
   color: white;
   display: block;
   margin: 0 auto;
@@ -216,8 +224,8 @@ const changeFromTo = () => {
 }
 
 .btn-exchange {
-  background-color: rgb(134, 182, 246);
-  width: 10%;
+  background-color: rgb(180, 212, 255);
+  width: 13%;
   height: 5%;
   margin-top: 5%;
 }

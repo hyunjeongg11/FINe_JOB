@@ -56,8 +56,8 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 
 .currency-converter {
   grid-area: currency-converter;
-  width: 85%;
-  margin-left: 10%;
+  width: 60%;
+  margin-left: 22.5%;
 }
 
 .popular-products {
@@ -81,7 +81,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 
 .today-info > div {
   margin-bottom: 5%;
-  background-color: rgb(238, 245, 255);
+  background-color: rgb(219, 236, 241);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;

@@ -62,7 +62,7 @@ const getTodayLuck = function() {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  background-color: rgb(224, 224, 224);
+  /* background-color: rgb(224, 224, 224); */
   padding: 15px 0;
   border-radius: 10px;
 }
@@ -84,7 +84,7 @@ const getTodayLuck = function() {
 .btn-luck {
   width: 100px;
   margin: 10px auto;
-  background-color: rgb(134, 182, 246);
+  background-color: rgb(180, 212, 255);
   color: white; /* Optional: Makes the button text white for better contrast */
   border: none; /* Optional: Removes the border */
   padding: 10px;
