@@ -45,6 +45,12 @@ const getTodayLuck = function() {
 </script>
 
 <style scoped>
+.outer-box {
+  background-color: rgb(236, 245, 248);
+  padding-bottom: 3%;
+  border-radius: 10px;
+}
+
 .luck-container {
   display: flex;
   flex-direction: column;
@@ -66,6 +72,8 @@ const getTodayLuck = function() {
   border-radius: 10px;
   padding: 0px 10px;
   background-color: white;
+  margin-left: 5%;
+  width: 90%;
 }
 
 .luck-header {
@@ -74,6 +82,7 @@ const getTodayLuck = function() {
   text-align: center;
   padding-top: 5px;
   border-radius: 10px;
+  width: 90%;
 }
 
 .luck-title {
@@ -84,8 +93,8 @@ const getTodayLuck = function() {
 }
 
 .luck-content {
-  font-size: 1rem;
-  padding: 5px 0px;
+  font-size: 14px;
+  padding-top: 3px;
   background-color: white;
   border-radius: 10px;
 }
