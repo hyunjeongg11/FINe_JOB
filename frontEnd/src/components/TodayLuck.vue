@@ -110,6 +110,10 @@ const getTodayLuck = function() {
   cursor: pointer;
 }
 
+.btn-luck:hover {
+  background-color: rgb(104, 142, 206);
+}
+
 .highlight {
   color: rgb(134, 182, 246);
   font-size: 1.4rem;
