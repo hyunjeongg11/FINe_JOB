@@ -1,6 +1,6 @@
 <template>
   <div class="outer-box">
-    <h4 class="calculator-title">환율 계산기</h4>
+    <h2 class="calculator-title">환율 계산기</h2>
     <p class="calculator-info">※ 매매기준으로 계산됩니다.</p>
     <div class="container">
       <div>
@@ -178,18 +178,24 @@ const changeFromTo = () => {
 <style scoped>
 .outer-box {
   padding: 10px;
-  background-color: rgb(236, 245, 248);
+  /* background-color: rgb(236, 245, 248); */
+  background-color: rgb(219, 236, 241);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 30%;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-top: 3%;
 }
 
 .calculator-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  /* font-size: 1.5rem; */
+  /* font-weight: bold; */
   text-align: center;
   /* background-color: rgb(224, 224, 224); */
   border-radius: 10px;
   padding: 5px 0;
+  height: 80%;
 }
 
 .calculator-info {
@@ -205,7 +211,8 @@ const changeFromTo = () => {
 }
 
 .btn-calc {
-  background-color: rgb(180, 212, 255);
+  /* background-color: rgb(180, 212, 255); */
+  background-color: rgb(126, 186, 205);
   color: white;
   display: block;
   margin: 0 auto;
@@ -224,7 +231,8 @@ const changeFromTo = () => {
 }
 
 .btn-exchange {
-  background-color: rgb(180, 212, 255);
+  /* background-color: rgb(180, 212, 255); */
+  background-color: rgb(126, 186, 205);
   width: 15%;
   height: 5%;
   margin-top: 5%;
@@ -240,10 +248,12 @@ const changeFromTo = () => {
 }
 
 .btn-exchange:hover {
-  background-color: rgb(104, 142, 206);
+  background-color: rgba(139, 210, 231, 0.534);
+  /* background-color: rgb(104, 142, 206); */
 }
 
 .btn-calc:hover {
-  background-color: rgb(104, 142, 206);
+  background-color: rgba(139, 210, 231, 0.534);
+  /* background-color: rgb(104, 142, 206); */
 }
 </style>
