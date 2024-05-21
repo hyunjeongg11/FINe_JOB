@@ -151,12 +151,31 @@ export const useFinanceStore = defineStore('Finance', () => {
       "bank_name": "토스뱅크 주식회사",
       "bank_url": "https://www.tossbank.com/product-service/savings/time-deposit",
     },
+    {
+      "bank_name": "MG새마을금고",
+      "bank_url": "https://www.skhybank.com/deposit/depositList.do",
+    },
   ])
 
   const searchBankLink = (bankname) => {
     const bank = bankLink.value.filter(bank => bank.bank_name.includes(bankname))
     return bank.length > 0 ? bank[0].bank_url : ''
   }
+
+  const mapSearchBankLink = (bankname) => {
+    const nameParts = [];
+  
+    for (let i = 0; i < bankname.length - 2; i++) {
+      nameParts.push(bankname.substring(i, i + 3));
+    }
+  
+    const bank = bankLink.value.filter(bank => {
+      return nameParts.some(part => bank.bank_name.includes(part));
+    });
+  
+    return bank.length > 0 ? bank[0].bank_url : '';
+  }
+
 
   const getSavingRecommendation = (amountData) => {
     const { inputAmount, targetAmount } = amountData
@@ -176,5 +195,5 @@ export const useFinanceStore = defineStore('Finance', () => {
   }
 
   return { API_URL, depositList, savingList, depositOption, savingOption, recommendSavingList,
-    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink, getSavingRecommendation }
+    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink, mapSearchBankLink, getSavingRecommendation }
 }, {persist: true})

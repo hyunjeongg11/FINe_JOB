@@ -20,16 +20,16 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
-import { userCheckStore } from '@/stores/usercheck' // 사용자 스토어 임포트
+import { userCheckStore } from '@/stores/usercheck' 
 
 const router = useRouter()
-const userStore = userCheckStore() // 사용자 스토어 사용
+const userStore = userCheckStore() 
 const props = defineProps({
   deposit: Object
 })
 
 const goDetail = function (bank, id) {
-  if (!userStore.isLoggedIn) {
+  if (!userStore.isLogin) {
     alert('로그인 해주세요')
     router.push({ name: 'login' })
   } else {

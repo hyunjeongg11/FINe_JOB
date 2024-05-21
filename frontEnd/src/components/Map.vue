@@ -10,6 +10,7 @@
 import SearchBar from './SearchBar.vue';
 import PlaceList from './PlaceList.vue';
 import { useFinanceStore } from '@/stores/finance';
+import markerImageSrc from '/assets/marker.png'; 
 
 export default {
   name: "KakaoMap",
@@ -130,14 +131,8 @@ export default {
       }
     },
     addMarker(position, idx, title, bankName) {
-      const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
-      const imageSize = new window.kakao.maps.Size(36, 37);
-      const imgOptions = {
-        spriteSize: new window.kakao.maps.Size(36, 691),
-        spriteOrigin: new window.kakao.maps.Point(0, idx * 46 + 10),
-        offset: new window.kakao.maps.Point(13, 37),
-      };
-      const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
+      const imageSize = new window.kakao.maps.Size(50, 50); // Adjust size as needed
+      const markerImage = new window.kakao.maps.MarkerImage(markerImageSrc, imageSize); // Use the imported image
       const marker = new window.kakao.maps.Marker({
         position: position,
         image: markerImage,
@@ -158,7 +153,7 @@ export default {
       window.kakao.maps.event.addListener(marker, "click", () => {
         const store = useFinanceStore();
         console.log(title)
-        const bankUrl = store.searchBankLink(title);
+        const bankUrl = store.mapSearchBankLink(title);
         if (bankUrl) {
           console.log('click')
           window.open(bankUrl, "_blank");
@@ -202,8 +197,10 @@ export default {
 
 <style scoped>
 #map {
-  width: 70%;
+  width: 65%;
   height: 500px;
   margin: 0 auto;
+  border-radius: 20px;
+  border: 3px solid #00000027;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div id="menu_wrap" class="container">
     <ul id="placesList" class="list-group">
-      <li v-if="places.length === 0" class="list-group-item custom-list-item">
-        해당 지역에는 선택한 은행이 없습니다.
+      <li v-if="places.length === 0" class="list-group-item custom-list-item noplace">
+        <h5>해당 지역에는 선택한 은행이 없습니다.</h5>
       </li>
       <li
         v-else
@@ -37,11 +37,15 @@ export default {
 </script>
 
 <style scoped>
+h5 {
+  font-weight: bold;
+}
+
 #menu_wrap {
   position: absolute;
-  top: 60%;
+  top: 55%;
   right: 0;
-  width: 250px;
+  width: 300px;
   height: 80%;
   padding: 5px;
   background: rgba(255, 255, 255, 0.7);
@@ -71,4 +75,5 @@ export default {
 #menu_wrap .option button {
   margin-left: 5px;
 }
+
 </style>
