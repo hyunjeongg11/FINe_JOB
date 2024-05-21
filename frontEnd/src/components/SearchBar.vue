@@ -10,12 +10,15 @@
             </button>
           </div>
           <select v-model="selectedProvince" @change="updateCountryList" class="form-select">
+            <option value="" disabled selected>시/도</option>
             <option v-for="(province, index) in provinces" :key="index" :value="province">{{ province }}</option>
           </select>
           <select v-model="selectedCountry" class="form-select">
+            <option value="" disabled selected>구/군</option>
             <option v-for="country in countryList" :key="country" :value="country">{{ country }}</option>
           </select>
           <select v-model="selectedBank" class="form-select">
+            <option value="" disabled selected>은행명</option>
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
           <div class="input-group-append">
