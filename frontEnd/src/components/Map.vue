@@ -158,6 +158,9 @@ export default {
           console.log('click')
           window.open(bankUrl, "_blank");
         }
+        else {
+          alert("해당 은행의 홈페이지가 없습니다.");
+        }
       });
 
       return marker;

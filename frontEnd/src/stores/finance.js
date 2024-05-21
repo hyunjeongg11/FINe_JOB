@@ -164,16 +164,18 @@ export const useFinanceStore = defineStore('Finance', () => {
   }
 
   const mapSearchBankLink = (bankname) => {
+    // console.log(bankname);
     const nameParts = [];
-  
     for (let i = 0; i < bankname.length - 2; i++) {
       nameParts.push(bankname.substring(i, i + 3));
     }
-  
+    // console.log(nameParts);
     const bank = bankLink.value.filter(bank => {
+      // console.log(bank.bank_name);
       return nameParts.some(part => bank.bank_name.includes(part));
     });
-  
+    // console.log(bank.length);
+    // console.log(bank[0].bank_url);
     return bank.length > 0 ? bank[0].bank_url : '';
   }
 
