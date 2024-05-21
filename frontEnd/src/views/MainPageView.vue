@@ -81,7 +81,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 
 .today-info > div {
   margin-bottom: 5%;
-  background-color: rgb(219, 236, 241);
+  background-color: rgb(236, 245, 248);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
@@ -92,7 +92,7 @@ import RecommendJobList from '@/components/RecommendJobList.vue'
 }
 
 .today-luck {
-  height: 38%;
+  height: 40%;
 }
 
 .recommend-job {

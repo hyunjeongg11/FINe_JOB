@@ -49,7 +49,7 @@ const getTodayLuck = function() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%; /* 높이를 100%로 설정합니다. */
+  height: 90%;
 }
 
 .luck-info {
@@ -72,13 +72,13 @@ const getTodayLuck = function() {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  padding: 5px 0px;
+  padding-top: 5px;
   border-radius: 10px;
 }
 
 .luck-title {
   font-size: 1.2rem;
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: bold;
   text-align: center;
 }
@@ -87,7 +87,6 @@ const getTodayLuck = function() {
   font-size: 1rem;
   padding: 5px 0px;
   background-color: white;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;
 }
 
@@ -95,11 +94,11 @@ const getTodayLuck = function() {
   width: 100px;
   margin: 10px auto;
   background-color: rgb(180, 212, 255);
-  color: white; /* Optional: Makes the button text white for better contrast */
-  border: none; /* Optional: Removes the border */
+  color: white;
+  border: none;
   padding: 10px;
-  border-radius: 5px; /* Optional: Adds rounded corners */
-  cursor: pointer; /* Optional: Changes the cursor to a pointer when hovering */
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .highlight {
