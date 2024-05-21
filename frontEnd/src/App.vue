@@ -130,6 +130,9 @@ const hideSearchResults = () => {
 
 const navigateTo = (link) => {
   router.push(link)
+  searchQuery.value = ''
+  searchResults.value = []
+  searchResultsVisible.value = false
 }
 
 onMounted(() => {
@@ -212,7 +215,6 @@ header {
   left: 50%;
   transform: translateX(-50%);
 }
-
 
 .dropdown-item:hover {
   background-color: rgb(219, 236, 241);
