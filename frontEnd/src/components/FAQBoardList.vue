@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2>FAQ 목록</h2>
     <table class="board-table">
       <thead>
         <tr>
