@@ -8,10 +8,10 @@ export const userCheckStore = defineStore('usercheck', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
   const userId = ref(null)
+  const recommendJobs = ref([])
   const store = useBoardStore() 
   const router = useRouter()
   const isSuperUser = ref(false)
-
   const isLogin = computed(() => {
     if (token.value === null) {
       return false
@@ -52,6 +52,7 @@ export const userCheckStore = defineStore('usercheck', () => {
         token.value = null
         userId.value = null
         store.todayLuck = ''
+        recommendJobs.value = []
         router.push({ name: 'main'})
       })
       .catch(err => {
@@ -128,7 +129,21 @@ export const userCheckStore = defineStore('usercheck', () => {
       }
     }
   }
-
-
-  return { API_URL, token, userId, router, isSuperUser, isLogin, logIn, logOut, signUp, changePassword, withdraw }
+  const getRecommendJobs = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/jobs/recommend_job/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then((res) => {
+        // console.log(res.data)
+        recommendJobs.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  return { API_URL, token, userId, recommendJobs, router, isSuperUser, isLogin, logIn, logOut, signUp, changePassword, withdraw, getRecommendJobs }
 }, {persist: true})

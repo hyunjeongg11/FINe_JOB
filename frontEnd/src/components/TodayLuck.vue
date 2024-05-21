@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="luck-container" v-else>
-        <p class="luck-info">오늘의 운세를 보려면 로그인하세요.</p>
+        <p class="luck-info">오늘의 운세를 보시려면 로그인하세요.</p>
       </div>
     </div>
   </div>

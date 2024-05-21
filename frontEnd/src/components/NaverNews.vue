@@ -40,7 +40,6 @@ const newsList = computed(() => apistore.news)
   box-sizing: border-box;
   overflow: hidden;
   background-color: rgb(219, 236, 241);
-
   border-radius: 10px;
 }
 
