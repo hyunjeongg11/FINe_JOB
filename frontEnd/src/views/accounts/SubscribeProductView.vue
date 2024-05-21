@@ -166,6 +166,7 @@ onMounted(() => {
   width: 250px;
   margin-right: 30px;
   border-radius: 5px;
+  margin-top: 8px;
 }
 
 .link {

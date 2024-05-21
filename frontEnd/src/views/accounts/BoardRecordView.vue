@@ -98,6 +98,7 @@ h2 {
 	height: 60%;
   width: 250px;
   margin-right: 30px;
+  margin-top: 8px;
   border-radius: 5px;
 }
 
