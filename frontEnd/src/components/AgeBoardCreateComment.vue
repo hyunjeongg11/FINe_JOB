@@ -1,6 +1,6 @@
 <template>
   <div class="create-comment">
-    <h3>댓글 작성</h3>
+    <!-- <h3>댓글 작성</h3> -->
     <form @submit.prevent="submitComment">
       <div class="form-group">
         <label for="content">내용</label>
@@ -55,6 +55,9 @@ const submitComment = () => {
 <style scoped>
 .create-comment {
   margin-top: 20px;
+  border: #ccc solid 1px;
+  padding: 10px;
+  background-color: #f0f0f080;
 }
 
 .form-group {
@@ -66,6 +69,10 @@ const submitComment = () => {
   margin-bottom: 5px;
 }
 
+
+#content {
+  height: 100px;
+}
 .form-group textarea {
   width: 100%;
   padding: 10px;

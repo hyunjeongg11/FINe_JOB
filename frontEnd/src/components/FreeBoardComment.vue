@@ -1,10 +1,10 @@
 <template>
   <div class="comments">
-    <h3>댓글 목록</h3>
+    <h5>댓글 목록</h5>
     <ul v-if="freeComments">
       <li v-for="comment in freeComments" :key="comment.id" class="comment-item">
-        <p>{{ comment.user.username }}: {{ comment.content }}</p>
-        <button @click="deleteComment(comment.id)" v-if="comment.user.username === userStore.userId">삭제</button>
+        <p>{{ comment.user.username }} : {{ comment.content }}</p>
+        <button v-if="comment.user.username === userStore.userId" @click="deleteComment(comment.id)">삭제</button>
       </li>
     </ul>
     <p v-else>댓글이 없습니다!</p>
@@ -20,8 +20,8 @@ import { useBoardStore } from '@/stores/board'
 import { useRoute } from 'vue-router'
 import CreateComment from '@/components/FreeBoardCreateComment.vue'
 
-const store = useBoardStore()
 const userStore = userCheckStore()
+const store = useBoardStore()
 const route = useRoute()
 
 const freeComments = ref(null)
@@ -32,11 +32,10 @@ const fetchComments = () => {
     method: 'get',
     url: `${store.API_URL}/api/v1/boards/free/${route.params.id}`,
     headers: {
-      Authorization: `Token ${userStore.token}` // 인증 토큰을 헤더에 추가
+      Authorization: `Token ${userStore.token}`
     }
   })
     .then((res) => {
-      // console.log(res.data)
       freeBoard.value = res.data
       freeComments.value = res.data.free_comment
     })
@@ -60,7 +59,7 @@ const deleteComment = (commentId) => {
     })
       .then(() => {
         alert('댓글이 삭제되었습니다.')
-        fetchComments() // 댓글 삭제 후 댓글 목록 다시 불러오기
+        fetchComments()
       })
       .catch((err) => {
         console.log(err)
@@ -87,12 +86,11 @@ button {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
-  background-color: #dc3545;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #c82333;
+  background-color: #e7707c;
 }
 </style>

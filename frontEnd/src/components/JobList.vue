@@ -122,6 +122,14 @@ const nextPage = () => {
   border: 1px solid #ddd;
 }
 
+a {
+  color: rgb(0, 0, 0);
+}
+
+a:hover {
+  color: rgb(59, 130, 153);
+}
+
 .pagination {
   text-align: center;
   margin-top: 20px;
@@ -133,10 +141,11 @@ const nextPage = () => {
   border: 1px solid #ddd;
   background-color: #fff;
   cursor: pointer;
+  color: rgb(59, 130, 153);
 }
 
 .pagination button.active {
-  background-color: #007bff;
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 
@@ -144,7 +153,6 @@ const nextPage = () => {
   cursor: not-allowed;
   opacity: 0.5;
 }
-
 .outer-box {
   background-color: rgb(219, 236, 241);
   border-radius: 10px;

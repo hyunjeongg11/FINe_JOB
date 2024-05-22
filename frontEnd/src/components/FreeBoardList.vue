@@ -1,31 +1,28 @@
 <template>
   <div class="container">
-    <h2>자유게시판 목록</h2>
-    <table class="board-table" v-if="filteredBoards.length">
-      <thead>
-        <tr>
-          <th class="title-col">제목</th>
-          <th class="author-col">작성자</th>
-          <th class="date-col">작성일</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="freeBoard in filteredBoards" :key="freeBoard.id">
-          <td>
-            <RouterLink :to="{ name: 'freeboarddetail', params: { id: freeBoard.id } }">
-              {{ freeBoard.title }}
-            </RouterLink>
-          </td>
-          <td>{{ freeBoard.user.username }}</td>
-          <td>{{ formatDateTime(freeBoard.created_at) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="header">
+      <h2>자유게시판 목록</h2>
+      <div v-if="isLogin">
+        <RouterLink :to="{ name: 'freeboardcreate' }" class="create-button">게시글 작성</RouterLink>
+      </div>
+    </div>
+    <hr>
+    <div class="board-list" v-if="filteredBoards.length">
+      <div class="board-item" v-for="freeBoard in filteredBoards" :key="freeBoard.id">
+        <div class="board-header">
+          <RouterLink :to="{ name: 'freeboarddetail', params: { id: freeBoard.id } }">
+            {{ freeBoard.title }}
+          </RouterLink>
+        </div>
+        <div class="board-meta">
+          <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
+          {{ freeBoard.user.username }} | {{ formatDateTime(freeBoard.created_at) }}
+        </div>
+        <hr />
+      </div>
+    </div>
     <div v-else>
       게시글이 없습니다!
-    </div>
-    <div class="actions" v-if="isLogin">
-      <RouterLink :to="{ name: 'freeboardcreate' }" class="create-button">게시글 생성</RouterLink>
     </div>
     <div class="pagination">
       <button @click="prevPage" :disabled="currentPage === 1">&lt;</button>
@@ -48,7 +45,6 @@ const userStore = userCheckStore() // 사용자 스토어 사용
 const router = useRouter()
 const currentPage = ref(1)
 const itemsPerPage = 10
-
 
 const filteredBoards = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
@@ -90,68 +86,65 @@ const isLogin = computed(() => userStore.isLogin) // 로그인 상태 계산
 
 <style scoped>
 .container {
-  max-width: 1500px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 h2 {
-  text-align: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
-.board-table {
-  width: 100%;
-  border-collapse: collapse;
+.board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.board-item {
+  padding: 10px 0;
+}
+
+.board-header {
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-.board-table th,
-.board-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.board-table th {
-  background-color: #f1f1f1;
-}
-
-.board-table td a {
-  color: #007bff;
+.board-header a {
+  color: #000; /* Black color for title */
   text-decoration: none;
 }
 
-.board-table td a:hover {
+.board-header a:hover {
   text-decoration: underline;
 }
 
-/* Add width percentages for columns */
-.title-col {
-  width: 60%;
+.board-meta {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
 }
 
-.author-col {
-  width: 20%;
-}
-
-.date-col {
-  width: 20%;
-}
-
-.actions {
-  text-align: right;
-  margin-bottom: 20px;
+hr {
+  border: none;
+  border-top: 1px solid #181616;
+  margin: 10px 0;
 }
 
 .create-button {
   display: inline-block;
   padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #007bff;
+  background-color: rgb(59, 130, 153)
+;
   color: white;
   text-decoration: none;
   border-radius: 4px;
@@ -160,11 +153,12 @@ h2 {
 }
 
 .create-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(59, 130, 153);
 }
 
 .pagination {
   text-align: center;
+  margin-top: 20px;
 }
 
 .pagination button {
@@ -173,10 +167,11 @@ h2 {
   border: 1px solid #ddd;
   background-color: #fff;
   cursor: pointer;
+  color: rgb(59, 130, 153);
 }
 
 .pagination button.active {
-  background-color: #007bff;
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 

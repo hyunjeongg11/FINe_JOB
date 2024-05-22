@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<ul class="nav nav-underline justify-content-center">
+	<div class="container">
+		<ul class="nav nav-underline">
 			<li class="nav-item">
 				<RouterLink :to="{name: 'freeboard'}" class="nav-link" :class="{ active: isActiveRoute('freeboard') }">자유게시판</RouterLink>
 			</li>
@@ -47,7 +47,7 @@ h1 {
 	margin-bottom: 20px;
 }
 .container {
-	max-width: 1500px;
+	max-width: 1000px;
 	margin: 0 auto;
 	padding: 20px;
 	/* border: 1px solid #ddd; */
@@ -73,6 +73,17 @@ nav {
 .nav-link:hover,
 .nav-link.active {
     color: rgb(59, 130, 153);
+}
+
+.nav-underline {
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  padding-left: 40px;
+}
+
+.nav-item {
+  margin-right: 20px;
 }
 
 </style>

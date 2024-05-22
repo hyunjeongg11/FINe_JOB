@@ -1,31 +1,38 @@
 <template>
   <div class="container">
     <h2>FAQ 목록</h2>
-    <table class="board-table">
-      <thead>
-        <tr>
-          <th class="title-col">주제</th>
-          <th class="date-col">등록일</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="board in filteredBoards" :key="board.id">
-          <td><a :href="board.url" target="_blank">{{ board.subject }}</a></td>
-          <td>{{ board.registerDate }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <hr>
+    <div class="board-list" v-if="filteredBoards.length">
+      <div class="board-item" v-for="board in filteredBoards" :key="board.id">
+        <div class="board-header">
+          <a :href="board.url" target="_blank">
+            {{ board.subject }}
+          </a>
+        </div>
+        <div class="board-meta">
+          {{ formatDate(board.registerDate) }}
+        </div>
+        <hr />
+      </div>
+    </div>
+    <div v-else>
+      게시글이 없습니다!
+    </div>
+    <div class="pagination">
+      <button @click="prevPage" :disabled="currentPage === 1">&lt;</button>
+      <button v-for="page in totalPages" :key="page" @click="goToPage(page)" :class="{ active: currentPage === page }">
+        {{ page }}
+      </button>
+      <button @click="nextPage" :disabled="currentPage === totalPages">&gt;</button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
 import { useBoardStore } from '@/stores/board'
-import FAQBoardList from '@/components/FAQBoardList.vue'
-import { useRouter, RouterLink } from 'vue-router'
 
 const store = useBoardStore()
-const router = useRouter()
 const currentPage = ref(1)
 const itemsPerPage = 10
 
@@ -55,85 +62,68 @@ const nextPage = () => {
   }
 }
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 </script>
 
 <style scoped>
 .container {
-  max-width: 1500px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
 }
 
 h2 {
-  text-align: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
-.board-table {
-  width: 100%;
-  border-collapse: collapse;
+.board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.board-item {
+  padding: 10px 0;
+}
+
+.board-header {
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-.board-table th,
-.board-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.board-table th {
-  background-color: #f1f1f1;
-}
-
-.board-table td a {
-  color: #007bff;
+.board-header a {
+  color: #000; /* Black color for title */
   text-decoration: none;
 }
 
-.board-table td a:hover {
+.board-header a:hover {
   text-decoration: underline;
 }
 
-/* Add width percentages for columns */
-.title-col {
-  width: 60%;
+.board-meta {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
 }
 
-.author-col {
-  width: 20%;
-}
-
-.date-col {
-  width: 20%;
-}
-
-.actions {
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-.create-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
+hr {
   border: none;
-  cursor: pointer;
-}
-
-.create-button:hover {
-  background-color: #0056b3;
+  border-top: 1px solid #181616;
+  margin: 10px 0;
 }
 
 .pagination {
   text-align: center;
+  margin-top: 20px;
 }
 
 .pagination button {

@@ -119,6 +119,15 @@ onMounted (() => {
   padding: 10px 0;
 }
 
+a {
+  color: rgb(0, 0, 0);
+}
+
+a:hover {
+  color: rgb(59, 130, 153);
+}
+
+
 /* Adjust widths for better alignment */
 .td-title {
   width: 30%;

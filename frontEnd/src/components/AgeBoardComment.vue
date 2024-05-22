@@ -1,9 +1,9 @@
 <template>
   <div class="comments">
-    <h3>댓글 목록</h3>
+    <h5>댓글 목록</h5>
     <ul v-if="ageComments">
       <li v-for="comment in ageComments" :key="comment.id" class="comment-item">
-        <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        <p>{{ comment.user.username }} : {{ comment.content }}</p>
         <button v-if="comment.user.username === userStore.userId" @click="deleteComment(comment.id)">삭제</button>
       </li>
     </ul>
@@ -85,12 +85,12 @@ button {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
-  background-color: #dc3545;
-  color: white;
+  /* background-color: #dc3545; */
+  color: black;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #c82333;
+  background-color: #e7707c;
 }
 </style>
