@@ -7,7 +7,7 @@
         </nav>
         <nav v-else class="auth-nav">
           <p class="nav-link dropdown-toggle username" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img :src="`/assets/profile.png`" alt="현위치" style="height: 35px; width: 35px; border-radius: 20px;">
+            <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;">
             {{ store.userId }}님
           </p>
           <ul class="dropdown-menu">
@@ -78,6 +78,9 @@
       <RouterView />
     </main>
     <Footer />
+    <button @click="scrollToTop" class="scroll-to-top">
+      <img :src="`/assets/up.png`" alt="맨 위로" class="up-icon">
+    </button>
   </div>
 </template>
 
@@ -157,6 +160,13 @@ onMounted(() => {
     });
   });
 });
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 </script>
 
 <style scoped>
@@ -242,6 +252,20 @@ footer {
   color: white;
   padding: 20px 0;
   text-align: center;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.scroll-to-top .up-icon {
+  width: 50px;
+  height: 50px;
 }
 
 @font-face {

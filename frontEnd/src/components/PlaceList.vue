@@ -43,10 +43,10 @@ h5 {
 
 #menu_wrap {
   position: absolute;
-  top: 55%;
+  top: 53%;
   right: 0;
   width: 300px;
-  height: 80%;
+  height: 78%;
   padding: 5px;
   background: rgba(255, 255, 255, 0.7);
   z-index: 1;
