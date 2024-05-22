@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>일자리</h1>
     <JobList />
   </div>
   <RouterView />
@@ -17,5 +16,8 @@ function goBack() {
 </script>
 
 <style scoped>
+.job-search-title {
+  margin-left: 10%;
+}
 
 </style>

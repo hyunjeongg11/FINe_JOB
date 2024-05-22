@@ -1,9 +1,15 @@
 <template>
   <div class="outer-box">
-    <h4 class="page-title">추천공고</h4>
+    <h4 class="page-title">{{ store.userId }} 님을 위한 추천 공고</h4>
     <div class="job-container">
       <div v-if="store.token">
-        <div v-if="store.recommendJobs && store.recommendJobs.length > 0">
+        <div v-if="loading">
+          <!-- 로딩 스피너 표시 -->
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div v-else-if="store.recommendJobs && store.recommendJobs.length > 0">
           <table class="job-table">
             <thead>
               <tr>
@@ -40,9 +46,14 @@ import { ref, watch, onMounted } from 'vue'
 import { userCheckStore } from '@/stores/usercheck'
 
 const store = userCheckStore()
+const loading = ref(false)
 
 onMounted (() => {
-  store.getRecommendJobs()
+  loading.value = true; // 버튼 클릭 시 로딩 상태를 true로 변경
+  setTimeout(() => {
+    store.getRecommendJobs()
+    loading.value = false; // 추천공고를 가져온 후 로딩 상태를 false로 변경
+  }, 500);
 })
 </script>
 
@@ -59,8 +70,8 @@ onMounted (() => {
   background-color: rgb(219, 236, 241);
   border-radius: 10px;
   padding: 5px;
-  width: 130%; /* Change to 100% to match the container */
-  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  width: 80%; /* Change to 100% to match the container */
+  margin: 0 auto;
 }
 
 .job-container {
@@ -80,8 +91,17 @@ onMounted (() => {
 .table-header {
   background-color: #edf2f7;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 16px;
   padding: 12px 15px;
+}
+
+.spinner-grow {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
 }
 
 /* Adjust widths for better alignment */
@@ -102,11 +122,12 @@ onMounted (() => {
 }
 
 .truncate {
-  font-size: 10px;
+  font-size: 13px;
   max-width: 150px; /* Set a maximum width for text truncation */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; /* Prevent text from wrapping */
+  padding: 10px 0;
 }
 
 /* Adjust widths for better alignment */
