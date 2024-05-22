@@ -186,7 +186,7 @@ header {
   justify-content: flex-end;
   align-items: center;
   padding: rem;
-  margin-right: 100px; 
+  margin-right: 90px; 
 }
 
 
@@ -201,14 +201,14 @@ header {
 
 .username {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .main-nav {
   width: 100%;
   background-color: #fff;
   border-bottom: 2px solid rgb(59, 130, 153);
-  padding: 0 5%;
+  padding: 0 10%;
   margin-bottom: 20px;
 }
 
@@ -221,7 +221,7 @@ header {
 .nav-item {
   flex: 1;
   text-align: center;
-  font-size: 23px;
+  font-size: 20px;
   position: relative;
 }
 
