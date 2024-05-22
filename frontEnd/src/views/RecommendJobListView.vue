@@ -17,6 +17,9 @@
                 <th class="table-header th-company">회사명</th>
                 <th class="table-header th-location">근무지</th>
                 <th class="table-header th-deadline">마감일</th>
+                <th class="table-header th-experience">경력사항</th>
+                <th class="table-header th-requirement">요구사항</th>
+                <th class="table-header th-jobtype">근무형태</th>
               </tr>
             </thead>
             <tbody>
@@ -25,6 +28,9 @@
                 <td class="truncate">{{ job.company }}</td>
                 <td class="truncate">{{ job.location }}</td>
                 <td class="truncate">{{ job.deadline }}</td>
+                <td class="truncate">{{ job.experience }}</td>
+                <td class="truncate">{{ job.requirement }}</td>
+                <td class="truncate">{{ job.jobtype }}</td>
               </tr>
             </tbody>
           </table>
@@ -42,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { userCheckStore } from '@/stores/usercheck'
 
 const store = userCheckStore()
@@ -58,7 +64,7 @@ onMounted (() => {
 </script>
 
 <style scoped>
-/* Existing styles */
+/* 기존 스타일 */
 .page-title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -92,7 +98,7 @@ onMounted (() => {
   background-color: #edf2f7;
   font-weight: bold;
   font-size: 16px;
-  padding: 12px 15px;
+  padding: 12px 6px;
 }
 
 .spinner-grow {
@@ -104,25 +110,8 @@ onMounted (() => {
   margin: 20px auto;
 }
 
-/* Adjust widths for better alignment */
-.th-title {
-  width: 40%;
-}
-
-.th-company {
-  width: 25%;
-}
-
-.th-location {
-  width: 20%;
-}
-
-.th-deadline {
-  width: 25%;
-}
-
 .truncate {
-  font-size: 13px;
+  font-size: 15px;
   max-width: 150px; /* Set a maximum width for text truncation */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -136,15 +125,27 @@ onMounted (() => {
 }
 
 .td-company {
-  width: 25%;
+  width: 15%;
 }
 
 .td-location {
-  width: 20%;
+  width: 15%;
 }
 
 .td-deadline {
-  width: 25%;
+  width: 15%;
+}
+
+.td-experience {
+  width: 10%;
+}
+
+.td-requirement {
+  width: 10%;
+}
+
+.td-jobtype {
+  width: 5%;
 }
 
 tr:nth-child(even) {

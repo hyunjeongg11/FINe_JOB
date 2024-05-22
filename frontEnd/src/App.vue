@@ -25,7 +25,7 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <RouterLink :to="{ name: 'main' }">
-                  <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
+                  <img :src="logoSrc" @mouseover="logoSrc = '/assets/logo/small_logo_hover.png'" @mouseout="logoSrc = '/assets/logo/small_logo.png'" alt="Logo" class="logo">
                 </RouterLink>
               </li>
               <li class="nav-item dropdown">
@@ -98,6 +98,7 @@ const store = userCheckStore()
 const searchQuery = ref('')
 const searchResults = ref([])
 const searchResultsVisible = ref(false)
+const logoSrc = ref('/assets/logo/small_logo.png')
 const router = useRouter()
 
 const navigationItems = [
@@ -192,7 +193,6 @@ header {
   padding: rem;
   margin-right: 8%; 
 }
-
 
 .logo {
   height: 60px;
