@@ -24,12 +24,10 @@
       </div>
     </div>
     <div class="icons">
-      <div class="login">
-        <div>
-          로그인
-        </div>
-      </div>
       <div class="login-area">
+        <div class="login-form">로그인</div>
+      </div>
+      <div class="icons-area">
         <div class="icon-item icon-top-left">
           <img src="/assets/carousel/1.jpg" alt="금융">
           <p>금융</p>
@@ -99,22 +97,24 @@ import NaverNews from '@/components/NaverNews.vue'
   grid-area: icons;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 
-.login {
-  height: 40%; /* 로그인 영역의 높이를 40%로 지정합니다. */
-  /* 로그인 영역 스타일 */
+.login-area {
+  height: 35%;
+  margin-bottom: 5%;
+  background-color: skyblue;
 }
 
-.icon-area {
-  height: 60%; /* 아이콘 영역의 높이를 60%로 지정합니다. */
+.icons-area {
+  height: 60%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 5px;
   justify-items: center;
   align-items: center;
-  /* 아이콘 영역 스타일 */
+  background-color: pink;
 }
 
 .icon-item {
@@ -124,9 +124,9 @@ import NaverNews from '@/components/NaverNews.vue'
 }
 
 .icon-item img {
-  width: 150px;
-  height: 150px;
-  margin-bottom: 10px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 5px;
   border-radius: 50%;
 }
 
@@ -151,7 +151,6 @@ import NaverNews from '@/components/NaverNews.vue'
   grid-row: 2;
 }
 
-/* 뉴스 및 운세 영역 스타일 */
 .news {
   grid-area: news;
 }
@@ -164,5 +163,9 @@ import NaverNews from '@/components/NaverNews.vue'
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.login {
+  background-color: aqua;
 }
 </style>
