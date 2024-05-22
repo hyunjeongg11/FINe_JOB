@@ -104,6 +104,8 @@ import NaverNews from '@/components/NaverNews.vue'
   height: 35%;
   margin-bottom: 5%;
   background-color: skyblue;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
 }
 
 .icons-area {
@@ -114,7 +116,6 @@ import NaverNews from '@/components/NaverNews.vue'
   gap: 5px;
   justify-items: center;
   align-items: center;
-  background-color: pink;
 }
 
 .icon-item {
@@ -126,7 +127,7 @@ import NaverNews from '@/components/NaverNews.vue'
 .icon-item img {
   width: 100px;
   height: 100px;
-  margin-bottom: 5px;
+  margin: 3px;
   border-radius: 50%;
 }
 
@@ -161,8 +162,6 @@ import NaverNews from '@/components/NaverNews.vue'
 
 .main-container > div {
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .login {

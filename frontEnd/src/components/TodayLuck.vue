@@ -3,7 +3,13 @@
     <h4 class="luck-header">오늘의 운세</h4>
     <div class="luck-border">
       <div class="luck-container" v-if="userStore.token">
-        <div v-if="todayLuckTitle">
+        <div v-if="loading">
+          <!-- 로딩 스피너 표시 -->
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div v-else-if="todayLuckTitle">
           <p class="luck-title">오늘의 총운은 <span class="highlight">{{ todayLuckTitle }}</span>입니다.</p>
           <hr>
           <p class="luck-content">{{ todayLuckContent }}</p>
@@ -26,6 +32,8 @@ import { useBoardStore } from '@/stores/board'
 import { userCheckStore } from '@/stores/usercheck'
 const store = useBoardStore()
 const userStore = userCheckStore()
+const loading = ref(false)
+
 const todayLuckTitle = computed(() => {
   if (store.todayLuck && store.todayLuck.title) {
     const fullTitle = store.todayLuck.title
@@ -40,7 +48,11 @@ const todayLuckTitle = computed(() => {
 const todayLuckContent = computed(() => store.todayLuck.content)
 
 const getTodayLuck = function() {
-  store.getTodayLuck()
+  loading.value = true; // 버튼 클릭 시 로딩 상태를 true로 변경
+  setTimeout(() => {
+    store.getTodayLuck()
+    loading.value = false; // 운세를 가져온 후 로딩 상태를 false로 변경
+  }, 500)
 }
 </script>
 
@@ -117,5 +129,14 @@ const getTodayLuck = function() {
 .highlight {
   color: rgb(134, 182, 246);
   font-size: 1.4rem;
+}
+
+.spinner-grow {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
 }
 </style>
