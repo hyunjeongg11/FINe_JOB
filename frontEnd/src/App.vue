@@ -61,7 +61,7 @@
               </li>
             </ul>
             <form class="d-flex position-relative" role="search" @submit.prevent="performSearch">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="searchQuery" @focus="showSearchResults" @input="updateSearchResults" @blur="hideSearchResults">
+              <input class="form-control me-2" type="search" placeholder="검색어" aria-label="Search" v-model="searchQuery" @focus="showSearchResults" @input="updateSearchResults" @blur="hideSearchResults">
               <button class="btn btn-outline-success" type="submit" :style="{ backgroundColor: 'rgb(59, 130, 153)', borderColor: 'rgb(59, 130, 153)', color: 'white' }">Search</button>
               <ul class="dropdown-menu search-results" :class="{ show: searchResultsVisible }">
                 <li v-for="result in searchResults" :key="result.name">
@@ -173,10 +173,12 @@ header {
 
 .header-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: rem;
+  margin-right: 100px; 
 }
+
 
 .logo {
   height: 40px;
@@ -185,7 +187,6 @@ header {
 .auth-nav {
   display: flex;
   gap: 1rem;
-  margin-right: 10%;
 }
 
 .username {
@@ -197,7 +198,8 @@ header {
   width: 100%;
   background-color: #fff;
   border-bottom: 2px solid rgb(59, 130, 153);
-  padding: 0 10%;
+  padding: 0 5%;
+  margin-bottom: 20px;
 }
 
 .navbar-nav {
