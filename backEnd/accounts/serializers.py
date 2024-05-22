@@ -21,11 +21,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'nickname', 'birthday', 'gender', 'address', 'profile_img', 'asset', 'salary', 'interest_industry')
 
 class CustomUserEditSerializer(serializers.ModelSerializer):
-    address = serializers.CharField(source='user.detailuser.address', read_only=True)
+    # address = serializers.CharField(source='user.detailuser.address', read_only=True)
 
     class Meta:
         model = User
         fields = ['nickname', 'birthday', 'address', 'gender', 'profile_img', 'asset', 'salary', 'interest_industry']
+        read_only_fields = ['birthday',]
 
 # 관심 상품 리스트
 class UserLikeListSerializer(serializers.ModelSerializer):

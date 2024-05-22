@@ -137,6 +137,7 @@ onMounted(() => {
 })
 
 const updateDetail = function () {
+  
   axios({
     method: 'put',
     url: `${userStore.API_URL}/api/v1/accounts/edit_user_info/`,
