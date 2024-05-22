@@ -171,7 +171,7 @@ export const useFinanceStore = defineStore('Finance', () => {
     }
     // console.log(nameParts);
     const bank = bankLink.value.filter(bank => {
-      // console.log(bank.bank_name);
+      console.log(bank.bank_name);
       return nameParts.some(part => bank.bank_name.includes(part));
     });
     // console.log(bank.length);

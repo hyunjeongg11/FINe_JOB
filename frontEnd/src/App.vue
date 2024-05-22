@@ -53,6 +53,7 @@
                 <ul class="dropdown-menu">
                   <li><RouterLink :to="{ name: 'searchbank' }" class="dropdown-item" href="#">주변 은행 찾기</RouterLink></li>
                   <li><RouterLink :to="{ name: 'currencyconverter' }" class="dropdown-item" href="#">환율 계산기</RouterLink></li>
+                  <li><RouterLink :to="{ name: 'interestcalculator' }" class="dropdown-item" href="#">이자 계산기</RouterLink></li>
                 </ul>
               </li>
               <li class="nav-item">
@@ -74,7 +75,11 @@
     </header>
 
     <main>
-      <RouterView />
+      <RouterView v-slot="{ Component, route }">
+        <keep-alive include="DepositList">
+          <component :is="Component" :key="route.path" />
+        </keep-alive>
+      </RouterView>/>
     </main>
     <Footer />
     <button @click="scrollToTop" class="scroll-to-top">

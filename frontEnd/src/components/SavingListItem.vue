@@ -1,14 +1,18 @@
+[SavingListItem.vue]
 <template>
   <div class="container-fluid">
     <div class="cards-container">
-      <div class="card-container" v-for="saving in [props.saving]" :key="saving.id">
-        <div class="card" @click="goDetail(saving.fin_prdt_cd, saving.id)">
-          <img :src="`/assets/banks/${saving.kor_co_nm}.png`" class="card-img-top" alt="Bank Logo">
-          <div class="card-body">
-            <p class="card-text">{{ saving.join_way }}</p>
-            <h3 class="card-text">{{ saving.fin_prdt_nm }}</h3>
-            <h5 class="card-text">최대 우대금리: <strong>{{ calculateMaxRate(saving.saving_options).maxRate }}</strong>%</h5>
-            <p class="card-text">기간: {{ calculateMaxRate(saving.saving_options).maxTerm }}개월</p>
+      <div class="card" @click="goDetail(saving.fin_prdt_cd, saving.id)">
+        <div class="card-content">
+          <div class="card-img-container">
+            <img :src="`/assets/banks/${saving.kor_co_nm}.png`" class="card-img" alt="Bank Logo">
+            <p class="bank-name">{{ saving.kor_co_nm }}</p>
+          </div>
+          <div class="card-text-content">
+            <p class="join-way">{{ saving.join_way }}</p>
+            <h4 class="product-name">{{ saving.fin_prdt_nm }}</h4>
+            <h5 class="rate">최대 우대금리: <strong>{{ calculateMaxRate(saving.saving_options).maxRate }}</strong>%</h5>
+            <p class="term">기간: {{ calculateMaxRate(saving.saving_options).maxTerm }}개월</p>
             <button class="btn btn-primary">상세보기</button>
           </div>
         </div>
@@ -52,67 +56,77 @@ const calculateMaxRate = (savingOptions) => {
 </script>
 
 <style scoped>
-.container-fluid {
-  width: 30%;
-  margin: 0 auto; /* Center the container */
-}
-
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 20px 0;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .card-container {
-  flex: 1 1 30%;
-  margin: 10px;
+  flex: 0 0 calc(33.33% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); */
   cursor: pointer;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 400px; /* Adjusted height to fit all content */
-}
-
-.card-img-top {
   width: 100%;
-  height: 150px; /* Fixed height to maintain aspect ratio */
-  object-fit: cover;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  background-color: white;
+  border: none;
 }
 
-.card-body {
-  padding: 15px;
-  text-align: center;
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px;
+}
+
+.card-img-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
 
-.card-text {
-  margin: 5px 0;
-  flex-grow: 1; /* Allow text to grow and take available space */
+.card-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.bank-name {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.card-text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding-left: 10px;
+}
+
+.join-way,
+.product-name,
+.rate,
+.term {
+  margin-bottom: 10px;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border: none;
-  padding: 10px 20px;
   margin-top: 10px;
-  cursor: pointer;
-  border-radius: 5px;
+  background-color: rgba(113, 166, 201, 0.856);
+  border: none;
   color: white;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 </style>

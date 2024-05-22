@@ -15,6 +15,7 @@ import DepositView from '@/views/finances/DepositView.vue'
 import DepositDetailView from '@/views/finances/DepositDetailView.vue'
 import SavingView from '@/views/finances/SavingView.vue'
 import SavingDetailView from '@/views/finances/SavingDetailView.vue'
+import InterestCalculatorView from '@/views/InterestCalculatorView.vue'
 import JobView from '@/views/JobView.vue'
 import RecommendJobListView from '@/views/RecommendJobListView.vue'
 import CurrencyConverterView from '@/views/CurrencyConverterView.vue'
@@ -110,6 +111,11 @@ const router = createRouter({
       path: '/saving/:fin_prdt_cd/:id/', 
       name:'savingdetail', 
       component: SavingDetailView
+    },
+    {
+      path: '/interestcalculator',
+      name: 'interestcalculator',
+      component: InterestCalculatorView
     },
     {
       path: '/job', 
