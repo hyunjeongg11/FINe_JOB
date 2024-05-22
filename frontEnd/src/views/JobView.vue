@@ -1,7 +1,5 @@
 <template>
   <div>
-    <button @click="goBack" class="back-button">뒤로 가기</button>
-    <h1>일자리</h1>
     <JobList />
   </div>
   <RouterView />
@@ -18,18 +16,8 @@ function goBack() {
 </script>
 
 <style scoped>
-.back-button {
-    margin: 10px 10px;
-    padding: 5px 10px;
-    font-size: 16px;
-    color: black;
-    /* background-color: #555; */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.job-search-title {
+  margin-left: 10%;
 }
 
-.back-button:hover {
-    background-color: rgb(165, 165, 165);
-}
 </style>

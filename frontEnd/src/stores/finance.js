@@ -13,6 +13,7 @@ export const useFinanceStore = defineStore('Finance', () => {
   const depositOption = ref([])
   const savingOption = ref([])
   const recommendSavingList = ref([])
+  const recommendDepositList = ref([])
 
   const getDepositList = function() {
     axios({
@@ -23,7 +24,7 @@ export const useFinanceStore = defineStore('Finance', () => {
       }
     })
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         depositList.value = res.data
       })
       .catch(err => console.log(err))
@@ -151,12 +152,33 @@ export const useFinanceStore = defineStore('Finance', () => {
       "bank_name": "토스뱅크 주식회사",
       "bank_url": "https://www.tossbank.com/product-service/savings/time-deposit",
     },
+    {
+      "bank_name": "MG새마을금고",
+      "bank_url": "https://www.skhybank.com/deposit/depositList.do",
+    },
   ])
 
   const searchBankLink = (bankname) => {
     const bank = bankLink.value.filter(bank => bank.bank_name.includes(bankname))
     return bank.length > 0 ? bank[0].bank_url : ''
   }
+
+  const mapSearchBankLink = (bankname) => {
+    // console.log(bankname);
+    const nameParts = [];
+    for (let i = 0; i < bankname.length - 2; i++) {
+      nameParts.push(bankname.substring(i, i + 3));
+    }
+    // console.log(nameParts);
+    const bank = bankLink.value.filter(bank => {
+      console.log(bank.bank_name);
+      return nameParts.some(part => bank.bank_name.includes(part));
+    });
+    // console.log(bank.length);
+    // console.log(bank[0].bank_url);
+    return bank.length > 0 ? bank[0].bank_url : '';
+  }
+
 
   const getSavingRecommendation = (amountData) => {
     const { inputAmount, targetAmount } = amountData
@@ -175,6 +197,24 @@ export const useFinanceStore = defineStore('Finance', () => {
       })
   }
 
-  return { API_URL, depositList, savingList, depositOption, savingOption, recommendSavingList,
-    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink, getSavingRecommendation }
+  const getDepositRecommendation = (amountData) => {
+    const { inputAmount, targetAmount } = amountData
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/financial_products/recommend_deposit_products/?depositAmount=${inputAmount}&targetAmount=${targetAmount}`,
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        recommendDepositList.value = res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  return { API_URL, depositList, savingList, depositOption, savingOption, recommendSavingList, recommendDepositList, getDepositRecommendation,
+    getDepositList, getSavingList, getDepositOption, getSavingOption, bankLink, searchBankLink, mapSearchBankLink, getSavingRecommendation }
 }, {persist: true})

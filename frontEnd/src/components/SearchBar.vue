@@ -3,23 +3,29 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" @click="moveToCurrentLocation">
+              <img :src="`/assets/target_icon.png`" alt="현위치" style="height: 20px; width: 20px;">
+              현위치
+            </button>
+          </div>
           <select v-model="selectedProvince" @change="updateCountryList" class="form-select">
+            <option value="" disabled selected>시/도</option>
             <option v-for="(province, index) in provinces" :key="index" :value="province">{{ province }}</option>
           </select>
           <select v-model="selectedCountry" class="form-select">
+            <option value="" disabled selected>구/군</option>
             <option v-for="country in countryList" :key="country" :value="country">{{ country }}</option>
           </select>
           <select v-model="selectedBank" class="form-select">
+            <option value="" disabled selected>은행명</option>
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
           <div class="input-group-append">
-            <button class="btn btn-primary search-button" type="button" @click="searchPlaces">검색</button>
+            <button class="btn search-button" type="button" @click="searchPlaces">검색</button>
           </div>
         </div>
       </div>
-    </div>
-    <div class="text-center mb-3">
-      <button class="btn btn-secondary" @click="moveToCurrentLocation">현재 위치로 이동</button>
     </div>
   </div>
 </template>
@@ -57,7 +63,7 @@ export default {
         '제주특별자치도': ['서귀포시', '제주시'],
         '강원특별자치도': ['강릉시', '고성군', '동해시', '삼척시', '속초시', '양구군', '양양군', '영월군', '원주시', '인제군', '정선군', '철원군', '춘천시', '태백시', '평창군', '홍천군', '화천군', '횡성군']
       },
-      banks: ['SC제일은행', '경남은행', '광주은행', '국민은행', '기업은행', '농협은행', '대구은행', '부산은행', '수협은행', '신한은행', '외환은행', '우리은행', '전북은행', '제주은행', '하나은행', '한국산업은행', '한국시티은행'],
+      banks: ['SC제일은행', '경남은행', '광주은행', '국민은행', '기업은행', '농협은행', '대구은행', '부산은행', '수협은행', '신한은행', '외환은행', '우리은행', '전북은행', '제주은행', '하나은행', '한국산업은행', '한국시티은행', 'MG새마을금고'],
       countryList: []
     };
   },
@@ -79,3 +85,19 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.input-group-prepend {
+  margin-right: 5px;
+}
+
+.search-button {
+  background-color: rgb(59, 130, 153);
+  color: white;
+}
+
+button.button_blue.my-2 {
+  display: block;
+  margin: 20px auto;
+}
+</style>

@@ -88,7 +88,7 @@ def recommend_job(request):
         save_job_info()
     try:
         job_infos = get_list_or_404(JobInfo, keyword=request.user.interest_industry, date=datetime.date.today())
-        job_infos = random.sample(job_infos, 5)
+        job_infos = random.sample(job_infos, 10)
         serializer = JobInfoSerializer(job_infos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception:

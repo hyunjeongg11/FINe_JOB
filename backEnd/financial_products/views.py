@@ -219,24 +219,18 @@ def like_saving_check(request, product_pk):
 
 
 # 예금 단리 복리 계산기
-def deposit_calculate_interest(deposit_amount, target_amount, interest_type, intr_rate, intr_rate2, save_trm):
+def deposit_calculate_interest(deposit_amount, target_amount, interest_type, intr_rate2, save_trm):
     if interest_type == '단리':
         result = {}
-        simple_interest = round(deposit_amount * (1 + (intr_rate / 100) * (save_trm / 12)))
-        simple_interest2 = round(deposit_amount * (1 + (intr_rate2 / 100) * (save_trm / 12)))
+        simple_interest = round(deposit_amount * (1 + (intr_rate2 / 100) * (save_trm / 12)))
         if simple_interest >= target_amount:
             result['amount'] = simple_interest
-        if simple_interest2 >= target_amount:
-            result['amount2'] = simple_interest2
         return result
     elif interest_type == '복리':
         result = {}
-        compound_interest = round(deposit_amount * (1 + (intr_rate / 100))**(save_trm / 12))
-        compound_interest2 = round(deposit_amount * (1 + (intr_rate2 / 100))**(save_trm / 12))
+        compound_interest = round(deposit_amount * (1 + (intr_rate2 / 100))**(save_trm / 12))
         if compound_interest >= target_amount:
             result['amount'] = compound_interest
-        if compound_interest2 >= target_amount:
-            result['amount2'] = compound_interest2
         return result
     return {}
 
@@ -245,45 +239,51 @@ def deposit_calculate_interest(deposit_amount, target_amount, interest_type, int
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recommend_deposit_products(request):
-    deposit_amount = request.GET['depositAmount']
-    target_amount = request.GET['targetAmount']
+    deposit_amount = int(request.GET['depositAmount'])
+    target_amount = int(request.GET['targetAmount'])
     deposit_products = get_list_or_404(Deposit_Products)
-    data = {}
+    deposit_products_list = []
+    amount_list = [] # 우대금리 최대 금액
+    min_save_trm = float('inf') # 기본, 우대금리 최소 저축기간
     for deposit_product in deposit_products:
         options = Deposit_Options.objects.filter(deposit_product=deposit_product)
-        for option in options:
+        for option in sorted(options, key=lambda x: x.save_trm):
             intr_rate_type_nm = option.intr_rate_type_nm
-            intr_rate = option.intr_rate
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = deposit_calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            result = deposit_calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
             if result:
-                data[deposit_product.fin_prdt_cd] = (result, save_trm)
+                if save_trm < min_save_trm:
+                    amount_list = [result['amount']]
+                    deposit_products_list = [deposit_product.fin_prdt_cd]
+                    min_save_trm = save_trm
+                elif save_trm == min_save_trm:
+                    amount_list.append(result['amount'])
+                    deposit_products_list.append(deposit_product.fin_prdt_cd)
                 break
-    if data:
-        return Response({'message': 'okay', 'data': data})
+
+    if deposit_products_list:
+        max_indices = sorted(range(len(amount_list)), key=lambda i: amount_list[i], reverse=True)[:4]
+        recommend_products = [deposit_products_list[i] for i in max_indices]
+        recommend_deposit_products = Deposit_Products.objects.filter(fin_prdt_cd__in=recommend_products)
+        serializer = DepositProductsSerializer(recommend_deposit_products, many=True)
+        return Response(serializer.data, status=200)
     return Response({'message': 'no data'})
 
 
 # 적금 단리 복리 계산기
-def saving_calculate_interest(monthly_amount, target_amount, interest_type, intr_rate, intr_rate2, save_trm):
+def saving_calculate_interest(monthly_amount, target_amount, interest_type, intr_rate2, save_trm):
     if interest_type == '단리':
         result = {}
-        simple_interest = round(monthly_amount * (save_trm * (save_trm + 1) / 2 * (intr_rate / 100) / 12) + monthly_amount * save_trm)
         simple_interest2 = round(monthly_amount * (save_trm * (save_trm + 1) / 2 * (intr_rate2 / 100) / 12) + monthly_amount * save_trm)
-        if simple_interest >= target_amount:
-            result['amount'] = simple_interest
         if simple_interest2 >= target_amount:
-            result['amount2'] = simple_interest2
+            result['amount'] = simple_interest2
         return result
     elif interest_type == '복리':
         result = {}
-        compound_interest = round(monthly_amount * ((1 + (intr_rate / 100))**((save_trm + 1) / 12) - (1 + intr_rate / 100)**(1 / 12)) / ((1 + intr_rate / 100)**(1 / 12) - 1))
-        compound_interest2 = round(monthly_amount * ((1 + (intr_rate2 / 100))**((save_trm + 1) / 12) - (1 + intr_rate2 / 100)**(1 / 12)) / ((1 + intr_rate2 / 100)**(1 / 12) - 1))
+        compound_interest = round(monthly_amount * ((1 + (intr_rate2 / 100))**((save_trm + 1) / 12) - (1 + intr_rate2 / 100)**(1 / 12)) / ((1 + intr_rate2 / 100)**(1 / 12) - 1))
         if compound_interest >= target_amount:
             result['amount'] = compound_interest
-        if compound_interest2 >= target_amount:
-            result['amount2'] = compound_interest2
         return result
     return {}
 
@@ -295,23 +295,31 @@ def recommend_saving_products(request):
     monthly_amount = int(request.GET['monthlyAmount'])
     target_amount = int(request.GET['targetAmount'])
     saving_products = get_list_or_404(Saving_Products)
-    # data = {}
-    recommend_saving_products_codes = []
+    saving_products_list = []
+    amount_list = [] # 우대금리 최대 금액
+    min_save_trm = float('inf') # 우대금리 최소 저축기간
+    recommend_products = []
     for saving_product in saving_products:
         options = Saving_Options.objects.filter(saving_product=saving_product)
-        for option in options:
+        for option in sorted(options, key=lambda x: x.save_trm):
             intr_rate_type_nm = option.intr_rate_type_nm
-            intr_rate = option.intr_rate
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = saving_calculate_interest(monthly_amount, target_amount, intr_rate_type_nm, intr_rate, intr_rate2, save_trm)
+            result = saving_calculate_interest(monthly_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
             if result:
-                # data[saving_product.fin_prdt_cd] = (result, save_trm)
-                recommend_saving_products_codes.append(saving_product.fin_prdt_cd)
+                if save_trm < min_save_trm:
+                    amount_list = [result['amount']]
+                    saving_products_list = [saving_product.fin_prdt_cd]
+                    min_save_trm = save_trm
+                elif save_trm == min_save_trm:
+                    amount_list.append(result['amount'])
+                    saving_products_list.append(saving_product.fin_prdt_cd)
                 break
 
-    if recommend_saving_products_codes:
-        recommend_saving_products = Saving_Products.objects.filter(fin_prdt_cd__in=recommend_saving_products_codes)
+    if saving_products_list:
+        max_indices = sorted(range(len(amount_list)), key=lambda i: amount_list[i], reverse=True)[:4]
+        recommend_products = [saving_products_list[i] for i in max_indices]
+        recommend_saving_products = Saving_Products.objects.filter(fin_prdt_cd__in=recommend_products)
         serializer = SavingProductsSerializer(recommend_saving_products, many=True)
         return Response(serializer.data, status=200)
     return Response({'message': 'no data'}, status=200)

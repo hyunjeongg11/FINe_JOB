@@ -1,5 +1,5 @@
 <template>
-  <button @click="goBack" class="back-button">뒤로 가기</button>
+  
   <div class="container mt-5">
     <h1 class="mb-4">{{ detail.fin_prdt_nm }} 상품 상세 정보</h1>
 
@@ -141,18 +141,5 @@ const moveToLink = function (link) {
 </script>
 
 <style scoped>
-.back-button {
-    margin: 10px 10px;
-    padding: 5px 10px;
-    font-size: 16px;
-    color: black;
-    /* background-color: #555; */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-.back-button:hover {
-    background-color: rgb(165, 165, 165);
-}
 </style>

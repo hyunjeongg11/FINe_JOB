@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'happy';
+    src: url('../srcs/fonts/Cafe24Behappy.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'school';
+    src: url('../srcs/fonts/Cafe24Decoschool.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'shadow';
+    src: url('../srcs/fonts/Cafe24Decoshadow.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'pretty';
+    src: url('../srcs/fonts/Cafe24Oneprettynight-v2.0.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'magic';
+    src: url('../srcs/fonts/Cafe24Supermagic-Regular-v1.0.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'hanbit';
+    src: url('../srcs/fonts/KCC-Hanbit.ttf') format('truetype');
+}
+
+body {
+    font-family: 'happy','school', 'shadow','pretty', 'magic', 'hanbit'  sans-serif;
+}

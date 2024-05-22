@@ -1,14 +1,15 @@
+[SavingList.vue]
 <template>
   <div class="container">
-    <h1 class="mb-4">적금 상품</h1>
-    <div class="d-flex justify-content-between mb-3">
-      <button v-if="!isRecommendVisible" @click="toggleRecommend" class="btn button_blue">추천받기</button>
-      <button v-if="!isSearchVisible" @click="toggleSearch" class="btn button_blue">검색하기</button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-0">{{ isRecommendVisible ? '적금 상품 추천받기' : '적금 상품 검색하기' }}</h1>
+      <button v-if="isRecommendVisible" @click="toggleSearch" class="btn button_blue">검색하기로 이동</button>
+      <button v-if="isSearchVisible" @click="toggleRecommend" class="btn button_blue">추천받기로 이동</button>
     </div>
     <hr>
 
     <div v-if="isSearchVisible">
-      <h2 class="mb-3">검색 조건을 입력하세요</h2>
+      <h3 class="mb-3">검색 조건을 입력하세요</h3>
       <form @submit.prevent="onClickFilter">
         <div class="row">
           <div class="col-md-4">
@@ -22,21 +23,20 @@
             <p>예치기간을 선택하세요.</p>
             <select name="term" id="term" v-model="term" class="form-control">
               <option value="전체 기간">전체 기간</option>
-              <option value="6">6개월</option>
-              <option value="12">12개월</option>
-              <option value="24">24개월</option>
-              <option value="36">36개월</option>
+              <option value="6">6 개월</option>
+              <option value="12">12 개월</option>
+              <option value="24">24 개월</option>
+              <option value="36">36 개월</option>
             </select>
           </div>
-          <div class="col-md-2 mt-4 d-flex justify-content-center">
-            <input type="submit" value="검색" class="btn button_blue">
+          <div class="col-md-2 mt-4 d-flex justify-content-start">
+            <input type="submit" value="검색하기" class="btn button_blue" style="width: 100px;">
           </div>
         </div>
       </form>
     </div>
-
     <div v-if="isRecommendVisible">
-      <h2 class="mb-3">추천 조건을 입력하세요</h2>
+      <h3 class="mb-3">추천 조건을 입력하세요</h3>
       <form @submit.prevent="onClickRecommend">
         <div class="row">
           <div class="col-md-4">
@@ -44,11 +44,11 @@
             <input type="number" id="inputAmount" v-model="inputAmount" class="form-control" :min="0">
           </div>
           <div class="col-md-4">
-            <label for="targetAmount">목표 금액을 입력하세요</label>
+            <label for="targetAmount">목표금액을 입력하세요</label>
             <input type="number" id="targetAmount" v-model="targetAmount" class="form-control" :min="0">
           </div>
-          <div class="col-md-2 mt-4 d-flex justify-content-center">
-            <input type="submit" value="추천받기" class="btn button_blue">
+          <div class="col-md-2 mt-4 d-flex justify-content-start">
+            <input type="submit" value="추천받기" class="btn button_blue" style="width: 100px;">
           </div>
         </div>
       </form>
@@ -56,68 +56,22 @@
   </div>
 
   <div class="container">
-    <button @click="toggleCalculator" class="btn my-2 button_blue">{{ isOpen ? '이자계산기 닫기' : '이자계산기 열기' }}></button>
-    <div v-if="isOpen">
-      <h4>간편 예적금 계산기</h4>
-      <div>저축 방식 :
-        <select v-model="type" class="form-control">
-          <option disabled value="">유형을 선택해 주세요</option>
-          <option>예금</option>
-          <option>적금</option>
-        </select>
-      </div>
-      <div>
-        <label for="inputmoney">예치 금액 : </label>
-        <input type="number" id="inputmoney" v-model="inputmoney" :min="0" class="form-control">원
-      </div>
-      <div>이자 방식 :
-        <select v-model="intr_rate_type" class="form-control">
-          <option disabled value="">유형을 선택해 주세요</option>
-          <option>단리</option>
-          <option>복리</option>
-        </select>
-      </div>
-      <div>
-        <label for="save_trm">예금 기간 : </label>
-        <input type="number" id="save_trm" v-model="save_trm" :min="0" class="form-control">(개월)
-      </div>
-      <div>    
-        <label for="intr_rate">연이자율 : </label>
-        <input type="number" id="intr_rate" v-model="intr_rate" :min="0" class="form-control">(%)
-      </div>
-      <div>
-        <p><strong>원금 합계 : </strong>{{ calinput.toLocaleString('ko-KR') }}(원)</p>
-      </div>
-      <div>
-        <p><strong>세전이자 :</strong> {{ beforintr.toLocaleString('ko-KR') }}(원)</p>
-      </div>
-      <div>
-        <p><strong>이자과세 :</strong> -{{ taxintr.toLocaleString('ko-KR') }}(원)</p>
-      </div>
-      <div>
-        <p><strong>세후 수령액 :</strong>{{ mymoney.toLocaleString('ko-KR') }}(원)</p>
-        <button @click.prevent="calculator()" class="btn button_blue">계산</button>
-      </div>
-    </div>
-
-    <div>
-      <hr>
-      <h2>적금 리스트</h2>
-      <div v-if="isSearchVisible">
-        <div class="grid-container" v-if="result.length > 0">
-          <SavingListItem v-for="saving in result" :key="saving.id" :saving="saving" class="grid-item" />
-        </div>
-        <div v-else>
-          <p class="text-center">조건에 맞는 결과가 없습니다.</p>
-        </div>
+    <hr>
+    <h4>적금 상품 목록</h4>
+    <div v-if="isSearchVisible">
+      <div class="grid-container" v-if="result.length > 0">
+        <SavingListItem v-for="saving in result" :key="saving.id" :saving="saving" class="grid-item" />
       </div>
       <div v-else>
-        <div class="grid-container" v-if="store.recommendSavingList.length > 0">
-          <SavingListItem v-for="saving in store.recommendSavingList" :key="saving.id" :saving="saving" class="grid-item" />
-        </div>
-        <div v-else>
-          <p class="text-center">조건에 맞는 결과가 없습니다.</p>
-        </div>
+        <p class="text-center">조건에 맞는 결과가 없습니다.</p>
+      </div>
+    </div>
+    <div v-else>
+      <div class="grid-container" v-if="store.recommendSavingList.length > 0">
+        <SavingListItem v-for="saving in store.recommendSavingList" :key="saving.id" :saving="saving" class="grid-item" />
+      </div>
+      <div v-else>
+        <p class="text-center">조건에 맞는 결과가 없습니다.</p>
       </div>
     </div>
   </div>
@@ -127,7 +81,6 @@
 import { ref, watch } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 import SavingListItem from '@/components/SavingListItem.vue'
-import axios from 'axios';
 
 const store = useFinanceStore()
 const bankList = [
@@ -158,7 +111,7 @@ const toggleRecommend = () => {
 const inputAmount = ref(0)
 const targetAmount = ref(0)
 
-// Period only filter
+// 기간만 필터링
 const termFilter = function (term) {
   const result = []
   for (const product of store.savingList) {
@@ -176,7 +129,7 @@ const termFilter = function (term) {
   return result
 }
 
-// Period and bank filter
+// 기간과 은행을 같이 필터링
 const termBankFilter = function (bank, term) {
   const result = []
   for (const product of store.savingList) {
@@ -207,16 +160,11 @@ const onClickFilter = function () {
   } else if (bank.value === '전체 은행' && term.value !== '전체 기간') {
     result.value = termFilter(term.value)
   } else if (bank.value !== '전체 은행' && term.value === '전체 기간') {
-    // Bank only filter
-    result.value = store.savingList.filter((item) => {
-      if (item.kor_co_nm === bank.value) {
-        return item
-      }
-    })
+    // 은행만 필터링
+    result.value = store.savingList.filter((item) => item.kor_co_nm === bank.value)
   } else {
     result.value = termBankFilter(bank.value, term.value)
   }
-  // console.log(result.value.length)
 }
 
 const onClickRecommend = function () {
@@ -225,51 +173,6 @@ const onClickRecommend = function () {
     targetAmount: targetAmount.value
   }
   store.getSavingRecommendation(amount)
-}
-
-
-
-const isOpen = ref(false)
-const type = ref('')  // Deposit or savings type
-const inputmoney = ref('')  // Deposit amount
-const intr_rate_type = ref('')  // Interest rate type
-const save_trm = ref('')  // Deposit period
-const intr_rate = ref('')  // Basic interest rate
-const calinput = ref('')  // Total principal amount
-const beforintr = ref('')  // Pre-tax interest
-const taxintr = ref('')  // Tax amount
-const mymoney = ref('')  // Expected amount
-
-const calculator = function () {
-  if (type.value === "예금") {
-    if (intr_rate_type.value === "단리") {
-      calinput.value = inputmoney.value * (save_trm.value / 12)
-      beforintr.value = (calinput.value * (intr_rate.value / 100))
-      taxintr.value = (beforintr.value * 0.154)
-      mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    } else {
-      calinput.value = inputmoney.value * (save_trm.value / 12)
-      beforintr.value = (inputmoney.value * ((1+(intr_rate.value/1200))*save_trm.value) - inputmoney.value)
-      taxintr.value = (beforintr.value * 0.154)
-      mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    }
-  } else { // 적금
-    if (intr_rate_type.value === "단리") {
-      calinput.value = inputmoney.value * save_trm.value
-      beforintr.value = (inputmoney.value * (intr_rate.value / 1200) * (Math.round(((save_trm.value + 1) * save_trm.value) / 2)))
-      taxintr.value = (beforintr.value * 0.154)
-      mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    } else {
-      calinput.value = inputmoney.value * save_trm.value
-      beforintr.value = ((inputmoney.value*((1+intr_rate.value/1200)*(save_trm.value+1))) - (inputmoney.value*(1+intr_rate.value/1200))) / (1+intr_rate.value/1200)
-      taxintr.value = (beforintr.value * 0.154)
-      mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
-    }
-  }
-}
-
-const toggleCalculator = function () {
-  isOpen.value = !isOpen.value
 }
 </script>
 
@@ -281,7 +184,7 @@ const toggleCalculator = function () {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for wider items */
+  grid-template-columns: repeat(2, 1fr); 
   gap: 20px;
 }
 
@@ -293,8 +196,12 @@ const toggleCalculator = function () {
   flex-direction: column;
   justify-content: space-between;
   padding: 10px;
-  height: auto; /* Adjusted to auto for flexible height */
-  width: 100%; /* Ensure items take full width of their grid area */
+  height: auto;
+  width: 100%;
+}
+
+#inputAmount, #targetAmount {
+  margin-top: 10px;
 }
 
 .button_blue {
@@ -302,8 +209,23 @@ const toggleCalculator = function () {
   color: white;
 }
 
-button.button_blue.my-2 {
-  display: block;
-  margin: 20px auto;
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+form .row > div {
+  display: flex;
+  flex-direction: column;
+}
+
+form .row > div > input, form .row > div > select {
+  margin-top: auto;
+}
+
+form .row > div.mt-4.d-flex.justify-content-center, form .row > div.mt-4.d-flex.justify-content-start {
+  margin-top: auto;
+  justify-content: flex-start !important;
 }
 </style>
