@@ -24,7 +24,6 @@
           <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <!-- <RouterLink :to="{ name: 'freeboard' }" class="nav-link" aria-current="page">커뮤니티</RouterLink> -->
                 <RouterLink :to="{ name: 'main' }">
                   <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
                 </RouterLink>
@@ -186,12 +185,13 @@ header {
   justify-content: flex-end;
   align-items: center;
   padding: rem;
-  margin-right: 90px; 
+  margin-right: 8%; 
 }
 
 
 .logo {
   height: 40px;
+  margin-right: 40px;
 }
 
 .auth-nav {
@@ -208,7 +208,7 @@ header {
   width: 100%;
   background-color: #fff;
   border-bottom: 2px solid rgb(59, 130, 153);
-  padding: 0 10%;
+  padding: 0 7%;
   margin-bottom: 20px;
 }
 
