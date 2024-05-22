@@ -54,7 +54,7 @@ const mymoney = ref(0)  // 세후 수령액
 
 const calculator = () => {
   if (type.value === "예금") {
-    calinput.value = inputmoney.value * (save_trm.value / 12)
+    calinput.value = inputmoney.value
     if (intr_rate_type.value === "단리") {
       beforintr.value = inputmoney.value * (intr_rate.value / 100) * (save_trm.value / 12)
     } else {
@@ -65,7 +65,7 @@ const calculator = () => {
     if (intr_rate_type.value === "단리") {
       beforintr.value = inputmoney.value * (intr_rate.value / 100) * ((save_trm.value + 1) * save_trm.value / 24)
     } else {
-      beforintr.value = inputmoney.value * Math.pow((1 + intr_rate.value / 100 / 12), save_trm.value) - inputmoney.value
+      beforintr.value = inputmoney.value * (save_trm.value * (save_trm.value + 1) / 2) * (intr_rate.value / 100 / 12)
     }
   }
   taxintr.value = beforintr.value * 0.154

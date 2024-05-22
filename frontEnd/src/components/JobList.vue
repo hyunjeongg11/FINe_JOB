@@ -3,9 +3,10 @@
     <h1 class="job-search-title mb-4">일자리 검색</h1>
     <h2 class="job-search-title mb-3">관심 산업을 선택하세요</h2>
     <select class="job-search-title form-select" v-model="keyword">
+      <option value="" disabled selected>산업군</option>
       <option v-for="kw in keywords" :key="kw" :value="kw">{{ kw }}</option>
     </select>
-    <hr>
+    <br>
     <div class="outer-box">
       <div v-if="!keyword" class="keyword-title">모든 산업 공고</div>
       <div v-else class="keyword-title">{{ keyword }} 산업 공고</div>

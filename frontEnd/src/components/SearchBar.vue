@@ -91,9 +91,15 @@ export default {
   margin-right: 5px;
 }
 
+.btn-outline-secondary{
+  margin-right: 10px;
+}
+
+
 .search-button {
   background-color: rgb(59, 130, 153);
   color: white;
+  margin-left: 10px;
 }
 
 button.button_blue.my-2 {
