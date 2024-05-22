@@ -1,9 +1,8 @@
 <template>
 	<div>
-		
-		<div class="container mt-5">
-			<div class="row justify-content-center">
-				<div class="col-md-4">
+		<div class="mt-5">
+			<div class="container d-flex justify-content-center"> <!-- justify-content-center 추가 -->
+				<div class="col-md-4 password-container">
 					<h1 class="mb-4">비밀번호 변경</h1>
 					<form @submit.prevent="changePassword">
 						<div class="mb-3">
@@ -29,7 +28,7 @@
 			</div>
 		</div>
 	</div>
-	</template>
+</template>
 
 <script setup>
 import { useRouter } from 'vue-router'
@@ -61,5 +60,9 @@ const changePassword = function () {
 </script>
 
 <style scoped>
-
+.password-container {
+  background-color: rgb(236, 245, 248);
+	padding : 2rem;
+	border-radius: 10px;
+}
 </style>

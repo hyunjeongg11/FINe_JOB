@@ -1,57 +1,59 @@
 <template>
-  
   <div v-if="!userStore.token" class="container">
     <h3>비로그인 사용자입니다.</h3>
   </div>
   <div v-else>
     <div class="container mt-5">
-      <h1>개인정보 수정</h1>
-      <form @submit.prevent="updateDetail">
-        <div class="d-flex justify-content-between align-items-center">
-          <span>ID: {{ username }}</span>
-          <button @click="goChangePassword" class="btn btn-primary">비밀번호 변경</button>
-        </div>
-        <hr>
-        <div class="container sort">
-          <div class="mb-3">
-            <label for="email" class="form-label">E-Mail :</label>
-            <input type="text" id="email" class="form-control" v-model="email" style="width: 70%;">
+      <h1 class="edit-title">개인정보 수정</h1>
+      <br>
+      <div class="outer-box">
+        <form @submit.prevent="updateDetail" class="form-content">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="user-id">사용자 ID: {{ username }}</span>
+            <button @click="goChangePassword" class="btn btn-primary">비밀번호 변경</button>
           </div>
-          <div class="mb-3">
-            <label for="nickname" class="form-label">닉네임 :</label>
-            <input type="text" id="nickname" class="form-control" v-model="nickname" style="width: 70%;">
+          <hr>
+          <div class="container sort">
+            <div class="mb-3">
+              <label for="email" class="form-label">E-Mail :</label>
+              <input type="text" id="email" class="form-control" v-model="email" style="width: 70%;">
+            </div>
+            <div class="mb-3">
+              <label for="nickname" class="form-label">닉네임 :</label>
+              <input type="text" id="nickname" class="form-control" v-model="nickname" style="width: 70%;">
+            </div>
+            <div class="mb-3">
+              <label for="province" class="form-label">주소 :</label>
+              <select name="province" id="province" class="form-select" v-model="province" style="width: 70%;">
+                <option :value="pr" v-for="pr in provinceInput">{{ pr }}</option>
+              </select>
+              <select name="country" id="country" class="form-select" v-model="country" style="width: 70%;">
+                <option :value="ct" v-for="ct in countryInput[prIdx]">{{ ct }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="asset" class="form-label">자산 :</label>
+              <input type="text" id="asset" class="form-control" v-model="asset" style="width: 70%;">원
+            </div>
+            <div class="mb-3">
+              <label for="salary" class="form-label">연봉 :</label>
+              <input type="text" class="form-control" v-model="salary" style="width: 70%;">원
+            </div>   
+            <div class="mb-3">
+              <label for="interest_industry" class="form-label">관심 산업 :</label>
+              <select name="interest_industry" id="interest_industry" class="form-select" v-model="interest_industry" style="width: 70%;">
+                <option :value="job" v-for="job in jobChoices">{{ job }}</option>
+              </select>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="province" class="form-label">주소 :</label>
-            <select name="province" id="province" class="form-select" v-model="province" style="width: 70%;">
-              <option :value="pr" v-for="pr in provinceInput">{{ pr }}</option>
-            </select>
-            <select name="country" id="country" class="form-select" v-model="country" style="width: 70%;">
-              <option :value="ct" v-for="ct in countryInput[prIdx]">{{ ct }}</option>
-            </select>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary text-center col-2">수정</button>
           </div>
-          <div class="mb-3">
-            <label for="asset" class="form-label">자산 :</label>
-            <input type="text" id="asset" class="form-control" v-model="asset" style="width: 70%;">원
+          <div class="d-flex justify-content-center">
+            <button @click="userStore.withdraw" class="btn btn-danger">회원 탈퇴</button>
           </div>
-          <div class="mb-3">
-            <label for="salary" class="form-label">연봉 :</label>
-            <input type="text" class="form-control" v-model="salary" style="width: 70%;">원
-          </div>   
-          <div class="mb-3">
-            <label for="interest_industry" class="form-label">관심 산업 :</label>
-            <select name="interest_industry" id="interest_industry" class="form-select" v-model="interest_industry" style="width: 70%;">
-              <option :value="job" v-for="job in jobChoices">{{ job }}</option>
-            </select>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary text-center col-2">수정</button>
-        </div>
-        <div class="d-flex justify-content-center">
-          <button @click="userStore.withdraw" class="btn btn-danger">회원 탈퇴</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -183,4 +185,25 @@ function goBack() {
 </script>
 
 <style scoped>
+.outer-box {
+  background-color: rgb(236, 245, 248);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.user-id {
+  font-size: 1.5rem;
+}
+
+.edit-title {
+  text-align: center;
+}
+
+.form-content {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+}
 </style>
