@@ -135,7 +135,7 @@ onMounted(() => {
 .update-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: rgb(95, 170, 173);
   color: white;
   border: none;
   cursor: pointer;

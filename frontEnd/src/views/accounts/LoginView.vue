@@ -70,6 +70,14 @@ const logIn = function() {
   position: absolute;
   bottom: 2rem;
   right: 2rem;
+  color: rgba(0, 0, 0, 0.418);
+  text-decoration: none; 
+  margin-right: 3%;
+}
+
+
+.signup-link:hover {
+  color: rgb(0, 0, 0);
 }
 
 .login-content {

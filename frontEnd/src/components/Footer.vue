@@ -36,9 +36,9 @@
   .footer {
     background-color: #f8f9fa;
     padding: 20px 0;
-    border-top: 1px solid #0000005e;
+    border-top: 1px solid #00000044;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 150px;
   }
   
   .footer-content {
@@ -48,7 +48,7 @@
     max-width: 800px;
     margin: 0 auto;
     margin-bottom: 60px;
-    font-size: 15px;
+    font-size: 13px;
   }
   
   .footer-item {

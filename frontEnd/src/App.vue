@@ -3,7 +3,9 @@
     <header>
       <div class="header-top">
         <nav v-if="!store.token" class="auth-nav">
-          <RouterLink :to="{ name: 'login' }">로그인</RouterLink>
+          <button @click="goLogin" class="login-btn">
+            로그인
+          </button>
         </nav>
         <nav v-else class="auth-nav">
           <p class="nav-link dropdown-toggle username" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -101,6 +103,10 @@ const searchResultsVisible = ref(false)
 const logoSrc = ref('/assets/logo/small_logo.png')
 const router = useRouter()
 
+const goLogin = function () {
+  router.push({ name: 'login'})
+}
+
 const navigationItems = [
   { name: '예금 상품', link: { name: 'deposit' } },
   { name: '적금 상품', link: { name: 'saving' } },
@@ -193,6 +199,19 @@ header {
   align-items: center;
   padding: rem;
   margin-right: 8%; 
+}
+
+.login-btn {
+  padding: 3px 10px;
+  background-color: rgb(255, 255, 255);
+  border-color: #33333346;
+  border-radius: 5px;
+}
+
+
+.login-btn:hover {
+  background-color: rgba(184, 184, 184, 0.5);
+  border-color: #33333346;
 }
 
 .logo {
