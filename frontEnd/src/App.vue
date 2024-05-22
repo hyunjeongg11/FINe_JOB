@@ -79,7 +79,7 @@
         <keep-alive include="DepositList">
           <component :is="Component" :key="route.path" />
         </keep-alive>
-      </RouterView>/>
+      </RouterView>
     </main>
     <Footer />
     <button @click="scrollToTop" class="scroll-to-top">
@@ -108,7 +108,8 @@ const navigationItems = [
   { name: '추천 일자리', link: { name: 'recommendjoblist' } },
   { name: '주변 은행 찾기', link: { name: 'searchbank' } },
   { name: '환율 계산기', link: { name: 'currencyconverter' } },
-  { name: '커뮤니티', link: { name: 'freeboard' } }
+  { name: '커뮤니티', link: { name: 'freeboard' } },
+  { name: '이자 계산기', link: { name: 'interestcalculator' } }
 ]
 
 const updateSearchResults = () => {
