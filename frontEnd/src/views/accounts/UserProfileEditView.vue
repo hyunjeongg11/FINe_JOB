@@ -1,7 +1,5 @@
 <template>
-      <button @click="goBack" class="back-button">
-      <img :src="`/assets/back.png`" alt="뒤로가기" style="width: 50px; height: 50px;">
-    </button>
+  
   <div v-if="!userStore.token" class="container">
     <h3>비로그인 사용자입니다.</h3>
   </div>
@@ -184,17 +182,4 @@ function goBack() {
 </script>
 
 <style scoped>
-.back-button {
-  margin: 10px 10px;
-  padding: 5px 10px;
-  font-size: 16px;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.back-button:hover {
-  background-color: rgb(165, 165, 165);
-}
 </style>

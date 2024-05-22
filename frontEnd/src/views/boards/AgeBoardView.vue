@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<button @click="goBack" class="back-button">
-      <img :src="`/assets/back.png`" alt="뒤로가기" style="width: 50px; height: 50px;">
-    </button>
 		<ul class="nav nav-underline justify-content-center">
 			<li class="nav-item">
 				<RouterLink :to="{name: 'freeboard'}" class="nav-link" :class="{ active: isActiveRoute('freeboard') }">자유게시판</RouterLink>
@@ -78,17 +75,4 @@ nav {
     color: rgb(59, 130, 153);
 }
 
-.back-button {
-    margin: 0px 10px;
-    font-size: 16px;
-    color: black;
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.back-button:hover {
-    background-color: rgb(165, 165, 165);
-}
 </style>

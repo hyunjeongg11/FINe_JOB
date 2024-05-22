@@ -1,7 +1,5 @@
 <template>
-      <button @click="goBack" class="back-button">
-      <img :src="`/assets/back.png`" alt="뒤로가기" style="width: 50px; height: 50px;">
-    </button>
+  
   <div class="container">
     <nav>
       <RouterLink :to="{ name: 'freeboard' }" class="nav-item-here">자유게시판</RouterLink> | 
@@ -211,18 +209,5 @@ nav {
   background-color: #c82333;
 }
 
-.back-button {
-    margin: 0px 10px;
-    /* padding: 5px 10px; */
-    font-size: 16px;
-    color: black;
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-.back-button:hover {
-    background-color: rgb(165, 165, 165);
-}
 </style>

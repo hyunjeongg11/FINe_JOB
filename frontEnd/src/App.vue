@@ -2,9 +2,6 @@
   <div id="app">
     <header>
       <div class="header-top">
-        <RouterLink :to="{ name: 'main' }">
-          <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
-        </RouterLink>
         <nav v-if="!store.token" class="auth-nav">
           <RouterLink :to="{ name: 'login' }">로그인</RouterLink>
         </nav>
@@ -26,6 +23,12 @@
           </button>
           <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
             <ul class="navbar-nav">
+              <li class="nav-item">
+                <!-- <RouterLink :to="{ name: 'freeboard' }" class="nav-link" aria-current="page">커뮤니티</RouterLink> -->
+                <RouterLink :to="{ name: 'main' }">
+                  <img :src="`/assets/logo/small_logo.png`" alt="Logo" class="logo">
+                </RouterLink>
+              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   금융상품 FIN

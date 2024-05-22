@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPageView from '@/views/MainPageView.vue'
+import IntroView from '@/views/IntroView.vue'
 import SearchBankView from '@/views/SearchBankView.vue'
 import FreeBoardView from '@/views/boards/FreeBoardView.vue'
 import FreeBoardCreateView from '@/views/boards/FreeBoardCreateView.vue'
@@ -32,6 +33,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'intro',
+      component: IntroView
+    },
+    {
+      path: '/main',
       name: 'main',
       component: MainPageView
     },
