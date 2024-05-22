@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<img class="intro-image" src="/assets/carousel/1.jpg" alt="인트로 이미지 1">
+		<img class="intro-image-gif" src="/assets/intro/intro1.gif" alt="인트로 이미지 1">
 		<img class="intro-image" src="/assets/carousel/2.jpg" alt="인트로 이미지 2">
 		<img class="intro-image" src="/assets/carousel/3.jpg" alt="인트로 이미지 3">
 		<img class="intro-image" src="/assets/carousel/4.jpg" alt="인트로 이미지 4">
@@ -38,19 +38,25 @@ const isElementInViewport = (el) => {
 
 <style scoped>
 .container {
-	text-align: center; /* 내부 컨텐츠의 수평 가운데 정렬을 위해 추가 */
+	text-align: center;
+}
+
+.intro-image-gif {
+	width: 60%;
+	height: auto;
+	object-fit: contain;
+	margin: 0 auto 300px;
 }
 
 .intro-image {
 	width: 60%;
 	height: auto;
 	object-fit: contain;
-	margin: 0 auto 300px; /* 이미지를 수평 가운데 정렬하고 아래 여백 추가 */
-	opacity: 0; /* 초기에는 이미지를 숨김 */
+	margin: 0 auto 300px;
+	opacity: 0;
 }
 
 
-/* 스크롤을 내리면 이미지가 서서히 나타나도록 설정 */
 @keyframes fadeIn {
 	from {
 		opacity: 0;
