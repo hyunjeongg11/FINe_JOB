@@ -2,7 +2,7 @@
   <div>
     <SearchBar @search-places="searchPlaces" @move-to-current-location="moveToCurrentLocation" />
     <div id="map"></div>
-    <PlaceList :places="places" @move-to-place="moveToPlace" />
+    <PlaceList :places="places" @move-to-place="moveToPlace" @visit-bank="visitBank" />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       places: [],
       markers: [],
       infowindow: null,
-      searchTriggered: false, // 검색 버튼 클릭 여부
+      searchTriggered: false,
     };
   },
   mounted() {
@@ -98,10 +98,39 @@ export default {
       });
     },
     searchPlaces({ province, country, bank }) {
-      this.searchTriggered = true; // 검색 버튼 클릭으로 인한 검색 실행
-      const query = `${province} ${country} ${bank}`;
+      this.searchTriggered = true;
+      let query = `${province} ${bank}`;
+      if (country) {
+        query = `${province} ${country} ${bank}`;
+      }
       const ps = new window.kakao.maps.services.Places();
-      ps.keywordSearch(query, this.placesSearchCB);
+      
+      // Get the location of the specific region
+      this.getLocationFromAddress(province, country)
+        .then(location => {
+          ps.keywordSearch(query, this.placesSearchCB, {
+            location: location,
+            radius: 2000, // Adjust the radius as needed to narrow the search results
+          });
+        })
+        .catch(() => {
+          alert('해당 지역의 위치를 찾을 수 없습니다.');
+          this.searchTriggered = false;
+        });
+    },
+    getLocationFromAddress(province, country) {
+      return new Promise((resolve, reject) => {
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        const address = `${province} ${country}`;
+        geocoder.addressSearch(address, (result, status) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const location = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+            resolve(location);
+          } else {
+            reject(status);
+          }
+        });
+      });
     },
     placesSearchCB(data, status) {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -111,7 +140,7 @@ export default {
         this.places = [];
         this.displayPlaces([]);
       }
-      this.searchTriggered = false; // 검색 버튼 클릭 후 이벤트 처리 완료
+      this.searchTriggered = false;
     },
     displayPlaces(places) {
       const bounds = new window.kakao.maps.LatLngBounds();
@@ -120,7 +149,7 @@ export default {
       for (let i = 0; i < places.length; i++) {
         const place = places[i];
         const placePosition = new window.kakao.maps.LatLng(place.y, place.x);
-        const marker = this.addMarker(placePosition, i, place.place_name, place.category_name);
+        const marker = this.addMarker(placePosition, i, place.place_name, place.id);
         bounds.extend(placePosition);
       }
 
@@ -130,9 +159,9 @@ export default {
         this.map.setCenter(this.map.getCenter());
       }
     },
-    addMarker(position, idx, title, bankName) {
-      const imageSize = new window.kakao.maps.Size(50, 50); // Adjust size as needed
-      const markerImage = new window.kakao.maps.MarkerImage(markerImageSrc, imageSize); // Use the imported image
+    addMarker(position, idx, title, placeId) {
+      const imageSize = new window.kakao.maps.Size(50, 50);
+      const markerImage = new window.kakao.maps.MarkerImage(markerImageSrc, imageSize);
       const marker = new window.kakao.maps.Marker({
         position: position,
         image: markerImage,
@@ -151,16 +180,8 @@ export default {
       });
 
       window.kakao.maps.event.addListener(marker, "click", () => {
-        const store = useFinanceStore();
-        console.log(title)
-        const bankUrl = store.mapSearchBankLink(title);
-        if (bankUrl) {
-          console.log('click')
-          window.open(bankUrl, "_blank");
-        }
-        else {
-          alert("해당 은행의 홈페이지가 없습니다.");
-        }
+        const url = `https://place.map.kakao.com/${placeId}`;
+        window.open(url, "_blank");
       });
 
       return marker;
@@ -194,6 +215,15 @@ export default {
       const locPosition = new window.kakao.maps.LatLng(position.y, position.x);
       this.map.setCenter(locPosition);
     },
+    visitBank(bankName) {
+      const store = useFinanceStore();
+      const bankUrl = store.mapSearchBankLink(bankName);
+      if (bankUrl) {
+        window.open(bankUrl, "_blank");
+      } else {
+        alert("해당 은행의 홈페이지가 없습니다.");
+      }
+    },
   },
 };
 </script>
@@ -201,7 +231,7 @@ export default {
 <style scoped>
 #map {
   width: 65%;
-  height: 500px;
+  height: 600px;
   margin: 0 auto;
   border-radius: 20px;
   border: 3px solid #00000027;

@@ -13,7 +13,7 @@
       >
         <span class="markerbg marker_{{ index + 1 }}"></span>
         <div class="info">
-          <h5>{{ place.place_name }}</h5>
+          <h5 @click.stop="visitBank(place.place_name)">{{ place.place_name }}</h5>
           <span>{{ place.road_address_name ? place.road_address_name : place.address_name }}</span>
           <span class="tel">{{ place.phone }}</span>
         </div>
@@ -31,6 +31,9 @@ export default {
   methods: {
     moveToPlace(place) {
       this.$emit("move-to-place", { x: place.x, y: place.y });
+    },
+    visitBank(bankName) {
+      this.$emit("visit-bank", bankName);
     }
   }
 };
@@ -39,6 +42,7 @@ export default {
 <style scoped>
 h5 {
   font-weight: bold;
+  cursor: pointer;
 }
 
 #menu_wrap {
