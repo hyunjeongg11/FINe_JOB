@@ -2,6 +2,7 @@
   <div id="app">
     <header>
       <div class="header-top">
+        <RouterLink :to="{name: 'intro'}" class="go-intro">웹페이지 소개</RouterLink>
         <nav v-if="!store.token" class="auth-nav">
           <button @click="goLogin" class="login-btn">
             로그인
@@ -197,6 +198,15 @@ const scrollToTop = () => {
 
 header {
   padding: 1rem;
+}
+.go-intro {
+  /* font-size: 15px; */
+  cursor: pointer;
+  color: rgba(70, 70, 70, 0.87);
+  /* text-decoration: none; */
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 .header-top {

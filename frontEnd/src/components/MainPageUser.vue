@@ -2,6 +2,7 @@
   <div>
     <div v-if="userStore.token">
       <p class="login-main-text">{{ userStore.userId }}님 환영합니다!</p>
+      <p>{{ userStore.email }}</p>
       <div class="btn-login-main">
         <button class="btn-login" @click="userStore.logOut">로그아웃</button>
       </div>
@@ -24,6 +25,8 @@ const router = useRouter()
 const goLogin = function () {
   router.push({ name: 'login'})
 }
+
+console.log(userStore)
 </script>
 
 <style scoped>
