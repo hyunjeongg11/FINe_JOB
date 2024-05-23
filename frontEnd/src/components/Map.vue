@@ -105,12 +105,11 @@ export default {
       }
       const ps = new window.kakao.maps.services.Places();
       
-      // Get the location of the specific region
       this.getLocationFromAddress(province, country)
         .then(location => {
           ps.keywordSearch(query, this.placesSearchCB, {
             location: location,
-            radius: 2000, // Adjust the radius as needed to narrow the search results
+            radius: 2000,
           });
         })
         .catch(() => {

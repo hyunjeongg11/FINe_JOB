@@ -101,7 +101,7 @@ h2 {
 }
 
 .board-header a {
-  color: #000; /* Black color for title */
+  color: #000;
   text-decoration: none;
 }
 

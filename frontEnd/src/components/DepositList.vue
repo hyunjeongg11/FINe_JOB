@@ -156,7 +156,7 @@ const onClickFilter = function () {
   if (bank.value === '전체 은행' && term.value === '전체 기간') {
     result.value = store.depositList
   } else if (bank.value === '전체 은행' && term.value !== '전체 기간') {
-    console.log('기간만 필터링')
+    // 기간만 필터링
     result.value = termFilter(term.value)
   } else if (bank.value !== '전체 은행' && term.value === '전체 기간') {
     // 은행만 필터링

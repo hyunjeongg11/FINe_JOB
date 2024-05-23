@@ -19,12 +19,10 @@ const intervalId = setInterval(() => {
 }, 10000)
 
 onMounted(() => {
-  // Initial news load
   apistore.getNews()
 })
 
 onUnmounted(() => {
-  // Stop the interval when the page is left
   if (intervalId) {
     clearInterval(intervalId)
   }

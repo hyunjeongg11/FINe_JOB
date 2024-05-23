@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<DepositList />
 	</div>
 </template>

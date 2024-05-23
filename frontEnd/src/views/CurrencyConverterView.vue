@@ -258,7 +258,7 @@
 }
 
 .form-select {
-  width: 50%; /* Ensure the select box only takes as much space as needed */
+  width: 50%; 
 }
 
 .btn-exchange {

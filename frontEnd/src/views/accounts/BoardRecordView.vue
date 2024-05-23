@@ -72,7 +72,6 @@ const formatDate = function (dateString) {
     const hours = ('0' + date.getHours()).slice(-2);
     const minutes = ('0' + date.getMinutes()).slice(-2);
 
-    // Form the desired date string
     const formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes
     return formattedDate
 }

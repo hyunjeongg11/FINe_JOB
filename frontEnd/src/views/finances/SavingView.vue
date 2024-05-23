@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<SavingList />
 	</div>
 </template>

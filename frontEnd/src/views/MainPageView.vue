@@ -110,7 +110,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
 </script>
 
 <style scoped>
-/* 전체 스타일 */
 * {
   box-sizing: border-box;
 }
@@ -128,7 +127,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   border-color: darkgray 2px solid;
 }
 
-/* 이미지 카루셀 스타일 */
 .image-carousel {
   grid-area: image-carousel;
   width: 100%;
@@ -142,7 +140,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   object-fit: cover;
 }
 
-/* 아이콘 영역 스타일 */
 .icons {
   grid-area: icons;
   display: flex;
@@ -155,8 +152,8 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   margin-bottom: 5%;
   background-color: rgb(219, 236, 241);
   display: flex;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
   border-color: rgb(88, 81, 81) 2px solid;
 }
@@ -229,6 +226,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
 }
 
 .icon-item .p-tag {
-  color: black; /* 글자 색을 검은색으로 지정 */
+  color: black;
 }
 </style>
