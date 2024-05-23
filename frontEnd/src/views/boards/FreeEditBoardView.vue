@@ -184,7 +184,6 @@ h1 {
 }
 
 .form-actions input[type="submit"] {
-  /* background-color: #007bff; */
   color: white;
 }
 

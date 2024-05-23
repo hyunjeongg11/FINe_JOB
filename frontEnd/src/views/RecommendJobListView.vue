@@ -76,22 +76,22 @@ onMounted (() => {
   background-color: rgb(219, 236, 241);
   border-radius: 10px;
   padding: 5px;
-  width: 80%; /* Change to 100% to match the container */
+  width: 80%;
   margin: 0 auto;
 }
 
 .job-container {
-  background-color: #ffffff;
+  background-color: rgb(219, 236, 241);
   border-radius: 10px;
   text-align: center;
   margin: 0 auto;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  overflow: auto; /* Enable vertical scrolling if needed */
-  max-width: 100%; /* Ensure the table does not exceed its container's width */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  overflow: auto;
+  max-width: 100%; 
 }
 
 .job-table {
-  width: 100%; /* Set the table width to 100% */
+  width: 100%;
 }
 
 .table-header {
@@ -108,14 +108,15 @@ onMounted (() => {
   justify-content: center;
   align-items: center;
   margin: 20px auto;
+  background-color: rgb(59, 130, 153);
 }
 
 .truncate {
   font-size: 15px;
-  max-width: 150px; /* Set a maximum width for text truncation */
+  max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Prevent text from wrapping */
+  white-space: nowrap; 
   padding: 10px 0;
 }
 
@@ -127,8 +128,6 @@ a:hover {
   color: rgb(59, 130, 153);
 }
 
-
-/* Adjust widths for better alignment */
 .td-title {
   width: 30%;
 }

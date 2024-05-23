@@ -1,6 +1,5 @@
 <template>
   <div class="create-comment">
-    <!-- <h3>댓글 작성</h3> -->
     <form @submit.prevent="submitComment">
       <div class="form-group">
         <label for="content">내용</label>
