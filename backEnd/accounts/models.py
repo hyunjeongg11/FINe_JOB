@@ -1,9 +1,24 @@
+import hashlib
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from allauth.account.adapter import DefaultAccountAdapter
 
+lenOfImages = 10
+
 def user_directory_path(instance, filename):
     return f'profile_images/{instance.username}/{filename}'
+
+def generate_hash(nickname, birthday, gender):
+    input_str = f"{nickname}-{birthday}-{gender}"
+    # SHA-256 해시 생성
+    hash_object = hashlib.sha256(input_str.encode())
+    # 해시 값을 16진수 문자열로 변환 후, 정수로 변환
+    hash_value = int(hash_object.hexdigest(), 16)
+    return hash_value
+
+def hash(nickname, birthday, gender):
+    hash_value = generate_hash(nickname, birthday, gender)
+    return hash_value % lenOfImages + 1
 
 class CustomAccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=True):
@@ -22,10 +37,11 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         birthday = data.get("birthday")
         gender = data.get("gender")
         address = data.get("address")
-        profile_img = data.get("profile_img")
         asset = data.get("asset")
         salary = data.get("salary")
+        print(salary)
         interest_industry = data.get("interest_industry")
+        profile_img_index = hash(str(nickname), str(birthday), str(gender))
 
         user_email(user, email)
         user_username(user, username)
@@ -41,9 +57,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user_field(user, "gender", gender)
         if address:
             user_field(user, "address", address)
-        if profile_img:
-            user.profile_img = profile_img
-            # user_field(user, "profile_img", profile_img)
+        if profile_img_index:
+            user_field(user, "profile_img_index", str(profile_img_index))
         if asset is not None:
             asset = str(asset)
             user_field(user, "asset", asset)
@@ -101,7 +116,7 @@ class User(AbstractUser):
     birthday = models.CharField(max_length=10)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True)
     address = models.CharField(max_length=255, null=True, blank=True)
-    profile_img = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
+    profile_img_index = models.IntegerField()
     asset = models.IntegerField(null=True)
     salary = models.IntegerField(null=True)
     interest_industry = models.CharField(max_length=20, choices=JOB_CHOICES, null=True)
