@@ -90,7 +90,7 @@ const goToMainPage = () => {
 }
 
 .intro-image.show {
-  animation: fadeIn 2s ease forwards;
+  animation: fadeIn 4s ease forwards;
 }
 
 .main-btn {

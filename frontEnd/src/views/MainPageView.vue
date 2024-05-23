@@ -96,7 +96,7 @@ import { RouterLink } from 'vue-router'
 const iconPaths = ref({
   금융: '/assets/icons/fin_black.png',
   환율: '/assets/icons/exchange_black.png',
-  일자리: '/assets/icons/map_black.png',
+  일자리: '/assets/icons/job_black.png',
   은행지도: '/assets/icons/map_black.png',
 })
 
