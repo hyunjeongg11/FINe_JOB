@@ -1,16 +1,22 @@
 <template >
 	<div class="container">
 		<img :src="gifSrc" class="intro-image-gif" alt="인트로 1">
-		<img class="intro-image" src="/assets/intro/a1.png" alt="인트로 2">
-		<img class="intro-image" src="/assets/intro/b1.png" alt="인트로 3">
-		<img class="intro-image" src="/assets/intro/c1.png" alt="인트로 4">
-		<img class="intro-image" src="/assets/intro/d1.png" alt="인트로 5">
-		<!-- <img class="intro-image" src="/assets/intro/a1.png" alt="인트로 2">
-		<img class="intro-image" src="/assets/intro/a1.png" alt="인트로 4"> -->
+		<img class="intro-image" src="/assets/intro/intro2.png" alt="인트로 2">
+		<img class="intro-image" src="/assets/intro/intro3.png" alt="인트로 3">
+		<img class="intro-image" src="/assets/intro/intro4.png" alt="인트로 4">
+		<img class="intro-image" src="/assets/intro/intro5.png" alt="인트로 5">
+		<img class="intro-image" src="/assets/intro/intro6.png" alt="인트로 6">
+		<img class="intro-image" src="/assets/intro/intro7.png" alt="인트로 7">
+		<img class="intro-image" src="/assets/intro/intro8.png" alt="인트로 8">
+		<img class="intro-image" src="/assets/intro/intro9.png" alt="인트로 9">
+		<RouterLink :to="{ name: 'main' }">
+			<button type="submit" class="btn text-center main-btn">메인페이지로 이동</button>
+		</RouterLink>
 	</div>
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const gifSrc = ref('')
@@ -56,14 +62,14 @@ const isElementInViewport = (el) => {
 	width: 80%;
 	height: auto;
 	object-fit: contain;
-	margin: 0 auto 300px;
+	margin: 0 auto 250px;
 }
 
 .intro-image {
 	width: 80%;
 	height: auto;
 	object-fit: contain;
-	margin: 0 auto 300px;
+	margin: 0 auto 250px;
 	opacity: 0;
 }
 
@@ -80,5 +86,19 @@ const isElementInViewport = (el) => {
 /* 스크롤 이벤트에 따라 이미지가 나타날 때 애니메이션 적용 */
 .intro-image.show {
 	animation: fadeIn 2s ease forwards;
+}
+
+.main-btn {
+  background-color: rgb(59, 130, 153);
+  border-color: rgb(95, 170, 173);
+  width: 300px;
+  color: white;
+  /* margin-right: 50%; */
+  margin-right: 10%;
+  height: 80px;
+  font-size: 25px;
+}
+.main-btn:hover {
+  background-color: rgb(45, 101, 119);
 }
 </style>

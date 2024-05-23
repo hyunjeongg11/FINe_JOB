@@ -1,6 +1,6 @@
 <template>
   <div class="news-outer">
-    <h4 class="news-header">오늘의 금융 뉴스</h4>
+    <h4 class="news-header">실시간 금융 뉴스</h4>
     <div v-for="news in newsList" :key="news.id" class="news-item">
       <a :href="news.link" target="_blank" class="news-link">
         <p v-html="news.title" class="news-title"></p>

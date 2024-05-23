@@ -4,16 +4,16 @@
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="/assets/intro/a2.png" class="d-block" alt="Image 1">
+            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 1">
           </div>
           <div class="carousel-item">
-            <img src="/assets/intro/b2.png" class="d-block" alt="Image 2">
+            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 2">
           </div>
           <div class="carousel-item">
-            <img src="/assets/intro/c2.png" class="d-block" alt="Image 3">
+            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 3">
           </div>
           <div class="carousel-item">
-            <img src="/assets/intro/d2.png" class="d-block" alt="Image 4">
+            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 4">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
