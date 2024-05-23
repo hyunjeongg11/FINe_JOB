@@ -59,8 +59,15 @@
                   <li><RouterLink :to="{ name: 'interestcalculator' }" class="dropdown-item" href="#">이자 계산기</RouterLink></li>
                 </ul>
               </li>
-              <li class="nav-item">
-                <RouterLink :to="{ name: 'freeboard' }" class="nav-link" aria-current="page">커뮤니티</RouterLink>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  커뮤니티
+                </a>
+                <ul class="dropdown-menu">
+                  <li><RouterLink :to="{ name: 'freeboard' }" class="dropdown-item" href="#">자유게시판</RouterLink></li>
+                  <li><RouterLink :to="{ name: 'ageboard' }" class="dropdown-item" href="#">연령별게시판</RouterLink></li>
+                  <li><RouterLink :to="{ name: 'FAQ' }" class="dropdown-item" href="#">FAQ</RouterLink></li>
+                </ul>
               </li>
             </ul>
             <form class="d-flex position-relative" role="search" @submit.prevent="performSearch">
@@ -118,8 +125,10 @@ const navigationItems = [
   { name: '추천 일자리', link: { name: 'recommendjoblist' } },
   { name: '주변 은행 찾기', link: { name: 'searchbank' } },
   { name: '환율 계산기', link: { name: 'currencyconverter' } },
-  { name: '커뮤니티', link: { name: 'freeboard' } },
-  { name: '이자 계산기', link: { name: 'interestcalculator' } }
+  { name: '이자 계산기', link: { name: 'interestcalculator' } },
+  { name: '자유게시판', link: { name: 'freeboard' } },
+  { name: '연령별게시판', link: { name: 'ageboard' } },
+  { name: 'FAQ', link: { name: 'FAQ' } }
 ]
 
 const updateSearchResults = () => {
