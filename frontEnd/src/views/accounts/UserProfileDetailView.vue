@@ -15,6 +15,10 @@
         <span class="value">{{ nickname || '닉네임이 없습니다' }}</span>
       </div>
       <div class="info-item">
+        <span class="label">주소:</span>
+        <span class="value">{{ address || '주소가 입력되지 않았습니다' }}</span>
+      </div>
+      <div class="info-item">
         <span class="label">생년월일:</span>
         <span class="value">{{ birthday || '생년월일이 입력되지 않았습니다' }}</span>
       </div>
@@ -58,10 +62,11 @@ const profile_img = ref(null)
 const asset = ref(null)
 const salary = ref(null)
 const interest_industry = ref(null)
+const address = ref(null)
 
 const goUserProfileEdit = function () {
-      router.push({ name: 'userprofileedit' })
-  }
+  router.push({ name: 'userprofileedit' })
+}
 
 const checkUser = function () {
 	axios({
@@ -83,6 +88,7 @@ const checkUser = function () {
 			salary.value = userData.salary
       interest_industry.value = userData.interest_industry
       profile_img.value = userData.profile_img_index
+      address.value = userData.address
 		})
 		.catch((err) => {
 			console.log(err)
