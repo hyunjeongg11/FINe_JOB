@@ -53,7 +53,7 @@ const isElementInViewport = (el) => {
 }
 
 .intro-image-gif {
-	width: 60%;
+	width: 80%;
 	height: auto;
 	object-fit: contain;
 	margin: 0 auto 300px;
