@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <nav>
-      <RouterLink :to="{ name: 'freeboard' }">자유게시판</RouterLink> |
-      <RouterLink :to="{ name: 'ageboard' }">연령별 게시판</RouterLink> |
-      <RouterLink :to="{ name: 'FAQ' }">FAQ</RouterLink>
+      <RouterLink :to="{ name: 'freeboard' }" class="nav-item-here">자유게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'ageboard' }" class="nav-item">연령별게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'FAQ' }" class="nav-item">FAQ</RouterLink>
     </nav>
     <h1>자유 게시글 수정</h1>
     <form @submit.prevent="submitEdit" class="form-container">
@@ -23,7 +23,7 @@
       </div>
       <div class="form-actions">
         <button type="button" @click="cancel">취소</button>
-        <input type="submit" value="저장" />
+        <input class="submit-btn" type="submit" value="저장" />
       </div>
     </form>
   </div>
@@ -110,7 +110,7 @@ const cancel = () => {
 
 <style scoped>
 .container {
-  max-width: 1500px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -120,6 +120,15 @@ const cancel = () => {
 
 nav {
   margin-bottom: 20px;
+}
+
+.nav-item {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-item-here {
+  color: black;
 }
 
 h1 {
@@ -175,7 +184,11 @@ h1 {
 }
 
 .form-actions input[type="submit"] {
-  background-color: #007bff;
+  color: white;
+}
+
+.submit-btn {
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 </style>

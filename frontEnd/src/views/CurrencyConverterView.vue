@@ -10,6 +10,7 @@
               <label for="source-input" class="w-25 fs-5 col-4 fw-bold">FROM</label>
               <img v-if="from" :src="`/assets/flags/${from}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
               <select id="source-input" v-model="from" class="form-select col-4">
+                <option value="" disabled selected>나라 이름</option>
                 <option value="AED">아랍에미리트 디르함</option>
                 <option value="AUD">호주 달러</option>
                 <option value="BHD">바레인 디나르</option>
@@ -39,6 +40,7 @@
               <label for="source-output" class="w-25 fs-5 col-3 fw-bold">TO</label>
               <img v-if="to" :src="`/assets/flags/${to}.png`" alt="" class="col-2" style="width: 4rem; height: 2.5rem;">
               <select id="source-output" v-model="to" class="form-select col-6">
+                <option value="" disabled selected>나라 이름</option>
                 <option value="AED">아랍에미리트 디르함</option>
                 <option value="AUD">호주 달러</option>
                 <option value="BHD">바레인 디나르</option>

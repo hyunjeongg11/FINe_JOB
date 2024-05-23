@@ -1,13 +1,12 @@
 <template>
   <div class="create-comment">
-    <h3>댓글 작성</h3>
     <form @submit.prevent="submitComment">
       <div class="form-group">
         <label for="content">내용</label>
         <textarea id="content" v-model.trim="content" required></textarea>
       </div>
       <div class="form-actions">
-        <button type="submit">작성</button>
+        <button class="submit-btn" type="submit">작성</button>
       </div>
     </form>
   </div>
@@ -55,6 +54,9 @@ const submitComment = () => {
 <style scoped>
 .create-comment {
   margin-top: 20px;
+  border: #ccc solid 1px;
+  padding: 10px;
+  background-color: #f0f0f080;
 }
 
 .form-group {
@@ -66,6 +68,10 @@ const submitComment = () => {
   margin-bottom: 5px;
 }
 
+
+#content {
+  height: 100px;
+}
 .form-group textarea {
   width: 100%;
   padding: 10px;
@@ -81,12 +87,16 @@ button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
   color: white;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(45, 101, 119);
+}
+
+.submit-btn {
+  background-color: rgb(59, 130, 153);
+  color: white;
 }
 </style>

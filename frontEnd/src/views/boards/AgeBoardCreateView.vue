@@ -1,10 +1,10 @@
 <template>
 	<div class="container">
 		<nav>
-			<RouterLink :to="{ name: 'freeboard' }">자유게시판</RouterLink> |
-			<RouterLink :to="{ name: 'ageboard' }">연령별 게시판</RouterLink> |
-			<RouterLink :to="{ name: 'FAQ' }">FAQ</RouterLink>
-		</nav>
+      <RouterLink :to="{ name: 'freeboard' }" class="nav-item">자유게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'ageboard' }" class="nav-item-here">연령별게시판</RouterLink> | 
+      <RouterLink :to="{ name: 'FAQ' }" class="nav-item">FAQ</RouterLink>
+    </nav>
 		<h1>연령별 게시글 작성</h1>
 		<form @submit.prevent="createBoard" class="form-container">
 			<div class="form-group">
@@ -23,7 +23,7 @@
 			</div>
 			<div class="form-actions">
 				<button type="button" @click="cancel">취소</button>
-				<input type="submit" value="등록" />
+				<input class="btn-submit" type="submit" value="등록" />
 			</div>
 		</form>
 	</div>
@@ -88,7 +88,7 @@ const cancel = () => {
 
 <style scoped>
 .container {
-	max-width: 1500px;
+	max-width: 1000px;
 	margin: 0 auto;
 	padding: 20px;
 	border: 1px solid #ddd;
@@ -99,6 +99,16 @@ const cancel = () => {
 nav {
 	margin-bottom: 20px;
 }
+
+.nav-item {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-item-here {
+  color: black;
+}
+
 
 h1 {
 	margin-bottom: 20px;
@@ -152,8 +162,12 @@ h1 {
 	background-color: #ccc;
 }
 
-.form-actions input[type="submit"] {
-	background-color: #007bff;
+.btn-submit {
+	background-color: rgb(59, 130, 153);
 	color: white;
+}
+
+.btn-submit:hover {
+  background-color: rgb(45, 101, 119);
 }
 </style>

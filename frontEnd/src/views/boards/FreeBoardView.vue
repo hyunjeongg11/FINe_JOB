@@ -1,21 +1,20 @@
 <template>
-	<div>
-		<ul class="nav nav-underline justify-content-center">
-			<li class="nav-item">
-				<RouterLink :to="{name: 'freeboard'}" class="nav-link" :class="{ active: isActiveRoute('freeboard') }">자유게시판</RouterLink>
-			</li>
-			<li class="nav-item"> 
-				<RouterLink :to="{name: 'ageboard'}" class="nav-link" :class="{ active: isActiveRoute('ageboard') }">연령별게시판</RouterLink>
-			</li>
-			<li class="nav-item">
-				<RouterLink :to="{name: 'FAQ'}" class="nav-link" :class="{ active: isActiveRoute('FAQ') }">FAQ</RouterLink>
-			</li>
-		</ul>
-		<div class="container">
-			<!-- <h1>자유게시판</h1> -->
-			<FreeBoardList />
-		</div>
-	</div>
+  <div class="container">
+    <ul class="nav nav-underline">
+      <li class="nav-item">
+        <RouterLink :to="{name: 'freeboard'}" class="nav-link" :class="{ active: isActiveRoute('freeboard') }">자유게시판</RouterLink>
+      </li>
+      <li class="nav-item"> 
+        <RouterLink :to="{name: 'ageboard'}" class="nav-link" :class="{ active: isActiveRoute('ageboard') }">연령별게시판</RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink :to="{name: 'FAQ'}" class="nav-link" :class="{ active: isActiveRoute('FAQ') }">FAQ</RouterLink>
+      </li>
+    </ul>
+    <div class="container">
+      <FreeBoardList />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -29,11 +28,11 @@ const router = useRouter()
 const route = useRoute()
 
 onMounted(() => {
-	store.getFreeBoards()
+  store.getFreeBoards()
 })
 
 function goBack() {
-    router.back()
+  router.back()
 }
 
 function isActiveRoute(name) {
@@ -43,36 +42,43 @@ function isActiveRoute(name) {
 
 <style scoped>
 h1 {
-	text-align: center;
-	margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 .container {
-	max-width: 1500px;
-	margin: 0 auto;
-	padding: 20px;
-	/* border: 1px solid #ddd;
-	border-radius: 8px;
-	background-color: #f9f9f9; */
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 nav {
-	text-align: center;
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .nav-link {
-	color: black;
-	font-size: 20px;
+  color: black;
+  font-size: 20px;
 }
 
 .nav-link.active {
-	color: black;
-	border-bottom: 2px solid black;
+  color: black;
+  border-bottom: 2px solid black;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: rgb(59, 130, 153);
+  color: rgb(59, 130, 153);
 }
 
+.nav-underline {
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  padding-left: 40px;
+  /* border-bottom: 1px solid #dee2e6; */
+}
+
+.nav-item {
+  margin-right: 20px;
+}
 </style>

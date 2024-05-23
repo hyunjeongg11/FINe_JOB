@@ -1,5 +1,4 @@
 <template>
-  
   <div class="container">
     <nav>
       <RouterLink :to="{ name: 'freeboard' }" class="nav-item-here">자유게시판</RouterLink> | 
@@ -8,29 +7,33 @@
     </nav>
     <div v-if="isLogin">
       <div v-if="freeBoard">
-        <h3>자유게시판</h3>
         <div class="post-header">
-          <h1>{{ freeBoard.title }}</h1>
+          <h2>{{ freeBoard.title }}</h2>
           <div class="post-meta">
-            <p>작성자 : {{ freeBoard.user.username }}</p>
-            <p>작성시간 : {{ formattedCreatedAt }}</p>
-            <p>수정시간 : {{ formattedUpdatedAt }}</p>
+          <img :src="`/assets/profile/profile${freeBoard.user.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
+             {{ freeBoard.user.username }} | {{ formattedCreatedAt }}
           </div>
+          <hr>
         </div>
         <div class="post-content">
-          <div class="content-box">
-            <p>{{ freeBoard.content }}</p>
-          </div>
+          <p>{{ freeBoard.content }}</p>
         </div>
         <div v-if="freeBoard.image" class="attachment">
-          <p>첨부파일: <a :href="freeBoard.image" download>{{ fileName }}</a></p>
+          첨부파일: <a :href="freeBoard.image" download>{{ fileName }}</a>
         </div>
-        <div class="actions">
-          <button class="fix" v-if="freeBoard.user.username === userStore.userId" @click="goToEditPage">수정</button>
-          <button class="fix" v-if="freeBoard.user.username === userStore.userId" @click="deleteBoard">삭제</button>
+        <hr>
+        <div class="comments-section">
+          <!-- <h3>댓글</h3> -->
+          <Comment />
+        </div>
+        <div class="actions-row">
+          <button class="back" @click="goBack">목록으로</button>
+          <div class="actions">
+            <button class="fix" v-if="freeBoard.user.username === userStore.userId" @click="goToEditPage">게시글 수정</button>
+            <button class="delete" v-if="freeBoard.user.username === userStore.userId" @click="deleteBoard">게시글 삭제</button>
+          </div>
         </div>
       </div>
-      <Comment />
     </div>
   </div>
 </template>
@@ -83,10 +86,7 @@ const formatDateTime = (datetime) => {
   const day = String(date.getDate()).padStart(2, '0')
   const hours = date.getHours()
   const minutes = String(date.getMinutes()).padStart(2, '0')
-  const isPM = hours >= 12
-  const formattedHours = isPM ? hours - 12 : hours
-  const period = isPM ? '오후' : '오전'
-  return `${year}.${month}.${day} ${period} ${formattedHours}:${minutes}`
+  return `${year}.${month}.${day} ${hours}:${minutes}`
 }
 
 const formattedCreatedAt = computed(() => {
@@ -132,12 +132,16 @@ const fileName = computed(() => {
 
 <style scoped>
 .container {
-  max-width: 1500px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 8px;
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
+}
+
+h2 {
+  margin-bottom: 25px;
 }
 
 nav {
@@ -153,7 +157,6 @@ nav {
   color: black;
 }
 
-
 .post-header {
   margin-bottom: 20px;
 }
@@ -162,24 +165,29 @@ nav {
   margin-bottom: 10px;
 }
 
-.post-meta p {
-  margin: 0;
-  line-height: 1.5;
+.post-meta {
+  font-size: 14px;
+  color: #555;
 }
 
 .post-content {
   margin-bottom: 20px;
-}
-
-.content-box {
   padding: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 150px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .attachment {
+  margin-top: 20px;
+}
+
+.actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -192,22 +200,45 @@ nav {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
-  color: white;
+  /* background-color: #def3f7; */
+  color: black;
   cursor: pointer;
 }
 
 .fix:hover {
-  background-color: #0056b3;
+  background-color: rgb(126, 186, 205);
 }
 
-.fix + .fix {
-  background-color: #dc3545;
+.delete {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  /* background-color: #f3b7bdb7; */
+  color: black;
+  cursor: pointer;
 }
 
-.fix + .fix:hover {
-  background-color: #c82333;
+.delete:hover {
+  background-color: #e7707c;
 }
 
+.back {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;
+}
 
+.back:hover {
+  background-color: rgb(173, 216, 230);
+}
+
+.comments-section {
+  margin-top: 20px;
+}
+
+.comments-section h3 {
+  margin-bottom: 20px;
+}
 </style>

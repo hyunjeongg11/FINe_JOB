@@ -10,7 +10,7 @@
         <form @submit.prevent="updateDetail" class="form-content">
           <div class="d-flex justify-content-between align-items-center">
             <span class="user-id">사용자 ID: {{ username }}</span>
-            <button @click="goChangePassword" class="btn btn-primary">비밀번호 변경</button>
+            <button @click="goChangePassword" class="btn change-btn">비밀번호 변경</button>
           </div>
           <hr>
           <div class="container sort">
@@ -46,11 +46,9 @@
               </select>
             </div>
           </div>
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary text-center col-2">수정</button>
-          </div>
-          <div class="d-flex justify-content-center">
-            <button @click="userStore.withdraw" class="btn btn-danger">회원 탈퇴</button>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn text-center edit-btn">수정</button>
+            <button @click="userStore.withdraw" class="btn delete-btn">회원 탈퇴</button>
           </div>
         </form>
       </div>
@@ -183,7 +181,6 @@ function goBack() {
 }
 
 </script>
-
 <style scoped>
 .outer-box {
   background-color: rgb(236, 245, 248);
@@ -205,5 +202,39 @@ function goBack() {
   background-color: white;
   padding: 1rem;
   border-radius: 10px;
+}
+
+.edit-btn {
+  background-color: rgb(95, 170, 173);
+  border-color: rgb(95, 170, 173);
+  width: 80px;
+  color: white;
+  margin-left: 10px;
+}
+.edit-btn:hover {
+  background-color: rgb(17, 142, 146);
+  /* border-color: rgb(95, 170, 173); */
+}
+
+.change-btn {
+  background-color: rgb(95, 170, 173);
+  border-color: rgb(95, 170, 173);
+  color: white;
+}
+
+.change-btn:hover {
+  background-color: rgb(17, 142, 146);
+  /* border-color: rgb(95, 170, 173); */
+}
+
+.delete-btn {
+  background-color: rgba(250, 22, 22, 0.925);
+  border-color: rgba(250, 22, 22, 0.925);
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: rgb(241, 131, 131);
+  /* border-color: rgba(238, 81, 81, 0.973); */
 }
 </style>

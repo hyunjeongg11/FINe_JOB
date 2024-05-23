@@ -12,6 +12,8 @@ export const userCheckStore = defineStore('usercheck', () => {
   const store = useBoardStore() 
   const router = useRouter()
   const isSuperUser = ref(false)
+  const profile_img_index = ref(null) // profile_img_index를 여기서 정의
+
   const isLogin = computed(() => {
     if (token.value === null) {
       return false
@@ -19,7 +21,8 @@ export const userCheckStore = defineStore('usercheck', () => {
       return true
     }
   })
-
+  
+  
   const logIn = function (payload) {
     const { username, password } = payload
     axios({
@@ -29,19 +32,42 @@ export const userCheckStore = defineStore('usercheck', () => {
         username, password
       }
     })
-      .then(res => {
-        console.log('로그인 완료')
-        token.value = res.data.key
-        userId.value = username
-        // checkSuperUser()
-        router.push({name: 'main'})
-      })
-      .catch(err => {
-        console.log(err)
-        window.alert('아이디 또는 비밀번호가 틀렸습니다.')
-      })
+    .then(res => {
+      console.log('로그인 완료')
+      token.value = res.data.key
+      userId.value = username
+      // checkSuperUser()
+      router.push({name: 'main'})
+      // console.log(userId.value)
+      getProfileIndex()
+    })
+    // .then(() => {
+    // })
+    .catch(err => {
+      console.log(err)
+      window.alert('아이디 또는 비밀번호가 틀렸습니다.')
+    })
   }
 
+  const getProfileIndex = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/api/v1/accounts/user_detail/${userId.value}`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then((res) => {
+        console.log(res.data.user_data)
+        const userData = res.data.user_data
+        profile_img_index.value = userData.profile_img_index
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  
+  
   const logOut = function () {
     axios({
       method: 'post',
@@ -53,6 +79,7 @@ export const userCheckStore = defineStore('usercheck', () => {
         userId.value = null
         store.todayLuck = ''
         recommendJobs.value = []
+        profile_img_index.value = null
         router.push({ name: 'main'})
       })
       .catch(err => {
@@ -101,18 +128,18 @@ export const userCheckStore = defineStore('usercheck', () => {
         console.log(err)
         window.alert("비밀번호는 8글자 이상이며, 영문과 숫자가 섞여야 합니다.")
       })
-  }
-  const withdraw = function () {
-    const answer = window.confirm("회원탈퇴 하시겠습니까?")
-    if (answer) {
-      const re_answer = window.confirm("정말 회원탈퇴 하시겠습니까?")
-      if (re_answer) {
-        const re_re_answer = window.confirm("정말 정말 떠나시겠습니까? 모든 정보는 지워집니다.")
-        if (re_re_answer) {
-          axios({
-            method: 'delete',
-            url: `${API_URL}/api/v1/accounts/delete_user/`,
-            headers: {
+    }
+    const withdraw = function () {
+      const answer = window.confirm("회원탈퇴 하시겠습니까?")
+      if (answer) {
+        const re_answer = window.confirm("정말 회원탈퇴 하시겠습니까?")
+        if (re_answer) {
+          const re_re_answer = window.confirm("정말 정말 떠나시겠습니까? 모든 정보는 지워집니다.")
+          if (re_re_answer) {
+            axios({
+              method: 'delete',
+              url: `${API_URL}/api/v1/accounts/delete_user/`,
+              headers: {
                 Authorization: `Token ${token.value}`
             }
           })
@@ -137,13 +164,14 @@ export const userCheckStore = defineStore('usercheck', () => {
         Authorization: `Token ${token.value}`
       }
     })
-      .then((res) => {
-        console.log(res.data)
-        recommendJobs.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    .then((res) => {
+      console.log(res.data)
+      recommendJobs.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
-  return { API_URL, token, userId, recommendJobs, router, isSuperUser, isLogin, logIn, logOut, signUp, changePassword, withdraw, getRecommendJobs }
+  
+return { API_URL, token, userId, recommendJobs, router, isSuperUser, isLogin, profile_img_index, logIn, logOut, signUp, changePassword, withdraw, getRecommendJobs, getProfileIndex }
 }, {persist: true})

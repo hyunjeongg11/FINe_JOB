@@ -3,11 +3,13 @@
     <header>
       <div class="header-top">
         <nav v-if="!store.token" class="auth-nav">
-          <RouterLink :to="{ name: 'login' }">로그인</RouterLink>
+          <button @click="goLogin" class="login-btn">
+            로그인
+          </button>
         </nav>
         <nav v-else class="auth-nav">
           <p class="nav-link dropdown-toggle username" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;">
+            <img :src="`/assets/profile/profile${store.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;">
             {{ store.userId }}님
           </p>
           <ul class="dropdown-menu">
@@ -79,7 +81,7 @@
         <keep-alive include="DepositList">
           <component :is="Component" :key="route.path" />
         </keep-alive>
-      </RouterView>/>
+      </RouterView>
     </main>
     <Footer />
     <button @click="scrollToTop" class="scroll-to-top">
@@ -93,6 +95,7 @@ import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 import { userCheckStore } from '@/stores/usercheck.js'
+import axios from 'axios'
 
 const store = userCheckStore()
 const searchQuery = ref('')
@@ -100,6 +103,12 @@ const searchResults = ref([])
 const searchResultsVisible = ref(false)
 const logoSrc = ref('/assets/logo/small_logo.png')
 const router = useRouter()
+const profile_img_index = ref(null)
+
+const goLogin = function () {
+  router.push({ name: 'login'})
+}
+
 
 const navigationItems = [
   { name: '예금 상품', link: { name: 'deposit' } },
@@ -108,7 +117,8 @@ const navigationItems = [
   { name: '추천 일자리', link: { name: 'recommendjoblist' } },
   { name: '주변 은행 찾기', link: { name: 'searchbank' } },
   { name: '환율 계산기', link: { name: 'currencyconverter' } },
-  { name: '커뮤니티', link: { name: 'freeboard' } }
+  { name: '커뮤니티', link: { name: 'freeboard' } },
+  { name: '이자 계산기', link: { name: 'interestcalculator' } }
 ]
 
 const updateSearchResults = () => {
@@ -147,6 +157,7 @@ const navigateTo = (link) => {
 }
 
 onMounted(() => {
+  // store.getProfileIndex()
   const dropdowns = document.querySelectorAll('.nav-item.dropdown');
 
   dropdowns.forEach(dropdown => {
@@ -172,6 +183,8 @@ const scrollToTop = () => {
     behavior: 'smooth'
   })
 }
+
+
 </script>
 
 <style scoped>
@@ -192,6 +205,19 @@ header {
   align-items: center;
   padding: rem;
   margin-right: 8%; 
+}
+
+.login-btn {
+  padding: 3px 10px;
+  background-color: rgb(255, 255, 255);
+  border-color: #33333346;
+  border-radius: 5px;
+}
+
+
+.login-btn:hover {
+  background-color: rgba(184, 184, 184, 0.5);
+  border-color: #33333346;
 }
 
 .logo {

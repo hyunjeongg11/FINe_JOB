@@ -138,5 +138,6 @@ const getTodayLuck = function() {
   justify-content: center;
   align-items: center;
   margin: 20px auto;
+  background-color: rgb(59, 130, 153);
 }
 </style>

@@ -11,7 +11,10 @@
     </div>
     <div class="form-group">
       <label for="inputmoney">예치 금액 :</label>
-      <input type="number" id="inputmoney" v-model="inputmoney" :min="0" class="form-control">원
+      <div class="input-group">
+        <input type="number" id="inputmoney" v-model="inputmoney" :min="0" class="form-control">
+        <span class="input-group-addon">원</span>
+      </div>
     </div>
     <div class="form-group">
       <label>이자 방식 :</label>
@@ -23,11 +26,17 @@
     </div>
     <div class="form-group">
       <label for="save_trm">예금 기간 :</label>
-      <input type="number" id="save_trm" v-model="save_trm" :min="0" class="form-control">(개월)
+      <div class="input-group">
+        <input type="number" id="save_trm" v-model="save_trm" :min="0" class="form-control">
+        <span class="input-group-addon">(개월)</span>
+      </div>
     </div>
     <div class="form-group">
       <label for="intr_rate">연이자율 :</label>
-      <input type="number" id="intr_rate" v-model="intr_rate" :min="0" class="form-control">(%)
+      <div class="input-group">
+        <input type="number" id="intr_rate" v-model="intr_rate" :min="0" class="form-control">
+        <span class="input-group-addon">(%)</span>
+      </div>
     </div>
     <div class="results">
       <p><strong>원금 합계 :</strong> {{ calinputFormatted }} 원</p>
@@ -54,22 +63,22 @@ const mymoney = ref(0)  // 세후 수령액
 
 const calculator = () => {
   if (type.value === "예금") {
-    calinput.value = inputmoney.value * (save_trm.value / 12)
+    calinput.value = inputmoney.value
     if (intr_rate_type.value === "단리") {
-      beforintr.value = inputmoney.value * (intr_rate.value / 100) * (save_trm.value / 12)
+      beforintr.value = Math.floor(inputmoney.value * (intr_rate.value / 100) * (save_trm.value / 12))
     } else {
-      beforintr.value = inputmoney.value * Math.pow((1 + intr_rate.value / 100), (save_trm.value / 12)) - inputmoney.value
+      beforintr.value = Math.floor(inputmoney.value * Math.pow((1 + intr_rate.value / 100), (save_trm.value / 12)) - inputmoney.value)
     }
   } else { // 적금
-    calinput.value = inputmoney.value * save_trm.value
+    calinput.value = Math.floor(inputmoney.value * save_trm.value)
     if (intr_rate_type.value === "단리") {
-      beforintr.value = inputmoney.value * (intr_rate.value / 100) * ((save_trm.value + 1) * save_trm.value / 24)
+      beforintr.value = Math.floor(inputmoney.value * (intr_rate.value / 100) * ((save_trm.value + 1) * save_trm.value / 24))
     } else {
-      beforintr.value = inputmoney.value * Math.pow((1 + intr_rate.value / 100 / 12), save_trm.value) - inputmoney.value
+      beforintr.value = Math.floor(inputmoney.value * (save_trm.value * (save_trm.value + 1) / 2) * (intr_rate.value / 100 / 12))
     }
   }
-  taxintr.value = beforintr.value * 0.154
-  mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
+  taxintr.value = Math.floor(beforintr.value * 0.154)
+  mymoney.value = Math.floor(calinput.value + beforintr.value - taxintr.value)
 }
 
 // Computed properties for formatted display
@@ -94,13 +103,26 @@ const mymoneyFormatted = computed(() => mymoney.value.toLocaleString('ko-KR'))
   margin-bottom: 15px;
 }
 
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
 .form-control {
-  width: 100%;
+  flex: 1;
   padding: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+.input-group-addon {
+  padding: 10px;
+  margin-left: 5px;
+  background-color: #e9ecef;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .results {
