@@ -144,6 +144,7 @@ const moveToLink = function (link) {
 .btn-submit {
   background-color: rgb(59, 130, 153);
   color: white;
+  border: rgb(59, 130, 153);
 }
 
 .btn-submit:hover {

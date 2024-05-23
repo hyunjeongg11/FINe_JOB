@@ -132,10 +132,12 @@ hr {
   border: 1px solid #ddd;
   background-color: #fff;
   cursor: pointer;
+  color: rgb(59, 130, 153);
 }
 
 .pagination button.active {
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 

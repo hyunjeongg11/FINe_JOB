@@ -145,6 +145,7 @@ const moveToLink = function (link) {
 <style scoped>
 .btn-submit {
   background-color: rgb(59, 130, 153);
+  border: rgb(59, 130, 153);
   color: white;
 }
 

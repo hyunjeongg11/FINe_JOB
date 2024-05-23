@@ -118,6 +118,7 @@ onMounted (() => {
   text-overflow: ellipsis;
   white-space: nowrap; 
   padding: 10px 0;
+  border: 1px solid #ddd;
 }
 
 a {
@@ -158,5 +159,8 @@ a:hover {
 
 tr:nth-child(even) {
   background-color: #f8fafc;
+}
+tr:nth-child(odd) {
+  background-color: white;
 }
 </style>
