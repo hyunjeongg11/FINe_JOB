@@ -9,7 +9,7 @@
         </nav>
         <nav v-else class="auth-nav">
           <p class="nav-link dropdown-toggle username" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;">
+            <img :src="`/assets/profile/profile${store.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;">
             {{ store.userId }}님
           </p>
           <ul class="dropdown-menu">
@@ -95,6 +95,7 @@ import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 import { userCheckStore } from '@/stores/usercheck.js'
+import axios from 'axios'
 
 const store = userCheckStore()
 const searchQuery = ref('')
@@ -102,10 +103,12 @@ const searchResults = ref([])
 const searchResultsVisible = ref(false)
 const logoSrc = ref('/assets/logo/small_logo.png')
 const router = useRouter()
+const profile_img_index = ref(null)
 
 const goLogin = function () {
   router.push({ name: 'login'})
 }
+
 
 const navigationItems = [
   { name: '예금 상품', link: { name: 'deposit' } },
@@ -154,6 +157,7 @@ const navigateTo = (link) => {
 }
 
 onMounted(() => {
+  // store.getProfileIndex()
   const dropdowns = document.querySelectorAll('.nav-item.dropdown');
 
   dropdowns.forEach(dropdown => {
@@ -179,6 +183,8 @@ const scrollToTop = () => {
     behavior: 'smooth'
   })
 }
+
+
 </script>
 
 <style scoped>

@@ -10,7 +10,7 @@
         <div class="post-header">
           <h2>{{ freeBoard.title }}</h2>
           <div class="post-meta">
-          <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
+          <img :src="`/assets/profile/profile${freeBoard.user.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
              {{ freeBoard.user.username }} | {{ formattedCreatedAt }}
           </div>
           <hr>

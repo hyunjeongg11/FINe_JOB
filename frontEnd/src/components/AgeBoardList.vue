@@ -27,7 +27,7 @@
           </RouterLink>
         </div>
         <div class="board-meta">
-          <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
+          <img :src="`/assets/profile/profile${ageBoard.user.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
           {{ ageBoard.user.username }} | {{ getAgeGroup(ageBoard.user.birthday, ageBoard.created_at) }} | {{ formatDateTime(ageBoard.created_at) }}
         </div>
         <hr />

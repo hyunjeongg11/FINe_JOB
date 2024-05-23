@@ -15,7 +15,7 @@
           </RouterLink>
         </div>
         <div class="board-meta">
-          <img :src="`/assets/profile.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
+          <img :src="`/assets/profile/profile${freeBoard.user.profile_img_index}.png`" alt="profile" style="height: 35px; width: 35px; border-radius: 20px;"> &nbsp;&nbsp;
           {{ freeBoard.user.username }} | {{ formatDateTime(freeBoard.created_at) }}
         </div>
         <hr />

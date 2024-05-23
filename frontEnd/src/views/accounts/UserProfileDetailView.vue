@@ -1,6 +1,6 @@
 <template>
   <div class="profile-container">
-    <img :src="`/assets/profile.png`" alt="Profile Image" class="profile-img" />
+    <img :src="`/assets/profile/profile${profile_img}.png`" alt="Profile Image" class="profile-img" />
     <div class="profile-info">
       <div class="info-item">
         <span class="label">ID:</span>
@@ -82,7 +82,7 @@ const checkUser = function () {
 			asset.value = userData.asset
 			salary.value = userData.salary
       interest_industry.value = userData.interest_industry
-
+      profile_img.value = userData.profile_img_index
 		})
 		.catch((err) => {
 			console.log(err)
