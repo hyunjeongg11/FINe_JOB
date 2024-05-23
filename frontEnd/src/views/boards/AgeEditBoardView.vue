@@ -23,7 +23,7 @@
       </div>
       <div class="form-actions">
         <button type="button" @click="cancel">취소</button>
-        <input type="submit" value="저장" />
+        <input class="submit-btn" type="submit" value="저장" />
       </div>
     </form>
   </div>
@@ -185,7 +185,12 @@ h1 {
 }
 
 .form-actions input[type="submit"] {
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  color: white;
+}
+
+.submit-btn {
+  background-color: rgb(59, 130, 153);
   color: white;
 }
 </style>

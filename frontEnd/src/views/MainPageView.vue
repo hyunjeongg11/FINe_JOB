@@ -26,7 +26,9 @@
     </div>
     <div class="icons">
       <div class="login-area">
-        <div class="login-form">로그인</div>
+        <div>
+          <MainPageUser />
+        </div>
       </div>
       <div class="icons-area">
         <RouterLink to="/deposit" class="icon-item icon-top-left" @mouseover="changeIconToColor($event, 'fin')" @mouseout="changeIconToBlackAndWhite($event, 'fin')">
@@ -60,6 +62,7 @@
 import { ref } from 'vue'
 import TodayLuck from '@/components/TodayLuck.vue'
 import NaverNews from '@/components/NaverNews.vue'
+import MainPageUser from '@/components/MainPageUser.vue'
 import { RouterLink } from 'vue-router'
 
 const iconPaths = ref({
@@ -121,7 +124,7 @@ const changeIconToBlackAndWhite = (event, iconName) => {
 .login-area {
   height: 35%;
   margin-bottom: 5%;
-  background-color: skyblue;
+  background-color: rgb(219, 236, 241);
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */

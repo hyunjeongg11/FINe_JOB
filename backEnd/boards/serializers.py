@@ -7,7 +7,7 @@ User = get_user_model()
 class UsernameSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'birthday')
+        fields = ('username', 'birthday', 'profile_img_index')
 
 
 class Age_BoardListSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class Age_BoardListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Age_Board
-        fields = ('id', 'user', 'title', 'content', 'created_at')
+        fields = ('id', 'user', 'title', 'content', 'created_at',)
 
 
 class Age_CommentSerializer(serializers.ModelSerializer):

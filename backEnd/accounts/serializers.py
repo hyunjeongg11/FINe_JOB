@@ -11,14 +11,14 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'profile_img_index')
 
 class UserDetailSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='user.detailuser.address', read_only=True)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'nickname', 'birthday', 'gender', 'address', 'profile_img', 'asset', 'salary', 'interest_industry')
+        fields = ('username', 'email', 'nickname', 'birthday', 'gender', 'address', 'profile_img_index', 'asset', 'salary', 'interest_industry')
 
 class CustomUserEditSerializer(serializers.ModelSerializer):
     # address = serializers.CharField(source='user.detailuser.address', read_only=True)

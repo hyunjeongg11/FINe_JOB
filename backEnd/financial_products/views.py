@@ -251,16 +251,17 @@ def recommend_deposit_products(request):
             intr_rate_type_nm = option.intr_rate_type_nm
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = deposit_calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
-            if result:
-                if save_trm < min_save_trm:
-                    amount_list = [result['amount']]
-                    deposit_products_list = [deposit_product.fin_prdt_cd]
-                    min_save_trm = save_trm
-                elif save_trm == min_save_trm:
-                    amount_list.append(result['amount'])
-                    deposit_products_list.append(deposit_product.fin_prdt_cd)
-                break
+            if intr_rate2 and save_trm:
+                result = deposit_calculate_interest(deposit_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
+                if result:
+                    if save_trm < min_save_trm:
+                        amount_list = [result['amount']]
+                        deposit_products_list = [deposit_product.fin_prdt_cd]
+                        min_save_trm = save_trm
+                    elif save_trm == min_save_trm:
+                        amount_list.append(result['amount'])
+                        deposit_products_list.append(deposit_product.fin_prdt_cd)
+                    break
 
     if deposit_products_list:
         max_indices = sorted(range(len(amount_list)), key=lambda i: amount_list[i], reverse=True)[:4]
@@ -281,9 +282,10 @@ def saving_calculate_interest(monthly_amount, target_amount, interest_type, intr
         return result
     elif interest_type == '복리':
         result = {}
-        compound_interest = round(monthly_amount * ((1 + (intr_rate2 / 100))**((save_trm + 1) / 12) - (1 + intr_rate2 / 100)**(1 / 12)) / ((1 + intr_rate2 / 100)**(1 / 12) - 1))
-        if compound_interest >= target_amount:
-            result['amount'] = compound_interest
+        if save_trm:
+            compound_interest = round(monthly_amount * ((1 + (intr_rate2 / 100))**((save_trm + 1) / 12) - (1 + intr_rate2 / 100)**(1 / 12)) / ((1 + intr_rate2 / 100)**(1 / 12) - 1))
+            if compound_interest >= target_amount:
+                result['amount'] = compound_interest
         return result
     return {}
 
@@ -305,16 +307,17 @@ def recommend_saving_products(request):
             intr_rate_type_nm = option.intr_rate_type_nm
             intr_rate2 = option.intr_rate2
             save_trm = option.save_trm
-            result = saving_calculate_interest(monthly_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
-            if result:
-                if save_trm < min_save_trm:
-                    amount_list = [result['amount']]
-                    saving_products_list = [saving_product.fin_prdt_cd]
-                    min_save_trm = save_trm
-                elif save_trm == min_save_trm:
-                    amount_list.append(result['amount'])
-                    saving_products_list.append(saving_product.fin_prdt_cd)
-                break
+            if intr_rate2 and save_trm:
+                result = saving_calculate_interest(monthly_amount, target_amount, intr_rate_type_nm, intr_rate2, save_trm)
+                if result:
+                    if save_trm < min_save_trm:
+                        amount_list = [result['amount']]
+                        saving_products_list = [saving_product.fin_prdt_cd]
+                        min_save_trm = save_trm
+                    elif save_trm == min_save_trm:
+                        amount_list.append(result['amount'])
+                        saving_products_list.append(saving_product.fin_prdt_cd)
+                    break
 
     if saving_products_list:
         max_indices = sorted(range(len(amount_list)), key=lambda i: amount_list[i], reverse=True)[:4]

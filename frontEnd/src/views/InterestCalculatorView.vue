@@ -65,20 +65,20 @@ const calculator = () => {
   if (type.value === "예금") {
     calinput.value = inputmoney.value
     if (intr_rate_type.value === "단리") {
-      beforintr.value = inputmoney.value * (intr_rate.value / 100) * (save_trm.value / 12)
+      beforintr.value = Math.floor(inputmoney.value * (intr_rate.value / 100) * (save_trm.value / 12))
     } else {
-      beforintr.value = inputmoney.value * Math.pow((1 + intr_rate.value / 100), (save_trm.value / 12)) - inputmoney.value
+      beforintr.value = Math.floor(inputmoney.value * Math.pow((1 + intr_rate.value / 100), (save_trm.value / 12)) - inputmoney.value)
     }
   } else { // 적금
-    calinput.value = inputmoney.value * save_trm.value
+    calinput.value = Math.floor(inputmoney.value * save_trm.value)
     if (intr_rate_type.value === "단리") {
-      beforintr.value = inputmoney.value * (intr_rate.value / 100) * ((save_trm.value + 1) * save_trm.value / 24)
+      beforintr.value = Math.floor(inputmoney.value * (intr_rate.value / 100) * ((save_trm.value + 1) * save_trm.value / 24))
     } else {
-      beforintr.value = inputmoney.value * (save_trm.value * (save_trm.value + 1) / 2) * (intr_rate.value / 100 / 12)
+      beforintr.value = Math.floor(inputmoney.value * (save_trm.value * (save_trm.value + 1) / 2) * (intr_rate.value / 100 / 12))
     }
   }
-  taxintr.value = beforintr.value * 0.154
-  mymoney.value = Math.round(calinput.value + beforintr.value - taxintr.value)
+  taxintr.value = Math.floor(beforintr.value * 0.154)
+  mymoney.value = Math.floor(calinput.value + beforintr.value - taxintr.value)
 }
 
 // Computed properties for formatted display
