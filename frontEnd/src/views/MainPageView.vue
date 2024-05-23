@@ -4,13 +4,16 @@
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="/assets/carousel/1.jpg" class="d-block" alt="Image 1">
+            <img src="/assets/intro/a2.png" class="d-block" alt="Image 1">
           </div>
           <div class="carousel-item">
-            <img src="/assets/carousel/2.jpg" class="d-block" alt="Image 2">
+            <img src="/assets/intro/b2.png" class="d-block" alt="Image 2">
           </div>
           <div class="carousel-item">
-            <img src="/assets/carousel/3.jpg" class="d-block" alt="Image 3">
+            <img src="/assets/intro/c2.png" class="d-block" alt="Image 3">
+          </div>
+          <div class="carousel-item">
+            <img src="/assets/intro/d2.png" class="d-block" alt="Image 4">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -29,19 +32,19 @@
       </div>
       <div class="icons-area">
         <div class="icon-item icon-top-left">
-          <img src="/assets/carousel/1.jpg" alt="금융">
+          <img src="/assets/icons/금융_흑백.png" alt="금융">
           <p>금융</p>
         </div>
         <div class="icon-item icon-top-right">
-          <img src="/assets/carousel/2.jpg" alt="환율">
+          <img src="/assets/icons/환율_흑백.png" alt="환율">
           <p>환율</p>
         </div>
         <div class="icon-item icon-bottom-left">
-          <img src="/assets/carousel/3.jpg" alt="일자리">
+          <img src="/assets/icons/일자리_흑백.png" alt="일자리">
           <p>일자리</p>
         </div>
         <div class="icon-item icon-bottom-right">
-          <img src="/assets/carousel/4.jpg" alt="은행 지도">
+          <img src="/assets/icons/지도1_흑백.png" alt="은행 지도">
           <p>은행 지도</p>
         </div>
       </div>
@@ -82,7 +85,7 @@ import NaverNews from '@/components/NaverNews.vue'
 .image-carousel {
   grid-area: image-carousel;
   width: 100%;
-  height: 550px;
+  height: 750px;
   overflow: hidden;
 }
 
@@ -113,7 +116,6 @@ import NaverNews from '@/components/NaverNews.vue'
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 5px;
   justify-items: center;
   align-items: center;
 }
@@ -122,13 +124,16 @@ import NaverNews from '@/components/NaverNews.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* padding: 10px; */
 }
 
 .icon-item img {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   margin: 3px;
-  border-radius: 50%;
+  padding: 20px;
+  border-radius: 20%;
+  border: 1px solid black;
 }
 
 /* 나머지 아이콘들의 위치 지정 */

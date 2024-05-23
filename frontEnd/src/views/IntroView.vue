@@ -1,9 +1,12 @@
-<template>
+<template >
 	<div class="container">
 		<img :src="gifSrc" class="intro-image-gif" alt="인트로 1">
-		<img class="intro-image" src="/assets/carousel/2.jpg" alt="인트로 2">
-		<img class="intro-image" src="/assets/carousel/3.jpg" alt="인트로 3">
-		<img class="intro-image" src="/assets/carousel/4.jpg" alt="인트로 4">
+		<img class="intro-image" src="/assets/intro/a1.png" alt="인트로 2">
+		<img class="intro-image" src="/assets/intro/b1.png" alt="인트로 3">
+		<img class="intro-image" src="/assets/intro/c1.png" alt="인트로 4">
+		<img class="intro-image" src="/assets/intro/d1.png" alt="인트로 5">
+		<!-- <img class="intro-image" src="/assets/intro/a1.png" alt="인트로 2">
+		<img class="intro-image" src="/assets/intro/a1.png" alt="인트로 4"> -->
 	</div>
 </template>
 
@@ -57,7 +60,7 @@ const isElementInViewport = (el) => {
 }
 
 .intro-image {
-	width: 60%;
+	width: 80%;
 	height: auto;
 	object-fit: contain;
 	margin: 0 auto 300px;
