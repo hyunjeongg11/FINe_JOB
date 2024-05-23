@@ -7,7 +7,7 @@
         <textarea id="content" v-model.trim="content" required></textarea>
       </div>
       <div class="form-actions">
-        <button type="submit">작성</button>
+        <button class="submit-btn" type="submit">작성</button>
       </div>
     </form>
   </div>
@@ -94,5 +94,10 @@ button {
 
 button:hover {
   background-color: rgb(45, 101, 119);
+}
+
+.submit-btn {
+  background-color: rgb(59, 130, 153);
+  color: white;
 }
 </style>
