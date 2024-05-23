@@ -88,12 +88,12 @@ button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
+  background-color: rgb(59, 130, 153);
   color: white;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(45, 101, 119);
 }
 </style>
