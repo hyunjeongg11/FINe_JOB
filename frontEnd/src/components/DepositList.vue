@@ -22,10 +22,10 @@
             <p>예치기간을 선택하세요.</p>
             <select name="term" id="term" v-model="term" class="form-control">
               <option value="전체 기간">전체 기간</option>
-              <option>6 개월</option>
-              <option>12 개월</option>
-              <option>24 개월</option>
-              <option>36 개월</option>
+              <option value="6">6 개월</option>
+              <option value="12">12 개월</option>
+              <option value="24">24 개월</option>
+              <option value="36">36 개월</option>
             </select>
           </div>
           <div class="col-md-2 mt-4 d-flex justify-content-start">
@@ -156,6 +156,7 @@ const onClickFilter = function () {
   if (bank.value === '전체 은행' && term.value === '전체 기간') {
     result.value = store.depositList
   } else if (bank.value === '전체 은행' && term.value !== '전체 기간') {
+    // 기간만 필터링
     result.value = termFilter(term.value)
   } else if (bank.value !== '전체 은행' && term.value === '전체 기간') {
     // 은행만 필터링

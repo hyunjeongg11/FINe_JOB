@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'profile_img_index')
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    address = serializers.CharField(source='user.detailuser.address', read_only=True)
+    # address = serializers.CharField(source='user.detailuser.address', read_only=True)
 
     class Meta:
         model = User
@@ -25,8 +25,8 @@ class CustomUserEditSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['nickname', 'birthday', 'address', 'gender', 'profile_img', 'asset', 'salary', 'interest_industry']
-        read_only_fields = ['birthday',]
+        fields = ['nickname', 'birthday', 'address', 'gender', 'asset', 'salary', 'interest_industry']
+        read_only_fields = ['birthday', 'profile_img_index']
 
 # 관심 상품 리스트
 class UserLikeListSerializer(serializers.ModelSerializer):

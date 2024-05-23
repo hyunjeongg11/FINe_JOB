@@ -3,18 +3,46 @@
     <div class="image-carousel">
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 1">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 2">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 3">
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/intro/intro2.png" class="d-block" alt="Image 4">
-          </div>
+          <RouterLink :to="{ name : 'deposit'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main1.png" class="d-block" alt="Image 1">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'deposit'}">
+            <div class="carousel-item active">
+              <img src="/assets/main/main2.png" class="d-block" alt="Image 1">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'saving'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main3.png" class="d-block" alt="Image 2">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'searchbank'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main4.png" class="d-block" alt="Image 3">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'currencyconverter'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main5.png" class="d-block" alt="Image 4">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'freeboard'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main6.png" class="d-block" alt="Image 5">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'main'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main7.png" class="d-block" alt="Image 6">
+            </div>
+          </RouterLink>
+          <RouterLink :to="{ name : 'intro'}">
+            <div class="carousel-item">
+              <img src="/assets/main/main8.png" class="d-block" alt="Image 7">
+            </div>
+          </RouterLink>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -68,7 +96,7 @@ import { RouterLink } from 'vue-router'
 const iconPaths = ref({
   금융: '/assets/icons/fin_black.png',
   환율: '/assets/icons/exchange_black.png',
-  일자리: '/assets/icons/map_black.png',
+  일자리: '/assets/icons/job_black.png',
   은행지도: '/assets/icons/map_black.png',
 })
 
@@ -82,7 +110,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
 </script>
 
 <style scoped>
-/* 전체 스타일 */
 * {
   box-sizing: border-box;
 }
@@ -97,9 +124,9 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   gap: 30px;
   width: 84%;
   margin: auto;
+  border-color: darkgray 2px solid;
 }
 
-/* 이미지 카루셀 스타일 */
 .image-carousel {
   grid-area: image-carousel;
   width: 100%;
@@ -113,7 +140,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   object-fit: cover;
 }
 
-/* 아이콘 영역 스타일 */
 .icons {
   grid-area: icons;
   display: flex;
@@ -126,8 +152,10 @@ const changeIconToBlackAndWhite = (event, iconName) => {
   margin-bottom: 5%;
   background-color: rgb(219, 236, 241);
   display: flex;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border-color: rgb(88, 81, 81) 2px solid;
 }
 
 .icons-area {
@@ -198,6 +226,6 @@ const changeIconToBlackAndWhite = (event, iconName) => {
 }
 
 .icon-item .p-tag {
-  color: black; /* 글자 색을 검은색으로 지정 */
+  color: black;
 }
 </style>

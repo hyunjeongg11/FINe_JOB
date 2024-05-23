@@ -13,6 +13,16 @@ export const userCheckStore = defineStore('usercheck', () => {
   const router = useRouter()
   const isSuperUser = ref(false)
   const profile_img_index = ref(null) // profile_img_index를 여기서 정의
+  const username = ref(null)
+  const email = ref(null)
+  const birthday = ref(null)
+  const nickname = ref(null)
+  const gender = ref(null)
+  const asset = ref(null)
+  const salary = ref(null)
+  const interest_industry = ref(null)
+  
+
 
   const isLogin = computed(() => {
     if (token.value === null) {
@@ -61,6 +71,14 @@ export const userCheckStore = defineStore('usercheck', () => {
         console.log(res.data.user_data)
         const userData = res.data.user_data
         profile_img_index.value = userData.profile_img_index
+        username.value = userData.username
+        email.value = userData.email
+        nickname.value = userData.nickname
+        birthday.value = userData.birthday
+        gender.value = userData.gender
+        asset.value = userData.asset
+        salary.value = userData.salary
+        interest_industry.value = userData.interest_industry
       })
       .catch((err) => {
         console.log(err)
@@ -173,5 +191,5 @@ export const userCheckStore = defineStore('usercheck', () => {
     })
   }
   
-return { API_URL, token, userId, recommendJobs, router, isSuperUser, isLogin, profile_img_index, logIn, logOut, signUp, changePassword, withdraw, getRecommendJobs, getProfileIndex }
+return { API_URL, token, userId, recommendJobs, router, isSuperUser, isLogin, profile_img_index, email, nickname,  logIn, logOut, signUp, changePassword, withdraw, getRecommendJobs, getProfileIndex }
 }, {persist: true})

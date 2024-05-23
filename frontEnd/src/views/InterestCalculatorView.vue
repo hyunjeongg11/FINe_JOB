@@ -81,7 +81,6 @@ const calculator = () => {
   mymoney.value = Math.floor(calinput.value + beforintr.value - taxintr.value)
 }
 
-// Computed properties for formatted display
 const calinputFormatted = computed(() => calinput.value.toLocaleString('ko-KR'))
 const beforintrFormatted = computed(() => beforintr.value.toLocaleString('ko-KR'))
 const taxintrFormatted = computed(() => taxintr.value.toLocaleString('ko-KR'))

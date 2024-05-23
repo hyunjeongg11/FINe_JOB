@@ -76,7 +76,7 @@ const getTodayLuck = function() {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%; /* 높이를 100%로 설정합니다. */
+  height: 100%; 
 }
 
 .luck-border {

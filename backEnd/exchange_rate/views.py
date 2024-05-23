@@ -74,3 +74,24 @@ def calculate(request):
 
     serializer = ExchangeRateSerializer(exchange_rates, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def exchange_rates_list(request):
+    search_date = request.GET.get('searchDate', datetime.today().strftime('%Y-%m-%d'))
+    
+    if not ExchangeRate.objects.filter(search_date=search_date):
+        response = get_exchange_rate_info(search_date)
+        if response:
+            save_exchange_rate(response, search_date)
+        else:
+            while not response:
+                now = datetime.strptime(search_date, '%Y-%m-%d')
+                search_date = now - timedelta(days=1)
+                search_date = search_date.strftime('%Y-%m-%d')
+                response = get_exchange_rate_info(search_date)
+            if not ExchangeRate.objects.filter(search_date=search_date):
+                save_exchange_rate(response, search_date)
+                
+    exchange_rates = ExchangeRate.objects.filter(search_date=search_date)
+    serializer = ExchangeRateSerializer(exchange_rates, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

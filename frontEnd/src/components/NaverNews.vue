@@ -19,12 +19,10 @@ const intervalId = setInterval(() => {
 }, 10000)
 
 onMounted(() => {
-  // Initial news load
   apistore.getNews()
 })
 
 onUnmounted(() => {
-  // Stop the interval when the page is left
   if (intervalId) {
     clearInterval(intervalId)
   }
@@ -39,8 +37,9 @@ const newsList = computed(() => apistore.news)
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: rgb(219, 236, 241);
+  background-color: rgba(219, 236, 241, 0.397);
   border-radius: 10px;
+  /* border-color: rgba(161, 159, 159, 0.788); */
 }
 
 .news-header {

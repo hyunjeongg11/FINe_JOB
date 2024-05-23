@@ -66,7 +66,7 @@ const createBoard = () => {
 
 	axios({
 		method: 'post',
-		url: `${store.API_URL}/api/v1/boards/age/`, // Ensure this is the correct endpoint
+		url: `${store.API_URL}/api/v1/boards/age/`,
 		data: formData,
 		headers: {
 			Authorization: `Token ${userStore.token}`,
