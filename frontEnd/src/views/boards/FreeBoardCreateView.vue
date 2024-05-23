@@ -164,10 +164,6 @@ h1 {
 	background-color: #ccc;
 }
 
-/* .form-actions input[type="submit"] {
-  background-color: rgb(59, 130, 153);
-	color: white;
-} */
 
 .btn-submit {
 	background-color: rgb(59, 130, 153);
