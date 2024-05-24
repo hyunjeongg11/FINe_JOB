@@ -1,5 +1,6 @@
 # final-pjt : FINe JOB 🔍
 ![alt text](img/intro1.gif)
+![alt text](img/main.png)
 
 ### 👥 팀원 : 부울경 2반 손우혁🧑, 부울경 2반 조현정👩 
 
